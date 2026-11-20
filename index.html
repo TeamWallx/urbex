@@ -1,0 +1,2699 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeroLinkXZ // TeamWallX Cyber Command & 160+ Games OS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            obsidian: '#060913',
+            panel: '#0c1220',
+            cyberCyan: '#00f0ff',
+            elecViolet: '#8b5cf6',
+            neonEmerald: '#10b981',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #060913;
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #060913; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00f0ff; }
+
+    @keyframes gridScroll {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 40px; }
+    }
+    .cyber-grid-bg {
+      background-image:
+        radial-gradient(circle at 18% 15%, rgba(0, 240, 255, 0.08), transparent 38%),
+        radial-gradient(circle at 82% 80%, rgba(139, 92, 246, 0.09), transparent 42%),
+        linear-gradient(to right, rgba(0, 240, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(139, 92, 246, 0.035) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+      animation: gridScroll 16s linear infinite;
+    }
+    .glass-card {
+      background: rgba(12, 18, 32, 0.78);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+    }
+    .glass-card-cyan {
+      background: rgba(12, 18, 32, 0.84);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 240, 255, 0.28);
+      box-shadow: 0 0 24px rgba(0, 240, 255, 0.1), inset 0 0 14px rgba(0, 240, 255, 0.04);
+    }
+    .glass-card-violet {
+      background: rgba(14, 18, 34, 0.84);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(139, 92, 246, 0.32);
+      box-shadow: 0 0 24px rgba(139, 92, 246, 0.12);
+    }
+    canvas.game-canvas {
+      background: #04070f;
+      border-radius: 0.75rem;
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+  </style>
+</head>
+<body class="cyber-grid-bg min-h-screen flex flex-col lg:flex-row selection:bg-cyan-400/30 selection:text-cyan-100">
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed bottom-5 left-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full px-4 sm:px-0"></div>
+
+  <!-- Mobile Top Bar -->
+  <header class="lg:hidden flex items-center justify-between px-4 py-3 bg-[#080c18]/95 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-30">
+    <div class="flex items-center gap-2.5">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#00f0ff] via-[#8b5cf6] to-[#10b981] flex items-center justify-center font-mono font-black text-slate-950 text-sm shadow-lg shadow-cyan-500/25">
+        NX
+      </div>
+      <div>
+        <span class="font-extrabold tracking-tight text-white text-base">NeroLink<span class="text-[#00f0ff]">XZ</span></span>
+        <span class="block text-[10px] font-mono text-[#10b981] uppercase tracking-widest">TeamWallX OS v5</span>
+      </div>
+    </div>
+    <button id="mobile-menu-btn" class="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 hover:text-[#00f0ff]">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </header>
+
+  <!-- Sidebar Navigation -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-[#080d19]/95 backdrop-blur-xl border-r border-slate-800/80 transform -translate-x-full lg:translate-x-0 lg:static lg:flex lg:flex-col transition-transform duration-200 ease-in-out shrink-0">
+    <!-- Brand -->
+    <div class="p-5 border-b border-slate-800/80 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#00f0ff] via-[#8b5cf6] to-[#10b981] flex items-center justify-center font-mono font-black text-slate-950 text-lg shadow-lg shadow-cyan-500/30">
+          NX
+        </div>
+        <div>
+          <h1 class="font-black text-lg tracking-tight text-white leading-none">NeroLink<span class="text-[#00f0ff]">XZ</span></h1>
+          <p class="text-[10px] font-mono text-violet-400 mt-1 tracking-wider">TEAMWALLX // COCODING</p>
+        </div>
+      </div>
+      <button id="close-sidebar-btn" class="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Nav Links -->
+    <nav class="flex-1 p-4 space-y-1.5 overflow-y-auto">
+      <div class="px-3 pb-1 text-[10px] font-mono uppercase tracking-widest text-slate-500">Command Modules</div>
+
+      <button data-tab="overview" class="nav-btn active w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all bg-[#00f0ff]/10 text-[#00f0ff] border border-[#00f0ff]/35">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+        <span>Command Center</span>
+      </button>
+
+      <button data-tab="games" class="nav-btn w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-100 hover:bg-slate-800/50 border border-transparent transition-all">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-[#00f0ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+          <span>Games Vault</span>
+        </div>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/35">162</span>
+      </button>
+
+      <button data-tab="ai" class="nav-btn w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-100 hover:bg-slate-800/50 border border-transparent transition-all">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span>COCO AI Co-Pilot</span>
+        </div>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30">Cohere v2</span>
+      </button>
+
+      <button data-tab="telemetry" class="nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-100 hover:bg-slate-800/50 border border-transparent transition-all">
+        <svg class="w-5 h-5 text-[#10b981]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span>Nibbles Habitat Monitor</span>
+      </button>
+
+      <div class="pt-4 px-3 pb-1 text-[10px] font-mono uppercase tracking-widest text-slate-500">System & Auth</div>
+
+      <button data-tab="settings" class="nav-btn w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-100 hover:bg-slate-800/50 border border-transparent transition-all">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+          <span>System & API Config</span>
+        </div>
+        <span id="sidebar-key-dot" class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+      </button>
+    </nav>
+
+    <!-- Audio & Cohere Sidebar Card -->
+    <div class="p-4 m-3 rounded-2xl glass-card space-y-3">
+      <div class="flex items-center justify-between">
+        <span class="text-[11px] font-mono text-slate-400">WEBAUDIO SYNTH</span>
+        <button id="sidebar-mute-btn" onclick="toggleGlobalAudioMute()" class="text-[10px] font-mono px-2.5 py-1 rounded-lg bg-[#00f0ff]/15 text-[#00f0ff] border border-[#00f0ff]/35 hover:bg-[#00f0ff]/25 transition-all">
+          🔊 SFX ON
+        </button>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="text-[11px] font-mono text-slate-400">COHERE V2</span>
+        <span id="sidebar-ai-badge" class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">FALLBACK</span>
+      </div>
+      <button onclick="switchTab('settings')" class="w-full py-2 px-3 rounded-xl bg-slate-800/90 hover:bg-violet-500/20 hover:text-violet-300 border border-slate-700 hover:border-violet-500/40 text-xs font-mono transition-all">
+        Configure API Key →
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Workspace -->
+  <main class="flex-1 flex flex-col min-w-0 max-h-screen overflow-y-auto">
+    <!-- Top Header Bar -->
+    <div class="sticky top-0 z-20 bg-[#060913]/85 backdrop-blur-xl border-b border-slate-800/80 px-4 sm:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono bg-[#10b981]/10 text-[#10b981] border border-[#10b981]/30">
+          <span class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
+          ONLINE // 240Hz
+        </span>
+        <div class="hidden md:flex items-center gap-3 text-xs font-mono text-slate-400 bg-slate-900/80 px-3 py-1 rounded-xl border border-slate-800">
+          <span>FPS: <strong id="top-fps" class="text-[#00f0ff]">240</strong></span>
+          <span class="text-slate-700">|</span>
+          <span>PING: <strong id="top-ping" class="text-[#10b981]">9ms</strong></span>
+        </div>
+      </div>
+
+      <!-- Global Quick Search Bar -->
+      <div class="flex-1 max-w-md hidden sm:block">
+        <div class="relative">
+          <svg class="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input
+            id="global-top-search"
+            type="text"
+            placeholder="Quick-jump 162 games (TrackMania, Teardown, Elden Ring...)"
+            class="w-full pl-9 pr-3 py-1.5 rounded-xl bg-[#0c1220] border border-slate-700/80 focus:border-[#00f0ff] focus:outline-none text-xs text-white placeholder-slate-500"
+          />
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Cohere API Key Status Pill -->
+        <button onclick="switchTab('settings')" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#0c1220] hover:bg-slate-800 border border-slate-700/80 text-xs font-mono transition-all">
+          <span id="topbar-status-dot" class="w-2 h-2 rounded-full bg-amber-400"></span>
+          <span id="topbar-status-text" class="text-slate-300">Cohere: Fallback</span>
+        </button>
+
+        <!-- Arcade Quick Launch -->
+        <button onclick="openArcadeModal('Neon TrackMania Time Attack')" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#00f0ff] via-[#8b5cf6] to-[#10b981] text-slate-950 font-extrabold text-xs shadow-lg shadow-cyan-500/20 hover:opacity-95 transition-all">
+          <span>▶ ARCADE</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Views Container -->
+    <div class="p-4 sm:p-8 max-w-7xl w-full mx-auto space-y-6 pb-24">
+
+      <!-- ========================================================= -->
+      <!-- VIEW 1: COMMAND CENTER (OVERVIEW)                         -->
+      <!-- ========================================================= -->
+      <section id="view-overview" class="tab-view space-y-6">
+        <!-- Hero Banner -->
+        <div class="relative overflow-hidden rounded-2xl glass-card-cyan p-6 sm:p-8">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div class="space-y-2.5 max-w-2xl">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/15 border border-violet-500/35 text-violet-300 text-xs font-mono">
+                <span>TEAMWALLX // NEROLINKXZ NEURAL COMMAND OS</span>
+              </div>
+              <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-white">
+                Cyber Command & <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] via-violet-400 to-[#10b981]">162-Game Vault</span>
+              </h2>
+              <p class="text-sm text-slate-300 leading-relaxed">
+                Launch 6 synthesized HTML5 Canvas arcade engines with WebAudio & particles, browse 162 curated modern & indie PC/console titles, monitor Nibbles' Raspberry Pi Pico enclosure sensors, and query <span class="text-[#00f0ff] font-mono">COCO (Cohere v2)</span>.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-3 shrink-0">
+              <button onclick="switchTab('games')" class="px-5 py-3 rounded-xl bg-[#00f0ff] hover:bg-cyan-300 text-slate-950 font-extrabold text-sm shadow-lg shadow-cyan-500/25 transition-all">
+                Open 162 Games Vault
+              </button>
+              <button onclick="openSurpriseModal()" class="px-5 py-3 rounded-xl bg-violet-600/25 hover:bg-violet-600/40 text-violet-200 border border-violet-500/40 font-bold text-sm transition-all">
+                🎰 Surprise Me
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div class="p-5 rounded-2xl glass-card hover:border-[#00f0ff]/40 transition-all">
+            <div class="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
+              <span>VAULT TITLES</span>
+              <span class="text-[#00f0ff]">6 ENGINES</span>
+            </div>
+            <div class="text-3xl font-black text-white">162 <span class="text-xs font-mono text-[#10b981]">INDEXED</span></div>
+            <div class="mt-2 text-xs text-slate-400">Custom SVG Covers & Genre Routing</div>
+          </div>
+
+          <div class="p-5 rounded-2xl glass-card hover:border-violet-500/40 transition-all">
+            <div class="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
+              <span>COCO AI (COHERE V2)</span>
+              <span id="kpi-ai-badge" class="text-amber-400">FALLBACK</span>
+            </div>
+            <div id="kpi-ai-model" class="text-lg font-bold text-white font-mono truncate">command-a-03-2025</div>
+            <div class="mt-2 text-xs text-slate-400">Bearer Auth // Quick Drawer Ready</div>
+          </div>
+
+          <div class="p-5 rounded-2xl glass-card hover:border-[#00f0ff]/40 transition-all">
+            <div class="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
+              <span>FRAME & NET TELEMETRY</span>
+              <span class="text-[#10b981]">LOCKED</span>
+            </div>
+            <div class="flex items-baseline gap-3">
+              <span id="kpi-fps" class="text-3xl font-black text-[#00f0ff] font-mono">240</span>
+              <span class="text-xs font-mono text-slate-400">FPS</span>
+              <span id="kpi-ping" class="text-xl font-bold text-[#10b981] font-mono ml-auto">9ms</span>
+            </div>
+            <div class="mt-2 text-xs text-slate-400">GPU Load: <span id="kpi-gpu" class="text-slate-200 font-mono">36%</span> // Frametime 4.1ms</div>
+          </div>
+
+          <div class="p-5 rounded-2xl glass-card hover:border-[#10b981]/40 transition-all">
+            <div class="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
+              <span>NIBBLES HABITAT</span>
+              <span class="text-[#10b981]">PICO-USB0</span>
+            </div>
+            <div class="flex items-baseline gap-3">
+              <span id="kpi-temp" class="text-3xl font-black text-white font-mono">21.4°C</span>
+              <span id="kpi-hum" class="text-sm font-mono text-[#00f0ff]">46% RH</span>
+            </div>
+            <div class="mt-2 text-xs text-slate-400">Wheel Peak: <span id="kpi-rpm" class="text-[#10b981] font-mono">38 RPM</span></div>
+          </div>
+        </div>
+
+        <!-- 6 Built-In Playable HTML5 Canvas Arcade Engines Grid -->
+        <div class="p-6 rounded-2xl glass-card space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-lg font-extrabold text-white flex items-center gap-2">
+                <span>🕹️ Playable HTML5 Arcade Cabinet (6 Synthesized Engines)</span>
+              </h3>
+              <p class="text-xs text-slate-400">Zero external assets — procedural WebAudio SFX, particle explosions, screen shake, combos & local high scores.</p>
+            </div>
+            <button onclick="toggleGlobalAudioMute()" id="overview-mute-btn" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-mono text-[#00f0ff] border border-slate-700">
+              🔊 WebAudio: ON
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            <button onclick="openArcadeModal('Neon TrackMania Time Attack')" class="p-4 rounded-xl bg-[#090e1a] hover:bg-[#00f0ff]/10 border border-slate-800 hover:border-[#00f0ff]/50 text-left transition-all group">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-mono text-[#00f0ff]">RACING // TIME TRIAL</span>
+                <span class="text-[11px] font-mono text-slate-400" id="hs-badge-Neon TrackMania Time Attack">BEST: --</span>
+              </div>
+              <div class="font-extrabold text-white group-hover:text-[#00f0ff] text-base">🏎️ Neon TrackMania Time Attack</div>
+              <p class="text-xs text-slate-400 mt-1">Drift checkpoints, boost pads, tire skids & beat the 24.33s ghost split!</p>
+            </button>
+
+            <button onclick="openArcadeModal('Voxel Teardown Demolition')" class="p-4 rounded-xl bg-[#090e1a] hover:bg-violet-500/10 border border-slate-800 hover:border-violet-500/50 text-left transition-all group">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-mono text-violet-400">PHYSICS // SANDBOX</span>
+                <span class="text-[11px] font-mono text-slate-400" id="hs-badge-Voxel Teardown Demolition">BEST: --</span>
+              </div>
+              <div class="font-extrabold text-white group-hover:text-violet-300 text-base">🧨 Voxel Teardown Demolition</div>
+              <p class="text-xs text-slate-400 mt-1">Blast multi-material voxel towers below the red target line with limited charges.</p>
+            </button>
+
+            <button onclick="openArcadeModal('Cyber Geometry Dash')" class="p-4 rounded-xl bg-[#090e1a] hover:bg-[#10b981]/10 border border-slate-800 hover:border-[#10b981]/50 text-left transition-all group">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-mono text-[#10b981]">RHYTHM // RUNNER</span>
+                <span class="text-[11px] font-mono text-slate-400" id="hs-badge-Cyber Geometry Dash">BEST: --</span>
+              </div>
+              <div class="font-extrabold text-white group-hover:text-[#10b981] text-base">📐 Cyber Geometry Dash</div>
+              <p class="text-xs text-slate-400 mt-1">Jump pads, plasma spikes, gravity-flip portals & beat visualizer to 100%.</p>
+            </button>
+
+            <button onclick="openArcadeModal('NeroBreach: Packet Hacker')" class="p-4 rounded-xl bg-[#090e1a] hover:bg-[#00f0ff]/10 border border-slate-800 hover:border-[#00f0ff]/50 text-left transition-all group">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-mono text-[#00f0ff]">TWIN-STICK // BOSSES</span>
+                <span class="text-[11px] font-mono text-slate-400" id="hs-badge-NeroBreach: Packet Hacker">BEST: --</span>
+              </div>
+              <div class="font-extrabold text-white group-hover:text-[#00f0ff] text-base">🛡️ NeroBreach: Packet Hacker</div>
+              <p class="text-xs text-slate-400 mt-1">360° core defense against corrupted waves, boss nodes, Rapid Fire & EMP Nova.</p>
+            </button>
+
+            <button onclick="openArcadeModal('Orbital Gravity Slingshot')" class="p-4 rounded-xl bg-[#090e1a] hover:bg-violet-500/10 border border-slate-800 hover:border-violet-500/50 text-left transition-all group">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-mono text-violet-400">SPACE // PHYSICS</span>
+                <span class="text-[11px] font-mono text-slate-400" id="hs-badge-Orbital Gravity Slingshot">BEST: --</span>
+              </div>
+              <div class="font-extrabold text-white group-hover:text-violet-300 text-base">🪐 Orbital Gravity Slingshot</div>
+              <p class="text-xs text-slate-400 mt-1">Slingshot around gravity wells, harvest dark-matter shards & dodge asteroids.</p>
+            </button>
+
+            <button onclick="openArcadeModal('Cyber Snake / Tron Grid')" class="p-4 rounded-xl bg-[#090e1a] hover:bg-[#10b981]/10 border border-slate-800 hover:border-[#10b981]/50 text-left transition-all group">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-mono text-[#10b981]">ARENA // LIGHT-CYCLE</span>
+                <span class="text-[11px] font-mono text-slate-400" id="hs-badge-Cyber Snake / Tron Grid">BEST: --</span>
+              </div>
+              <div class="font-extrabold text-white group-hover:text-[#10b981] text-base">🏍️ Cyber Snake / Tron Grid</div>
+              <p class="text-xs text-slate-400 mt-1">High-speed neon light-cycle duel against an AI hunter with turbo boost.</p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Telemetry Sparklines -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="p-5 rounded-2xl glass-card">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <h3 class="font-bold text-white text-sm">GPU Frame Pacing & CPU Load</h3>
+                <p class="text-xs text-slate-400">Live 240Hz render loop telemetry</p>
+              </div>
+              <div class="flex gap-3 text-[11px] font-mono">
+                <span class="text-[#00f0ff]">■ FPS</span>
+                <span class="text-violet-400">■ GPU %</span>
+              </div>
+            </div>
+            <div class="h-44 bg-[#050811] rounded-xl border border-slate-800/80 p-2">
+              <canvas id="sparkline-system" class="w-full h-full block"></canvas>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-2xl glass-card">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <h3 class="font-bold text-white text-sm">Nibbles Enclosure Climate & Wheel RPM</h3>
+                <p class="text-xs text-slate-400">Raspberry Pi Pico sensor bridge</p>
+              </div>
+              <div class="flex gap-3 text-[11px] font-mono">
+                <span class="text-[#10b981]">■ TEMP °C</span>
+                <span class="text-amber-400">■ WHEEL RPM</span>
+              </div>
+            </div>
+            <div class="h-44 bg-[#050811] rounded-xl border border-slate-800/80 p-2">
+              <canvas id="sparkline-nibbles" class="w-full h-full block"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- VIEW 2: GAMES VAULT (162 CURATED TITLES)                  -->
+      <!-- ========================================================= -->
+      <section id="view-games" class="tab-view hidden space-y-5">
+        <div class="p-5 sm:p-6 rounded-2xl glass-card-cyan space-y-4">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-2.5 flex-wrap">
+                <h2 class="text-2xl font-black text-white">NeroLinkXZ Games Vault</h2>
+                <span id="games-count-badge" class="text-xs font-mono px-3 py-1 rounded-full bg-[#00f0ff]/15 text-[#00f0ff] border border-[#00f0ff]/35">162 Titles</span>
+              </div>
+              <p class="text-xs text-slate-300 mt-1">162 authentic modern, competitive & indie titles with procedural artwork, smart genre engine mapping, and instant browser play.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <button id="favorites-filter-btn" onclick="toggleFavoritesOnly()" class="px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 flex items-center gap-1.5 transition-all">
+                <span id="fav-heart-icon">♡</span>
+                <span>Favorites (<span id="fav-count">0</span>)</span>
+              </button>
+              <button onclick="openSurpriseModal()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#00f0ff] via-violet-500 to-[#10b981] text-slate-950 font-extrabold text-xs shadow-lg shadow-cyan-500/20 flex items-center gap-1.5 transition-all">
+                <span>🎰 Surprise Me</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Search & Sort Row -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+            <div class="md:col-span-3 relative">
+              <svg class="w-5 h-5 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <input
+                id="game-search-input"
+                type="text"
+                placeholder="Search 162 games (e.g. 'TrackMania', 'Teardown', 'Elden Ring', 'Valorant', 'Silksong')..."
+                class="w-full pl-11 pr-4 py-3 rounded-xl bg-[#070b15] border border-slate-700/90 focus:border-[#00f0ff] focus:outline-none text-sm text-white placeholder-slate-500"
+              />
+            </div>
+            <select id="game-sort-select" class="px-4 py-3 rounded-xl bg-[#070b15] border border-slate-700/90 focus:border-[#00f0ff] focus:outline-none text-xs font-mono text-white">
+              <option value="featured">Sort: Featured Order</option>
+              <option value="playable">Sort: Playable First</option>
+              <option value="rating">Sort: Highest Rated</option>
+              <option value="az">Sort: A → Z</option>
+            </select>
+          </div>
+
+          <!-- Genre Filter Pills -->
+          <div id="genre-filter-pills" class="flex flex-wrap gap-2 pt-1"></div>
+        </div>
+
+        <!-- Games Grid -->
+        <div id="games-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- VIEW 3: COCO AI CO-PILOT (COHERE V2)                      -->
+      <!-- ========================================================= -->
+      <section id="view-ai" class="tab-view hidden space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 glass-card-violet p-5 rounded-2xl">
+          <div>
+            <div class="flex items-center gap-2.5">
+              <h2 class="text-xl font-black text-white">COCO // NeroLink AI Co-Pilot</h2>
+              <span id="ai-header-mode-pill" class="text-xs font-mono px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Fallback Mode</span>
+            </div>
+            <p class="text-xs text-slate-300 mt-1">Direct Cohere v2 Chat integration (<code class="text-[#00f0ff]">POST https://api.cohere.com/v2/chat</code>) with NeroLinkXZ & 162-game context.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="clearChatHistory()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-300 border border-slate-700">
+              Clear History
+            </button>
+            <button onclick="switchTab('settings')" class="px-3.5 py-2 rounded-xl bg-[#00f0ff]/15 hover:bg-[#00f0ff]/25 text-xs font-mono text-[#00f0ff] border border-[#00f0ff]/35">
+              API Key Config
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Prompt Chips -->
+        <div class="flex flex-wrap gap-2">
+          <button onclick="sendQuickPrompt('Recommend 5 adrenaline-pumping racing or physics sandbox games from the 162 vault')" class="px-3 py-1.5 rounded-xl glass-card hover:border-[#00f0ff]/50 text-xs text-slate-200 transition-all">
+            🏎️ Best Racing & Sandbox Picks
+          </button>
+          <button onclick="sendQuickPrompt('Write a clean MicroPython script for Raspberry Pi Pico to log Nibbles wheel RPM and DHT22 temperature')" class="px-3 py-1.5 rounded-xl glass-card hover:border-[#10b981]/50 text-xs text-slate-200 transition-all">
+            🐹 Pico Enclosure Sensor Code
+          </button>
+          <button onclick="sendQuickPrompt('Give me pro tips to beat the 24.33s ghost split in Neon TrackMania Time Attack')" class="px-3 py-1.5 rounded-xl glass-card hover:border-violet-500/50 text-xs text-slate-200 transition-all">
+            ⏱️ Beat 24.33s TrackMania Split
+          </button>
+        </div>
+
+        <!-- Chat Transcript -->
+        <div id="ai-chat-messages" class="h-[440px] overflow-y-auto p-5 rounded-2xl bg-[#070b15] border border-slate-800/90 space-y-4"></div>
+
+        <!-- Chat Input -->
+        <form id="ai-chat-form" class="flex gap-3">
+          <input
+            id="ai-chat-input"
+            type="text"
+            placeholder="Ask COCO anything (game recommendations, code snippets, Nibbles telemetry)..."
+            class="flex-1 px-4 py-3.5 rounded-xl bg-[#0c1220] border border-slate-700/90 focus:border-[#00f0ff] focus:outline-none text-sm text-white placeholder-slate-500"
+            autocomplete="off"
+          />
+          <button id="ai-send-btn" type="submit" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#00f0ff] via-violet-500 to-[#10b981] text-slate-950 font-extrabold text-sm shadow-lg shadow-cyan-500/20 transition-all shrink-0">
+            Send →
+          </button>
+        </form>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- VIEW 4: NIBBLES HABITAT MONITOR (PICO SERIAL TELEMETRY)   -->
+      <!-- ========================================================= -->
+      <section id="view-telemetry" class="tab-view hidden space-y-6">
+        <div class="p-6 rounded-2xl glass-card-cyan flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-mono text-[#10b981]">RASPBERRY PI PICO BRIDGE // /dev/ttyACM0</span>
+            <h2 class="text-2xl font-black text-white mt-0.5">Nibbles Habitat & Hardware Telemetry</h2>
+            <p class="text-xs text-slate-300 mt-1">Interactive sensor control & serial stream for Pearl Winter White dwarf hamster enclosure.</p>
+          </div>
+          <div class="flex flex-wrap gap-2.5">
+            <button onclick="triggerMealwormDispenser()" class="px-4 py-2.5 rounded-xl bg-[#10b981] hover:bg-emerald-400 text-slate-950 font-extrabold text-xs shadow-lg shadow-emerald-500/20 transition-all">
+              🪱 Dispense Mealworm Treat
+            </button>
+            <button onclick="toggleNightVisionMode()" id="night-vision-btn" class="px-4 py-2.5 rounded-xl bg-violet-500/20 hover:bg-violet-500/30 text-violet-200 border border-violet-500/40 text-xs font-mono transition-all">
+              🌙 IR Night Cam: ON
+            </button>
+          </div>
+        </div>
+
+        <!-- Sensor Toggles & Live Readouts -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-5 rounded-2xl glass-card space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono text-slate-400">ENCLOSURE TEMP</span>
+              <input type="checkbox" checked onchange="toggleSensorFeed('Temp Sensor', this.checked)" class="accent-[#00f0ff] w-4 h-4 cursor-pointer">
+            </div>
+            <div id="hab-temp-val" class="text-3xl font-black text-[#00f0ff] font-mono">21.4°C</div>
+            <div class="text-[11px] text-slate-400">Optimal Dwarf Range: 18–23°C</div>
+          </div>
+
+          <div class="p-5 rounded-2xl glass-card space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono text-slate-400">HUMIDITY (DHT22)</span>
+              <input type="checkbox" checked onchange="toggleSensorFeed('Humidity Sensor', this.checked)" class="accent-[#10b981] w-4 h-4 cursor-pointer">
+            </div>
+            <div id="hab-hum-val" class="text-3xl font-black text-[#10b981] font-mono">46.0%</div>
+            <div class="text-[11px] text-slate-400">Bedding Dryness: Nominal</div>
+          </div>
+
+          <div class="p-5 rounded-2xl glass-card space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono text-slate-400">SILENT WHEEL RPM</span>
+              <input type="checkbox" checked onchange="toggleSensorFeed('Hall-Effect Wheel', this.checked)" class="accent-violet-400 w-4 h-4 cursor-pointer">
+            </div>
+            <div id="hab-rpm-val" class="text-3xl font-black text-violet-400 font-mono">38 RPM</div>
+            <div class="text-[11px] text-slate-400">Session Distance: <span id="hab-dist-val" class="text-white font-mono">4.94 km</span></div>
+          </div>
+
+          <div class="p-5 rounded-2xl glass-card space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono text-slate-400">TREAT HOPPER</span>
+              <span class="text-xs font-mono text-amber-400">84%</span>
+            </div>
+            <div id="hab-treats-val" class="text-3xl font-black text-white font-mono">42 <span class="text-sm font-normal text-slate-400">worms</span></div>
+            <div class="text-[11px] text-slate-400">Servo Gate Ready</div>
+          </div>
+        </div>
+
+        <!-- Serial Console Log -->
+        <div class="p-5 rounded-2xl bg-[#050811] border border-slate-800/90 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-[#00f0ff]">[PICO-USB0] LIVE SERIAL TELEMETRY CONSOLE</span>
+            <button onclick="document.getElementById('pico-serial-log').innerHTML=''" class="text-[11px] font-mono text-slate-400 hover:text-white">Clear Log</button>
+          </div>
+          <div id="pico-serial-log" class="font-mono text-xs space-y-1.5 max-h-64 overflow-y-auto text-slate-300">
+            <div class="text-[#10b981]">[PICO-USB0] Connected @ 115200 baud | Node: NIBBLES_HABITAT_V2</div>
+            <div class="text-[#00f0ff]">[PICO-USB0] SENSOR_FRAME: temp=21.4C hum=46.0% wheel_rpm=38 lux=4</div>
+            <div class="text-violet-300">[PICO-USB0] ACTIVITY: Nibbles sprint burst logged on 21cm silent wheel</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- VIEW 5: SYSTEM & API CONFIG (COHERE V2)                   -->
+      <!-- ========================================================= -->
+      <section id="view-settings" class="tab-view hidden max-w-3xl space-y-6">
+        <div class="p-6 sm:p-8 rounded-2xl glass-card-cyan space-y-6">
+          <div>
+            <span class="text-xs font-mono text-[#00f0ff] uppercase tracking-wider">Cohere v2 Neural Endpoint</span>
+            <h2 class="text-2xl font-black text-white mt-1">System & API Key Configuration</h2>
+            <p class="text-sm text-slate-300 mt-1">
+              Your key is stored locally under <code class="text-[#00f0ff]">localStorage['nerolinkxz_cohere_key']</code> and sent directly to <code class="text-[#10b981]">https://api.cohere.com/v2/chat</code>.
+            </p>
+          </div>
+
+          <div class="space-y-2">
+            <label for="cohere-api-key-input" class="block text-xs font-mono uppercase tracking-wider text-slate-300">Cohere API Key</label>
+            <div class="flex gap-2">
+              <input
+                id="cohere-api-key-input"
+                type="password"
+                placeholder="Paste your Cohere v2 API key..."
+                class="flex-1 px-4 py-3 rounded-xl bg-[#070b15] border border-slate-700 focus:border-[#00f0ff] focus:outline-none text-sm font-mono text-white"
+              />
+              <button type="button" onclick="toggleApiKeyVisibility()" id="toggle-key-vis-btn" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-slate-200">
+                Show
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <label for="cohere-model-select" class="block text-xs font-mono uppercase tracking-wider text-slate-300">Cohere v2 Model</label>
+            <select id="cohere-model-select" class="w-full px-4 py-3 rounded-xl bg-[#070b15] border border-slate-700 focus:border-[#00f0ff] focus:outline-none text-sm font-mono text-white">
+              <option value="command-a-03-2025">command-a-03-2025 (Recommended Flagship)</option>
+              <option value="command-a-plus-05-2026">command-a-plus-05-2026 (Latest Reasoning)</option>
+              <option value="command-r-plus-08-2024">command-r-plus-08-2024 (High Throughput)</option>
+              <option value="command-r-08-2024">command-r-08-2024 (Fast Low-Latency)</option>
+            </select>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <button onclick="saveCohereSettings()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-[#00f0ff] to-[#10b981] text-slate-950 font-extrabold text-sm shadow-lg shadow-cyan-500/20 transition-all">
+              Save Key & Model
+            </button>
+            <button onclick="testCohereConnection()" id="test-cohere-btn" class="px-5 py-3 rounded-xl bg-violet-500/20 hover:bg-violet-500/30 text-violet-200 border border-violet-500/40 font-bold text-sm transition-all">
+              Test API Key (Ping v2)
+            </button>
+            <button onclick="clearCohereSettings()" class="px-4 py-3 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-sm font-medium transition-all ml-auto">
+              Clear Key
+            </button>
+          </div>
+
+          <div id="api-test-output" class="hidden p-4 rounded-xl bg-[#050811] border border-slate-800 font-mono text-xs text-slate-200 leading-relaxed"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- COLLAPSIBLE FLOATING COCO QUICK-CHAT DRAWER               -->
+  <!-- ========================================================= -->
+  <div class="fixed bottom-5 right-5 z-40 flex flex-col items-end">
+    <div id="quick-chat-drawer" class="hidden w-[340px] sm:w-[390px] mb-3 rounded-2xl glass-card-violet shadow-2xl overflow-hidden border border-violet-500/45">
+      <div class="px-4 py-3 bg-[#0a0f1d] border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#00f0ff] animate-pulse"></span>
+          <span class="font-extrabold text-xs text-white tracking-wide">COCO QUICK-LINK (COHERE V2)</span>
+        </div>
+        <button onclick="toggleQuickChatDrawer()" class="text-slate-400 hover:text-white text-xs font-mono">✕</button>
+      </div>
+      <div id="quick-drawer-messages" class="h-64 overflow-y-auto p-3.5 space-y-3 bg-[#060a14] text-xs"></div>
+      <form id="quick-drawer-form" class="p-2.5 bg-[#0a0f1d] border-t border-slate-800 flex gap-2">
+        <input id="quick-drawer-input" type="text" placeholder="Quick ask COCO..." class="flex-1 px-3 py-2 rounded-xl bg-[#060913] border border-slate-700 focus:border-[#00f0ff] focus:outline-none text-xs text-white" />
+        <button type="submit" class="px-3.5 py-2 rounded-xl bg-[#00f0ff] text-slate-950 font-extrabold text-xs">Ask</button>
+      </form>
+    </div>
+
+    <button onclick="toggleQuickChatDrawer()" class="px-4 py-3 rounded-2xl bg-gradient-to-r from-violet-600 to-[#00f0ff] text-slate-950 font-extrabold text-xs shadow-xl shadow-violet-500/30 flex items-center gap-2 hover:scale-105 transition-transform">
+      <span>⚡ COCO AI</span>
+    </button>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- PLAYABLE ARCADE CABINET MODAL (6 ENGINES)                 -->
+  <!-- ========================================================= -->
+  <div id="game-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/90 backdrop-blur-md p-2 sm:p-5">
+    <div class="w-full max-w-5xl bg-[#0a0f1d] border border-[#00f0ff]/40 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[94vh]">
+      <!-- Top Cabinet Bar -->
+      <div class="px-4 sm:px-6 py-3.5 bg-[#060a14] border-b border-slate-800 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <span id="modal-game-badge" class="px-2.5 py-1 rounded-lg bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/35 text-[11px] font-mono shrink-0">ARCADE ENGINE</span>
+          <h3 id="modal-game-title" class="text-base sm:text-xl font-black text-white truncate">Neon TrackMania Time Attack</h3>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="toggleGlobalAudioMute()" id="modal-mute-btn" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-mono text-[#00f0ff] border border-slate-700">
+            🔊 SFX
+          </button>
+          <button onclick="closeArcadeModal()" class="p-2 rounded-xl bg-slate-800 hover:bg-rose-500/20 text-slate-300 hover:text-rose-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="p-4 sm:p-5 flex-1 overflow-y-auto space-y-3.5">
+        <!-- Engine Switcher Pills -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-800/80">
+          <div class="flex flex-wrap gap-1.5">
+            <button onclick="openArcadeModal('Neon TrackMania Time Attack')" class="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-800/90 hover:bg-[#00f0ff]/20 text-[#00f0ff] border border-slate-700">🏎️ TrackMania</button>
+            <button onclick="openArcadeModal('Voxel Teardown Demolition')" class="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-800/90 hover:bg-violet-500/20 text-violet-300 border border-slate-700">🧨 Teardown</button>
+            <button onclick="openArcadeModal('Cyber Geometry Dash')" class="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-800/90 hover:bg-[#10b981]/20 text-[#10b981] border border-slate-700">📐 Geometry Dash</button>
+            <button onclick="openArcadeModal('NeroBreach: Packet Hacker')" class="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-800/90 hover:bg-[#00f0ff]/20 text-[#00f0ff] border border-slate-700">🛡️ NeroBreach</button>
+            <button onclick="openArcadeModal('Orbital Gravity Slingshot')" class="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-800/90 hover:bg-violet-500/20 text-violet-300 border border-slate-700">🪐 Orbital</button>
+            <button onclick="openArcadeModal('Cyber Snake / Tron Grid')" class="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-800/90 hover:bg-[#10b981]/20 text-[#10b981] border border-slate-700">🏍️ Tron Grid</button>
+          </div>
+          <div class="flex items-center gap-4 text-xs font-mono">
+            <span>COMBO: <strong id="arcade-combo" class="text-violet-400">x1</strong></span>
+            <span>SCORE: <strong id="arcade-score" class="text-[#00f0ff] text-sm">0</strong></span>
+            <span>BEST: <strong id="arcade-best" class="text-[#10b981]">0</strong></span>
+          </div>
+        </div>
+
+        <!-- Catalog Context Banner (when launched from one of the 162 catalog cards) -->
+        <div id="catalog-preview-banner" class="hidden p-3.5 rounded-xl bg-gradient-to-r from-[#00f0ff]/10 via-violet-500/10 to-[#10b981]/10 border border-[#00f0ff]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <div class="text-[11px] font-mono text-[#00f0ff]">VAULT COMPANION ENGINE MAPPED</div>
+            <p id="catalog-preview-desc" class="text-xs text-slate-200 mt-0.5"></p>
+          </div>
+          <span id="catalog-preview-meta" class="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-slate-900 text-[#10b981] border border-slate-700 shrink-0"></span>
+        </div>
+
+        <!-- Canvas Viewport -->
+        <div class="relative w-full h-[350px] sm:h-[420px] rounded-xl border border-slate-800 bg-[#04070f] overflow-hidden">
+          <canvas id="arcade-canvas" class="game-canvas"></canvas>
+
+          <!-- Start / Game Over Overlay -->
+          <div id="arcade-overlay" class="absolute inset-0 bg-[#04070f]/85 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center">
+            <h4 id="arcade-overlay-title" class="text-2xl sm:text-3xl font-black text-white mb-2">Neon TrackMania Time Attack</h4>
+            <p id="arcade-overlay-instructions" class="text-xs sm:text-sm text-slate-300 max-w-lg mb-5 leading-relaxed"></p>
+            <button id="arcade-start-btn" onclick="startCurrentMiniGame()" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#00f0ff] via-violet-500 to-[#10b981] text-slate-950 font-black text-sm shadow-xl shadow-cyan-500/30 hover:scale-105 transition-transform">
+              LAUNCH ENGINE
+            </button>
+          </div>
+        </div>
+
+        <!-- External Touch / Action Controls -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span id="arcade-control-hint" class="text-xs font-mono text-slate-400">Controls: WASD / Arrow Keys / Mouse Click & Drag</span>
+          <div class="flex gap-2">
+            <button onclick="triggerGameAction('left')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-mono text-white border border-slate-700">◀ LEFT</button>
+            <button onclick="triggerGameAction('action')" class="px-4 py-2 rounded-xl bg-[#00f0ff]/20 hover:bg-[#00f0ff]/30 text-xs font-mono text-[#00f0ff] border border-[#00f0ff]/40">⚡ ACTION / JUMP / FIRE</button>
+            <button onclick="triggerGameAction('right')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-mono text-white border border-slate-700">RIGHT ▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SURPRISE ME SLOT RANDOMIZER MODAL                         -->
+  <!-- ========================================================= -->
+  <div id="surprise-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/85 backdrop-blur-md p-4">
+    <div class="w-full max-w-md rounded-2xl glass-card-violet p-6 text-center space-y-5 border border-violet-500/50">
+      <div class="text-xs font-mono text-[#00f0ff] uppercase tracking-widest">NeroLinkXZ Neural Vault Roulette</div>
+      <h3 class="text-2xl font-black text-white">🎲 Surprise Me Picker</h3>
+      <div class="p-5 rounded-2xl bg-[#060a14] border border-slate-800 min-h-[115px] flex flex-col items-center justify-center">
+        <div id="slot-genre-label" class="text-xs font-mono text-violet-400 mb-1">SPINNING 162 TITLES...</div>
+        <div id="slot-title-label" class="text-xl font-black text-white">Initializing...</div>
+      </div>
+      <div class="flex gap-3 justify-center">
+        <button onclick="spinSurpriseSlot()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-mono text-white border border-slate-700">Re-Spin</button>
+        <button id="slot-launch-btn" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#00f0ff] to-[#10b981] text-slate-950 font-extrabold text-xs">Launch Selected ▶</button>
+        <button onclick="closeSurpriseModal()" class="px-3.5 py-2.5 rounded-xl bg-slate-900 text-slate-400 hover:text-white text-xs">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- APPLICATION JAVASCRIPT                                    -->
+  <!-- ========================================================= -->
+  <script>
+    // =========================================================================
+    // 1. PERSISTENT STATE & WEBAUDIO SYNTHESIZER
+    // =========================================================================
+    const STORAGE = {
+      KEY: 'nerolinkxz_cohere_key',
+      MODEL: 'nerolinkxz_cohere_model',
+      FAVS: 'nerolinkxz_favorites_v5',
+      CHAT: 'nerolinkxz_chat_history_v5',
+      SCORES: 'nerolinkxz_high_scores_v5'
+    };
+
+    let state = {
+      apiKey: localStorage.getItem(STORAGE.KEY) || '',
+      model: localStorage.getItem(STORAGE.MODEL) || 'command-a-03-2025',
+      favorites: JSON.parse(localStorage.getItem(STORAGE.FAVS) || '[]'),
+      chatHistory: JSON.parse(localStorage.getItem(STORAGE.CHAT) || '[]'),
+      highScores: JSON.parse(localStorage.getItem(STORAGE.SCORES) || '{}'),
+      selectedGenre: 'All',
+      searchQuery: '',
+      sortMode: 'featured',
+      favoritesOnly: false,
+      muted: false,
+      treatsLeft: 42,
+      wheelDist: 4.94,
+      irCam: true
+    };
+
+    // Procedural WebAudio Synthesizer (zero external audio files)
+    const SoundFX = {
+      ctx: null,
+      ensure() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+      },
+      play(type) {
+        if (state.muted) return;
+        this.ensure();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        if (type === 'shoot') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(680, now);
+          osc.frequency.exponentialRampToValueAtTime(140, now + 0.09);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+          osc.start(now); osc.stop(now + 0.09);
+        } else if (type === 'jump') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(240, now);
+          osc.frequency.exponentialRampToValueAtTime(580, now + 0.14);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+          osc.start(now); osc.stop(now + 0.14);
+        } else if (type === 'explosion') {
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(130, now);
+          osc.frequency.exponentialRampToValueAtTime(32, now + 0.28);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+          osc.start(now); osc.stop(now + 0.28);
+        } else if (type === 'pickup') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(520, now);
+          osc.frequency.setValueAtTime(780, now + 0.06);
+          gain.gain.setValueAtTime(0.14, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+          osc.start(now); osc.stop(now + 0.16);
+        } else if (type === 'boost') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(190, now);
+          osc.frequency.exponentialRampToValueAtTime(520, now + 0.22);
+          gain.gain.setValueAtTime(0.13, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+          osc.start(now); osc.stop(now + 0.22);
+        } else if (type === 'gameover') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(300, now);
+          osc.frequency.linearRampToValueAtTime(75, now + 0.45);
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+          osc.start(now); osc.stop(now + 0.45);
+        }
+      }
+    };
+
+    function toggleGlobalAudioMute() {
+      state.muted = !state.muted;
+      document.getElementById('sidebar-mute-btn').textContent = state.muted ? '🔇 MUTED' : '🔊 SFX ON';
+      document.getElementById('overview-mute-btn').textContent = state.muted ? '🔇 WebAudio: MUTED' : '🔊 WebAudio: ON';
+      document.getElementById('modal-mute-btn').textContent = state.muted ? '🔇 MUTED' : '🔊 SFX';
+      if (!state.muted) SoundFX.play('pickup');
+    }
+
+    function showToast(msg, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const el = document.createElement('div');
+      const borders = {
+        success: 'border-[#10b981]/60 text-[#10b981]',
+        error: 'border-rose-500/60 text-rose-300',
+        info: 'border-[#00f0ff]/60 text-[#00f0ff]'
+      };
+      el.className = `pointer-events-auto px-4 py-3 rounded-xl glass-card border shadow-xl text-xs font-mono flex items-center justify-between gap-3 ${borders[type] || borders.info}`;
+      el.innerHTML = `<span>${msg}</span><button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white">✕</button>`;
+      container.appendChild(el);
+      setTimeout(() => { if (el.parentElement) el.remove(); }, 4200);
+    }
+
+    // =========================================================================
+    // 2. NAVIGATION & STATUS SYNC
+    // =========================================================================
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-view').forEach(v => v.classList.add('hidden'));
+      const target = document.getElementById(`view-${tabId}`);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if (btn.dataset.tab === tabId) {
+          btn.classList.add('bg-[#00f0ff]/10', 'text-[#00f0ff]', 'border-[#00f0ff]/35');
+          btn.classList.remove('text-slate-400', 'border-transparent');
+        } else {
+          btn.classList.remove('bg-[#00f0ff]/10', 'text-[#00f0ff]', 'border-[#00f0ff]/35');
+          btn.classList.add('text-slate-400', 'border-transparent');
+        }
+      });
+      document.getElementById('sidebar').classList.add('-translate-x-full');
+    }
+
+    document.querySelectorAll('.nav-btn').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => document.getElementById('sidebar').classList.remove('-translate-x-full'));
+    document.getElementById('close-sidebar-btn').addEventListener('click', () => document.getElementById('sidebar').classList.add('-translate-x-full'));
+
+    document.getElementById('global-top-search').addEventListener('input', (e) => {
+      state.searchQuery = e.target.value;
+      document.getElementById('game-search-input').value = e.target.value;
+      switchTab('games');
+      renderGamesGrid();
+    });
+
+    function syncCohereStatusUI() {
+      const hasKey = state.apiKey.trim().length > 10;
+      const topDot = document.getElementById('topbar-status-dot');
+      const topText = document.getElementById('topbar-status-text');
+      const sideBadge = document.getElementById('sidebar-ai-badge');
+      const sideDot = document.getElementById('sidebar-key-dot');
+      const kpiBadge = document.getElementById('kpi-ai-badge');
+      const kpiModel = document.getElementById('kpi-ai-model');
+      const aiPill = document.getElementById('ai-header-mode-pill');
+
+      kpiModel.textContent = state.model;
+
+      if (hasKey) {
+        topDot.className = 'w-2 h-2 rounded-full bg-[#10b981] animate-pulse';
+        topText.textContent = `Cohere Live`;
+        topText.className = 'text-[#10b981]';
+        sideBadge.textContent = 'LIVE V2';
+        sideBadge.className = 'text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30';
+        sideDot.className = 'w-2.5 h-2.5 rounded-full bg-[#10b981]';
+        kpiBadge.textContent = 'ONLINE';
+        kpiBadge.className = 'text-[#10b981]';
+        aiPill.textContent = `Live Cohere v2 (${state.model})`;
+        aiPill.className = 'text-xs font-mono px-2.5 py-0.5 rounded-full bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30';
+      } else {
+        topDot.className = 'w-2 h-2 rounded-full bg-amber-400';
+        topText.textContent = 'Cohere: Fallback';
+        topText.className = 'text-amber-300';
+        sideBadge.textContent = 'FALLBACK';
+        sideBadge.className = 'text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30';
+        sideDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400';
+        kpiBadge.textContent = 'FALLBACK';
+        kpiBadge.className = 'text-amber-400';
+        aiPill.textContent = 'Smart Offline Fallback';
+        aiPill.className = 'text-xs font-mono px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30';
+      }
+    }
+
+    // =========================================================================
+    // 3. COHERE V2 AI CO-PILOT ("COCO") + QUICK DRAWER
+    // =========================================================================
+    function toggleApiKeyVisibility() {
+      const inp = document.getElementById('cohere-api-key-input');
+      const btn = document.getElementById('toggle-key-vis-btn');
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+      btn.textContent = inp.type === 'password' ? 'Show' : 'Hide';
+    }
+
+    function saveCohereSettings() {
+      state.apiKey = document.getElementById('cohere-api-key-input').value.trim();
+      state.model = document.getElementById('cohere-model-select').value;
+      localStorage.setItem(STORAGE.KEY, state.apiKey);
+      localStorage.setItem(STORAGE.MODEL, state.model);
+      syncCohereStatusUI();
+      showToast(state.apiKey ? 'Cohere v2 API key saved & activated!' : 'Saved in Smart Fallback mode.', 'success');
+    }
+
+    function clearCohereSettings() {
+      state.apiKey = '';
+      localStorage.removeItem(STORAGE.KEY);
+      document.getElementById('cohere-api-key-input').value = '';
+      syncCohereStatusUI();
+      showToast('API key removed.', 'info');
+    }
+
+    async function callCohereV2Chat(userPrompt) {
+      const sysPrompt = "You are COCO, the NeroLinkXZ AI Co-Pilot built for TeamWallX. You assist with our 162-game vault (including TrackMania, Teardown, Geometry Dash, Elden Ring, Valorant, Minecraft, etc.), Python/JS/WebGL coding, and Nibbles the Pearl Winter White dwarf hamster's Raspberry Pi Pico enclosure telemetry. Be sharp, helpful, and concise.";
+
+      // Strictly strip UI/client metadata (meta, id, timestamp, latency, model)
+      // so Cohere v2 /v2/chat receives only valid message objects ({ role, content }).
+      const sanitizeV2Message = (msg) => {
+        if (!msg || typeof msg !== 'object') return null;
+        const allowedRoles = ['system', 'user', 'assistant', 'tool'];
+        const role = allowedRoles.includes(msg.role) ? msg.role : 'user';
+        const content = typeof msg.content === 'string'
+          ? msg.content
+          : (Array.isArray(msg.content) ? msg.content : String(msg.content ?? ''));
+        const clean = { role, content };
+        if (role === 'assistant' && Array.isArray(msg.tool_calls) && msg.tool_calls.length > 0) {
+          clean.tool_calls = msg.tool_calls;
+        }
+        if (role === 'tool' && typeof msg.tool_call_id === 'string' && msg.tool_call_id.length > 0) {
+          clean.tool_call_id = msg.tool_call_id;
+        }
+        return clean;
+      };
+
+      const historySlice = state.chatHistory
+        .slice(-8)
+        .map(sanitizeV2Message)
+        .filter((m) => m && !(m.role === 'assistant' && m.content.startsWith('⚠️')));
+
+      const messages = [
+        { role: 'system', content: sysPrompt },
+        ...historySlice,
+        { role: 'user', content: String(userPrompt) }
+      ];
+
+      const res = await fetch('https://api.cohere.com/v2/chat', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${state.apiKey}`,
+          'Content-Type': 'application/json',
+          'X-Client-Name': 'NeroLinkXZ'
+        },
+        body: JSON.stringify({
+          model: state.model,
+          messages,
+          temperature: 0.6
+        })
+      });
+
+      if (!res.ok) {
+        let detail = `HTTP ${res.status} (${res.statusText})`;
+        if (res.status === 401) detail += ' — Unauthorized: Invalid Cohere API key.';
+        else if (res.status === 429) detail += ' — Rate Limit Exceeded: Slow down requests or check trial quota.';
+        try {
+          const errData = await res.json();
+          if (errData && errData.message) detail += ` | ${errData.message}`;
+        } catch (_) {}
+        throw new Error(detail);
+      }
+
+      const data = await res.json();
+      if (data && data.message && Array.isArray(data.message.content)) {
+        const block = data.message.content.find(c => c.type === 'text') || data.message.content[0];
+        if (block && block.text) return block.text;
+      }
+      throw new Error('Unexpected response structure from Cohere v2.');
+    }
+
+    async function testCohereConnection() {
+      const box = document.getElementById('api-test-output');
+      box.classList.remove('hidden');
+      if (!state.apiKey) {
+        box.innerHTML = `<span class="text-amber-400">[WARN] No API key found. Enter your Cohere key and click "Save Key & Model" first.</span>`;
+        return;
+      }
+      const t0 = performance.now();
+      box.innerHTML = `<span class="text-[#00f0ff] animate-pulse">[PING] POST https://api.cohere.com/v2/chat (${state.model})...</span>`;
+      try {
+        const reply = await callCohereV2Chat('Reply with: NEROLINKXZ COHERE V2 VERIFIED');
+        const ms = Math.round(performance.now() - t0);
+        box.innerHTML = `<span class="text-[#10b981]">[200 OK // ${ms}ms] Connection verified!</span><br><span class="text-white mt-1 block">${escapeHtml(reply)}</span>`;
+        showToast(`Cohere v2 verified in ${ms}ms!`, 'success');
+      } catch (err) {
+        const ms = Math.round(performance.now() - t0);
+        const corsHint = err.message.includes('Failed to fetch') ? ' (Possible CORS or offline network block)' : '';
+        box.innerHTML = `<span class="text-rose-400">[ERROR // ${ms}ms] ${escapeHtml(err.message + corsHint)}</span>`;
+        showToast('Cohere API test failed.', 'error');
+      }
+    }
+
+    function smartOfflineFallback(prompt) {
+      const q = prompt.toLowerCase();
+      if (q.includes('trackmania') || q.includes('24.33') || q.includes('race')) {
+        return "**Neon TrackMania Time Attack Pro Tips:**\n- Tap steering gently before apexes to maintain speed without over-drifting.\n- Hit every **cyan boost pad** straight-on to sustain 380+ km/h.\n- Target split: **24.33s** across 3 checkpoints!";
+      }
+      if (q.includes('pico') || q.includes('nibbles') || q.includes('python') || q.includes('sensor')) {
+        return "**Raspberry Pi Pico Telemetry (MicroPython):**\n```python\nimport machine, dht, time\nsensor = dht.DHT22(machine.Pin(15))\nwhile True:\n    sensor.measure()\n    print(f'[PICO-USB0] temp={sensor.temperature()}C hum={sensor.humidity()}%')\n    time.sleep(2)\n```";
+      }
+      if (q.includes('game') || q.includes('recommend') || q.includes('sandbox') || q.includes('racing')) {
+        return "**Top Vault Picks (162 Titles Indexed):**\n- **Neon TrackMania Time Attack** *(Playable Engine)* — Drift & boost time trials\n- **Voxel Teardown Demolition** *(Playable Engine)* — Physics tower collapse\n- **Cyber Geometry Dash** *(Playable Engine)* — Rhythm spike runner\n- **TrackMania Nations Forever** & **BeamNG.drive** *(Racing & Sim)*";
+      }
+      return `**COCO Smart Fallback Mode:** No Cohere API key is saved yet. Open **System & API Config** to paste your Cohere v2 key and unlock live \`${state.model}\` responses!`;
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function copyCodeSnippet(btn) {
+      const codeEl = btn.parentElement.nextElementSibling;
+      const temp = document.createElement('textarea');
+      temp.value = codeEl.textContent;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = 'Copy'; }, 1600);
+    }
+
+    function renderRichText(text) {
+      let safe = escapeHtml(text);
+      safe = safe.replace(/```([\s\S]*?)```/g, (_, code) => `
+        <div class="my-2 rounded-xl overflow-hidden border border-slate-700/80 bg-[#04070f]">
+          <div class="px-3 py-1 bg-slate-900 border-b border-slate-800 flex justify-between items-center text-[10px] font-mono text-slate-400">
+            <span>CODE SNIPPET</span>
+            <button type="button" onclick="copyCodeSnippet(this)" class="text-[#00f0ff] hover:underline">Copy</button>
+          </div>
+          <pre class="p-3 text-xs font-mono text-[#00f0ff] overflow-x-auto">${code.trim()}</pre>
+        </div>
+      `);
+      safe = safe.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-slate-800 text-[#00f0ff] font-mono text-xs">$1</code>');
+      safe = safe.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-white font-bold">$1</strong>');
+      safe = safe.replace(/\n/g, '<br>');
+      return safe;
+    }
+
+    function renderAllChatContainers() {
+      const mainBox = document.getElementById('ai-chat-messages');
+      const drawerBox = document.getElementById('quick-drawer-messages');
+      mainBox.innerHTML = '';
+      drawerBox.innerHTML = '';
+
+      state.chatHistory.forEach(msg => {
+        const isUser = msg.role === 'user';
+        const html = `
+          <div class="flex flex-col ${isUser ? 'items-end' : 'items-start'}">
+            <span class="text-[10px] font-mono text-slate-500 mb-1">${isUser ? 'YOU' : `COCO ${msg.meta ? '• ' + msg.meta : ''}`}</span>
+            <div class="max-w-[88%] px-3.5 py-2.5 rounded-2xl leading-relaxed ${
+              isUser
+                ? 'bg-[#00f0ff]/15 border border-[#00f0ff]/35 text-cyan-50 rounded-tr-sm'
+                : 'bg-[#0f172a] border border-slate-800 text-slate-200 rounded-tl-sm'
+            }">
+              ${renderRichText(msg.content)}
+            </div>
+          </div>
+        `;
+        mainBox.insertAdjacentHTML('beforeend', html);
+        drawerBox.insertAdjacentHTML('beforeend', html);
+      });
+      mainBox.scrollTop = mainBox.scrollHeight;
+      drawerBox.scrollTop = drawerBox.scrollHeight;
+    }
+
+    function clearChatHistory() {
+      state.chatHistory = [{
+        role: 'assistant',
+        meta: state.apiKey ? 'COHERE V2' : 'FALLBACK',
+        content: `**COCO AI Online.** All **162 vault games** and Nibbles' Pico telemetry sensors are synced. Ask me anything!`
+      }];
+      localStorage.setItem(STORAGE.CHAT, JSON.stringify(state.chatHistory));
+      renderAllChatContainers();
+    }
+
+    async function handleChatSubmission(promptText) {
+      if (!promptText.trim()) return;
+      state.chatHistory.push({ role: 'user', content: promptText.trim() });
+      localStorage.setItem(STORAGE.CHAT, JSON.stringify(state.chatHistory));
+      renderAllChatContainers();
+
+      try {
+        let reply = '';
+        let meta = '';
+        if (state.apiKey.trim().length > 10) {
+          reply = await callCohereV2Chat(promptText.trim());
+          meta = `COHERE (${state.model})`;
+        } else {
+          await new Promise(r => setTimeout(r, 260));
+          reply = smartOfflineFallback(promptText.trim());
+          meta = 'SMART FALLBACK';
+        }
+        state.chatHistory.push({ role: 'assistant', content: reply, meta });
+      } catch (err) {
+        state.chatHistory.push({
+          role: 'assistant',
+          meta: 'API ERROR',
+          content: `⚠️ **Cohere v2 Error:** \`${err.message}\`\nCheck your API key in **System & API Config**.`
+        });
+      }
+      localStorage.setItem(STORAGE.CHAT, JSON.stringify(state.chatHistory));
+      renderAllChatContainers();
+    }
+
+    function sendQuickPrompt(text) {
+      handleChatSubmission(text);
+    }
+
+    document.getElementById('ai-chat-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const inp = document.getElementById('ai-chat-input');
+      const val = inp.value;
+      inp.value = '';
+      handleChatSubmission(val);
+    });
+
+    document.getElementById('quick-drawer-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const inp = document.getElementById('quick-drawer-input');
+      const val = inp.value;
+      inp.value = '';
+      handleChatSubmission(val);
+    });
+
+    function toggleQuickChatDrawer() {
+      document.getElementById('quick-chat-drawer').classList.toggle('hidden');
+    }
+
+    // =========================================================================
+    // 4. 162 AUTHENTIC MODERN & PLAYABLE GAMES VAULT + PROCEDURAL SVG COVERS
+    // =========================================================================
+    const GENRE_LIST = [
+      'Racing & Sim', 'Sandbox & Physics', 'FPS & Tactical',
+      'Roguelike & Indie', 'RPG & Open World', 'Rhythm & Arcade', 'Strategy & Builder'
+    ];
+
+    const CORE_6_PLAYABLE = [
+      { title: 'Neon TrackMania Time Attack', genre: 'Racing & Sim', year: 2026, rating: 9.9, platform: 'Web / HTML5', engine: 'Neon TrackMania Time Attack', playable: true },
+      { title: 'Voxel Teardown Demolition', genre: 'Sandbox & Physics', year: 2026, rating: 9.8, platform: 'Web / HTML5', engine: 'Voxel Teardown Demolition', playable: true },
+      { title: 'Cyber Geometry Dash', genre: 'Rhythm & Arcade', year: 2026, rating: 9.9, platform: 'Web / HTML5', engine: 'Cyber Geometry Dash', playable: true },
+      { title: 'NeroBreach: Packet Hacker', genre: 'FPS & Tactical', year: 2026, rating: 9.8, platform: 'Web / HTML5', engine: 'NeroBreach: Packet Hacker', playable: true },
+      { title: 'Orbital Gravity Slingshot', genre: 'Sandbox & Physics', year: 2026, rating: 9.7, platform: 'Web / HTML5', engine: 'Orbital Gravity Slingshot', playable: true },
+      { title: 'Cyber Snake / Tron Grid', genre: 'Rhythm & Arcade', year: 2026, rating: 9.7, platform: 'Web / HTML5', engine: 'Cyber Snake / Tron Grid', playable: true }
+    ];
+
+    const AUTHENTIC_CATALOG_BY_GENRE = {
+      'Racing & Sim': [
+        ['TrackMania Nations Forever', 2008, 9.8, 'PC'],
+        ['TrackMania 2020', 2020, 9.6, 'PC / Console'],
+        ['BeamNG.drive', 2015, 9.8, 'PC'],
+        ['Forza Horizon 5', 2021, 9.5, 'PC / Xbox'],
+        ['Assetto Corsa Competizione', 2019, 9.4, 'PC / Console'],
+        ['iRacing', 2008, 9.3, 'PC'],
+        ['Dirt Rally 2.0', 2019, 9.4, 'PC / Console'],
+        ['Microsoft Flight Simulator', 2020, 9.5, 'PC / Xbox'],
+        ['Wreckfest', 2018, 9.2, 'PC / Console'],
+        ['Burnout Paradise Remastered', 2018, 9.1, 'PC / Console'],
+        ['Need for Speed Heat', 2019, 8.8, 'PC / Console'],
+        ['Rocket League', 2015, 9.7, 'PC / Console'],
+        ['Mario Kart 8 Deluxe', 2017, 9.6, 'Switch'],
+        ['Gran Turismo 7', 2022, 9.2, 'PS5'],
+        ['F1 24', 2024, 8.7, 'PC / Console'],
+        ['Euro Truck Simulator 2', 2012, 9.5, 'PC'],
+        ['Art of Rally', 2020, 9.1, 'PC / Console'],
+        ['Distance', 2018, 9.0, 'PC'],
+        ['Redout 2', 2022, 8.7, 'PC / Console'],
+        ['Wipeout Omega Collection', 2017, 9.3, 'PS4 / PS5'],
+        ['CarX Drift Racing Online', 2017, 9.0, 'PC / Console'],
+        ['Automobilista 2', 2020, 9.2, 'PC']
+      ],
+      'Sandbox & Physics': [
+        ['Teardown', 2022, 9.7, 'PC / Console'],
+        ['Teardown Sandbox', 2023, 9.6, 'PC'],
+        ['Minecraft Java/Bedrock', 2011, 9.9, 'Multi'],
+        ['Minecraft Dungeons', 2020, 8.7, 'Multi'],
+        ['Terraria', 2011, 9.8, 'Multi'],
+        ['Garry\'s Mod', 2006, 9.7, 'PC'],
+        ['People Playground', 2019, 9.6, 'PC'],
+        ['Besiege', 2020, 9.3, 'PC / Console'],
+        ['Trailmakers', 2019, 9.1, 'PC / Console'],
+        ['Scrap Mechanic', 2016, 9.0, 'PC'],
+        ['Kerbal Space Program', 2015, 9.6, 'PC / Console'],
+        ['Poly Bridge 3', 2023, 9.2, 'PC'],
+        ['WorldBox', 2021, 9.3, 'PC / Mobile'],
+        ['Astroneer', 2019, 9.1, 'PC / Console'],
+        ['Noita', 2020, 9.5, 'PC'],
+        ['Human Fall Flat', 2016, 9.0, 'Multi'],
+        ['Gang Beasts', 2017, 8.8, 'Multi'],
+        ['Roblox', 2006, 9.1, 'Multi'],
+        ['Valheim', 2021, 9.5, 'PC / Xbox'],
+        ['Enshrouded', 2024, 9.1, 'PC'],
+        ['Raft', 2022, 9.0, 'PC / Console'],
+        ['Grounded', 2022, 9.2, 'PC / Console']
+      ],
+      'FPS & Tactical': [
+        ['Counter-Strike 2', 2023, 9.5, 'PC'],
+        ['Valorant', 2020, 9.4, 'PC / Console'],
+        ['Apex Legends', 2019, 9.3, 'Multi'],
+        ['ULTRAKILL', 2020, 9.9, 'PC'],
+        ['Titanfall 2', 2016, 9.8, 'PC / Console'],
+        ['DOOM Eternal', 2020, 9.7, 'PC / Console'],
+        ['Half-Life 2', 2004, 9.9, 'PC'],
+        ['Portal 2', 2011, 9.9, 'PC / Console'],
+        ['Rainbow Six Siege', 2015, 9.2, 'PC / Console'],
+        ['Escape from Tarkov', 2017, 9.1, 'PC'],
+        ['Tarkov Arena', 2023, 8.6, 'PC'],
+        ['Ready or Not', 2023, 9.3, 'PC'],
+        ['BattleBit Remastered', 2023, 9.1, 'PC'],
+        ['Squad', 2020, 9.2, 'PC'],
+        ['Arma 3', 2013, 9.3, 'PC'],
+        ['Helldivers 2', 2024, 9.6, 'PC / PS5'],
+        ['Deep Rock Galactic', 2020, 9.7, 'PC / Console'],
+        ['Overwatch 2', 2022, 8.6, 'Multi'],
+        ['Fortnite', 2017, 9.2, 'Multi'],
+        ['Halo Infinite', 2021, 8.9, 'PC / Xbox'],
+        ['Battlefield 1', 2016, 9.4, 'PC / Console'],
+        ['Destiny 2', 2017, 9.0, 'PC / Console'],
+        ['Warframe', 2013, 9.3, 'Multi'],
+        ['SUPERHOT', 2016, 9.2, 'PC / VR'],
+        ['Splatoon 3', 2022, 9.2, 'Switch']
+      ],
+      'Roguelike & Indie': [
+        ['Hollow Knight: Silksong', 2025, 9.9, 'Multi'],
+        ['Hades II', 2024, 9.8, 'PC'],
+        ['Balatro', 2024, 9.8, 'Multi'],
+        ['Celeste', 2018, 9.8, 'Multi'],
+        ['Cuphead', 2017, 9.6, 'Multi'],
+        ['Dead Cells', 2018, 9.6, 'Multi'],
+        ['Risk of Rain 2', 2020, 9.6, 'PC / Console'],
+        ['Vampire Survivors', 2022, 9.5, 'Multi'],
+        ['Slay the Spire', 2019, 9.7, 'Multi'],
+        ['Enter the Gungeon', 2016, 9.4, 'Multi'],
+        ['The Binding of Isaac: Repentance', 2021, 9.6, 'Multi'],
+        ['Hotline Miami', 2012, 9.5, 'PC / Console'],
+        ['Katana ZERO', 2019, 9.6, 'PC / Switch'],
+        ['Ghostrunner', 2020, 9.1, 'PC / Console'],
+        ['Outer Wilds', 2019, 9.8, 'PC / Console'],
+        ['TUNIC', 2022, 9.4, 'Multi'],
+        ['Inscryption', 2021, 9.6, 'PC / Console'],
+        ['Dave the Diver', 2023, 9.5, 'PC / Switch'],
+        ['DREDGE', 2023, 9.2, 'Multi'],
+        ['Cult of the Lamb', 2022, 9.2, 'Multi'],
+        ['Pizza Tower', 2023, 9.7, 'PC / Switch'],
+        ['Undertale', 2015, 9.7, 'Multi'],
+        ['Deltarune', 2021, 9.6, 'Multi'],
+        ['OMORI', 2020, 9.5, 'Multi'],
+        ['OneShot', 2016, 9.6, 'PC / Console'],
+        ['Rain World', 2017, 9.4, 'PC / Console'],
+        ['Ori and the Will of the Wisps', 2020, 9.7, 'PC / Console'],
+        ['Lethal Company', 2023, 9.5, 'PC'],
+        ['Phasmophobia', 2020, 9.2, 'PC / Console'],
+        ['Papers, Please', 2013, 9.5, 'PC / Mobile'],
+        ['Return of the Obra Dinn', 2018, 9.6, 'Multi'],
+        ['Inside', 2016, 9.4, 'Multi'],
+        ['Limbo', 2010, 9.2, 'Multi'],
+        ['Little Nightmares II', 2021, 9.2, 'Multi']
+      ],
+      'RPG & Open World': [
+        ['Cyberpunk 2077: Phantom Liberty', 2023, 9.7, 'PC / Console'],
+        ['Elden Ring: Shadow of the Erdtree', 2024, 9.9, 'PC / Console'],
+        ['Baldur\'s Gate 3', 2023, 9.9, 'PC / Console'],
+        ['The Witcher 3: Wild Hunt', 2015, 9.8, 'Multi'],
+        ['Red Dead Redemption 2', 2018, 9.8, 'PC / Console'],
+        ['Grand Theft Auto V', 2013, 9.6, 'PC / Console'],
+        ['God of War Ragnarök', 2022, 9.6, 'PS5 / PC'],
+        ['Ghost of Tsushima', 2020, 9.6, 'PS5 / PC'],
+        ['Sekiro: Shadows Die Twice', 2019, 9.7, 'PC / Console'],
+        ['Dark Souls III', 2016, 9.6, 'PC / Console'],
+        ['Armored Core VI: Fires of Rubicon', 2023, 9.5, 'PC / Console'],
+        ['No Man\'s Sky', 2016, 9.3, 'Multi'],
+        ['Subnautica', 2018, 9.6, 'Multi'],
+        ['Stardew Valley', 2016, 9.8, 'Multi'],
+        ['Disco Elysium', 2019, 9.7, 'Multi'],
+        ['Persona 5 Royal', 2020, 9.7, 'Multi'],
+        ['NieR:Automata', 2017, 9.6, 'Multi'],
+        ['Monster Hunter Wilds', 2025, 9.5, 'PC / Console'],
+        ['Monster Hunter Rise', 2021, 9.3, 'Multi'],
+        ['Palworld', 2024, 9.1, 'PC / Console'],
+        ['V Rising', 2024, 9.2, 'PC / PS5'],
+        ['Sons of the Forest', 2024, 9.0, 'PC'],
+        ['Sea of Thieves', 2018, 9.0, 'PC / Console'],
+        ['Resident Evil 4 Remake', 2023, 9.7, 'PC / Console'],
+        ['Silent Hill 2 Remake', 2024, 9.4, 'PC / PS5'],
+        ['Alan Wake 2', 2023, 9.5, 'PC / Console'],
+        ['Control Ultimate Edition', 2019, 9.2, 'PC / Console'],
+        ['Death Stranding Director\'s Cut', 2021, 9.2, 'PC / Console'],
+        ['Metal Gear Solid V: The Phantom Pain', 2015, 9.4, 'PC / Console'],
+        ['Dying Light', 2015, 9.3, 'PC / Console'],
+        ['Mirror\'s Edge Catalyst', 2016, 8.7, 'PC / Console'],
+        ['Zelda: Breath of the Wild', 2017, 9.9, 'Switch'],
+        ['Zelda: Tears of the Kingdom', 2023, 9.8, 'Switch'],
+        ['Super Mario Odyssey', 2017, 9.7, 'Switch'],
+        ['Metroid Dread', 2021, 9.4, 'Switch'],
+        ['Animal Crossing: New Horizons', 2020, 9.3, 'Switch'],
+        ['Pokémon Scarlet & Violet', 2022, 8.5, 'Switch'],
+        ['Xenoblade Chronicles 3', 2022, 9.5, 'Switch'],
+        ['Fire Emblem Engage', 2023, 9.0, 'Switch'],
+        ['Sonic Frontiers', 2022, 8.8, 'Multi'],
+        ['Sea of Stars', 2023, 9.3, 'Multi'],
+        ['Path of Exile 2', 2024, 9.5, 'PC / Console'],
+        ['Diablo IV', 2023, 8.8, 'PC / Console'],
+        ['It Takes Two', 2021, 9.6, 'Multi'],
+        ['Portal Knights', 2017, 8.6, 'Multi']
+      ],
+      'Rhythm & Arcade': [
+        ['Geometry Dash 2.2', 2023, 9.8, 'PC / Mobile'],
+        ['osu!', 2007, 9.7, 'PC'],
+        ['Beat Saber', 2019, 9.8, 'PC / VR'],
+        ['Hi-Fi RUSH', 2023, 9.6, 'PC / Console'],
+        ['Super Smash Bros. Ultimate', 2018, 9.7, 'Switch'],
+        ['Among Us', 2018, 9.0, 'Multi'],
+        ['Fall Guys', 2020, 8.8, 'Multi'],
+        ['Tetris Effect: Connected', 2020, 9.6, 'Multi'],
+        ['Crypt of the NecroDancer', 2015, 9.3, 'Multi'],
+        ['Muse Dash', 2019, 9.2, 'PC / Switch'],
+        ['A Dance of Fire and Ice', 2019, 9.4, 'PC / Mobile'],
+        ['Sayonara Wild Hearts', 2019, 9.2, 'Multi']
+      ],
+      'Strategy & Builder': [
+        ['Factorio: Space Age', 2024, 9.9, 'PC'],
+        ['Satisfactory 1.0', 2024, 9.8, 'PC'],
+        ['RimWorld', 2018, 9.8, 'PC / Console'],
+        ['Cities: Skylines II', 2023, 8.6, 'PC'],
+        ['Rust', 2018, 9.1, 'PC / Console'],
+        ['Ravenfield', 2017, 9.3, 'PC'],
+        ['Dyson Sphere Program', 2021, 9.6, 'PC'],
+        ['Oxygen Not Included', 2019, 9.5, 'PC'],
+        ['Civilization VI', 2016, 9.3, 'Multi'],
+        ['Stellaris', 2016, 9.3, 'PC / Console'],
+        ['XCOM 2: War of the Chosen', 2017, 9.5, 'PC / Console'],
+        ['Into the Breach', 2018, 9.5, 'Multi']
+      ]
+    };
+
+    function mapTitleToPlayableEngine(title, genre) {
+      const t = title.toLowerCase();
+      if (t.includes('trackmania') || t.includes('forza') || t.includes('beamng') || t.includes('assetto') || t.includes('kart') || t.includes('rally') || t.includes('need for speed') || t.includes('burnout') || t.includes('f1') || genre === 'Racing & Sim') {
+        return 'Neon TrackMania Time Attack';
+      }
+      if (t.includes('teardown') || t.includes('minecraft') || t.includes('besiege') || t.includes('garry') || t.includes('playground') || t.includes('terraria') || t.includes('bridge') || genre === 'Sandbox & Physics') {
+        return 'Voxel Teardown Demolition';
+      }
+      if (t.includes('geometry') || t.includes('osu') || t.includes('beat saber') || t.includes('hi-fi') || t.includes('celeste') || t.includes('tetris') || genre === 'Rhythm & Arcade') {
+        return 'Cyber Geometry Dash';
+      }
+      if (t.includes('kerbal') || t.includes('outer wilds') || t.includes('no man') || t.includes('astroneer') || t.includes('portal') || t.includes('subnautica')) {
+        return 'Orbital Gravity Slingshot';
+      }
+      if (t.includes('tron') || t.includes('snake') || t.includes('hotline') || t.includes('katana') || t.includes('ghostrunner') || genre === 'Strategy & Builder') {
+        return 'Cyber Snake / Tron Grid';
+      }
+      return 'NeroBreach: Packet Hacker';
+    }
+
+    function buildVault162() {
+      const list = [];
+      let id = 1;
+      CORE_6_PLAYABLE.forEach(g => {
+        list.push({ id: id++, ...g });
+      });
+      for (const [genre, items] of Object.entries(AUTHENTIC_CATALOG_BY_GENRE)) {
+        for (const [title, year, rating, platform] of items) {
+          list.push({
+            id: id++,
+            title,
+            genre,
+            year,
+            rating,
+            platform,
+            playable: false,
+            engine: mapTitleToPlayableEngine(title, genre)
+          });
+        }
+      }
+      return list; // 6 + 172 = 178 unique authentic titles!
+    }
+
+    const VAULT_GAMES = buildVault162();
+
+    // Procedural SVG Banner Generator for every card
+    function generateProceduralSVG(game) {
+      const palettes = {
+        'Racing & Sim': ['#00f0ff', '#0284c7'],
+        'Sandbox & Physics': ['#8b5cf6', '#4f46e5'],
+        'FPS & Tactical': ['#f43f5e', '#8b5cf6'],
+        'Roguelike & Indie': ['#10b981', '#00f0ff'],
+        'RPG & Open World': ['#f59e0b', '#8b5cf6'],
+        'Rhythm & Arcade': ['#ec4899', '#00f0ff'],
+        'Strategy & Builder': ['#14b8a6', '#3b82f6']
+      };
+      const [c1, c2] = palettes[game.genre] || ['#00f0ff', '#8b5cf6'];
+      const seed = game.id * 37;
+      const cx1 = 30 + (seed % 180);
+      const cy1 = 15 + ((seed * 3) % 50);
+      const cx2 = 120 + ((seed * 7) % 140);
+      const initials = game.title.split(/[\s:]+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+
+      return `
+        <svg viewBox="0 0 320 88" class="w-full h-22 rounded-xl overflow-hidden block bg-[#050811]" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g-${game.id}" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="${c1}" stop-opacity="0.32"/>
+              <stop offset="100%" stop-color="${c2}" stop-opacity="0.16"/>
+            </linearGradient>
+          </defs>
+          <rect width="320" height="88" fill="url(#g-${game.id})"/>
+          <circle cx="${cx1}" cy="${cy1}" r="36" fill="${c1}" fill-opacity="0.14"/>
+          <polygon points="${cx2},10 ${cx2 + 34},74 ${cx2 - 28},74" fill="${c2}" fill-opacity="0.18"/>
+          <path d="M0 72 L320 44" stroke="${c1}" stroke-opacity="0.25" stroke-width="1.5"/>
+          <text x="14" y="54" fill="#ffffff" fill-opacity="0.14" font-family="JetBrains Mono, monospace" font-weight="900" font-size="38">${initials}</text>
+          <text x="306" y="22" text-anchor="end" fill="${c1}" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">#${String(game.id).padStart(3, '0')} // ${game.year}</text>
+        </svg>
+      `;
+    }
+
+    function renderGenrePills() {
+      const container = document.getElementById('genre-filter-pills');
+      const pills = ['All', 'Playable Now', ...GENRE_LIST];
+      container.innerHTML = pills.map(p => {
+        const active = state.selectedGenre === p;
+        return `
+          <button onclick="setGenreFilter('${p.replace(/'/g, "\\'")}')" class="px-3 py-1.5 rounded-xl text-xs font-mono border transition-all ${
+            active
+              ? 'bg-[#00f0ff]/20 text-[#00f0ff] border-[#00f0ff]/50 font-bold'
+              : 'bg-[#070b15] text-slate-400 hover:text-white border-slate-800'
+          }">
+            ${p}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function setGenreFilter(g) {
+      state.selectedGenre = g;
+      renderGenrePills();
+      renderGamesGrid();
+    }
+
+    function toggleFavoritesOnly() {
+      state.favoritesOnly = !state.favoritesOnly;
+      const btn = document.getElementById('favorites-filter-btn');
+      const icon = document.getElementById('fav-heart-icon');
+      if (state.favoritesOnly) {
+        btn.classList.add('border-rose-500/50', 'text-rose-300', 'bg-rose-500/10');
+        icon.textContent = '♥';
+      } else {
+        btn.classList.remove('border-rose-500/50', 'text-rose-300', 'bg-rose-500/10');
+        icon.textContent = '♡';
+      }
+      renderGamesGrid();
+    }
+
+    function toggleFavoriteGame(id, ev) {
+      ev.stopPropagation();
+      const idx = state.favorites.indexOf(id);
+      if (idx >= 0) state.favorites.splice(idx, 1);
+      else state.favorites.push(id);
+      localStorage.setItem(STORAGE.FAVS, JSON.stringify(state.favorites));
+      document.getElementById('fav-count').textContent = state.favorites.length;
+      renderGamesGrid();
+    }
+
+    function renderGamesGrid() {
+      const grid = document.getElementById('games-grid');
+      const q = state.searchQuery.toLowerCase();
+
+      let filtered = VAULT_GAMES.filter(g => {
+        if (state.favoritesOnly && !state.favorites.includes(g.id)) return false;
+        if (state.selectedGenre === 'Playable Now' && !g.playable) return false;
+        if (state.selectedGenre !== 'All' && state.selectedGenre !== 'Playable Now' && g.genre !== state.selectedGenre) return false;
+        if (q) {
+          const hay = `${g.title} ${g.genre} ${g.platform} ${g.year} ${g.engine}`.toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      if (state.sortMode === 'playable') {
+        filtered.sort((a, b) => (b.playable ? 1 : 0) - (a.playable ? 1 : 0));
+      } else if (state.sortMode === 'rating') {
+        filtered.sort((a, b) => b.rating - a.rating);
+      } else if (state.sortMode === 'az') {
+        filtered.sort((a, b) => a.title.localeCompare(b.title));
+      }
+
+      document.getElementById('games-count-badge').textContent = `${filtered.length} / ${VAULT_GAMES.length} Titles`;
+      document.getElementById('fav-count').textContent = state.favorites.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full p-10 rounded-2xl glass-card text-center text-sm text-slate-400">No games found matching your filter.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(game => {
+        const isFav = state.favorites.includes(game.id);
+        return `
+          <div onclick="launchVaultGame(${game.id})" class="cursor-pointer group rounded-2xl glass-card hover:bg-[#111a2e] ${
+            game.playable ? 'border-[#10b981]/45' : 'hover:border-[#00f0ff]/45'
+          } p-3.5 flex flex-col justify-between transition-all">
+            <div>
+              <div class="relative mb-3">
+                ${generateProceduralSVG(game)}
+                <button onclick="toggleFavoriteGame(${game.id}, event)" class="absolute top-2 left-2 w-7 h-7 rounded-lg bg-slate-950/80 border border-slate-700/80 flex items-center justify-center text-sm ${
+                  isFav ? 'text-rose-400' : 'text-slate-400 hover:text-white'
+                }">
+                  ${isFav ? '♥' : '♡'}
+                </button>
+                ${
+                  game.playable
+                    ? `<span class="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-[#10b981] text-slate-950 font-mono font-extrabold text-[10px]">PLAYABLE IN BROWSER</span>`
+                    : `<span class="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-slate-950/85 text-slate-300 border border-slate-700/80 font-mono text-[10px]">${game.platform}</span>`
+                }
+              </div>
+
+              <div class="flex items-center justify-between gap-2 text-[10px] font-mono mb-1">
+                <span class="text-[#00f0ff]">${game.genre}</span>
+                <span class="text-amber-400">★ ${game.rating.toFixed(1)}</span>
+              </div>
+              <h3 class="font-extrabold text-white group-hover:text-[#00f0ff] text-sm leading-snug transition-colors">${game.title}</h3>
+            </div>
+
+            <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono">
+              <span class="text-slate-400 truncate max-w-[140px]">${game.playable ? 'Direct Engine' : '→ ' + game.engine.split(':')[0]}</span>
+              <span class="${game.playable ? 'text-[#10b981] font-bold' : 'text-[#00f0ff]'}">LAUNCH ▶</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    document.getElementById('game-search-input').addEventListener('input', (e) => {
+      state.searchQuery = e.target.value;
+      renderGamesGrid();
+    });
+    document.getElementById('game-sort-select').addEventListener('change', (e) => {
+      state.sortMode = e.target.value;
+      renderGamesGrid();
+    });
+
+    function launchVaultGame(id) {
+      const game = VAULT_GAMES.find(g => g.id === id);
+      if (!game) return;
+      SoundFX.play('pickup');
+      if (game.playable) {
+        openArcadeModal(game.engine, null);
+      } else {
+        openArcadeModal(game.engine, game);
+      }
+    }
+
+    // Surprise Me Slot Randomizer
+    let selectedSlotGame = null;
+    function openSurpriseModal() {
+      const modal = document.getElementById('surprise-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      spinSurpriseSlot();
+    }
+    function closeSurpriseModal() {
+      const modal = document.getElementById('surprise-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+    function spinSurpriseSlot() {
+      let ticks = 0;
+      const titleEl = document.getElementById('slot-title-label');
+      const genreEl = document.getElementById('slot-genre-label');
+      const launchBtn = document.getElementById('slot-launch-btn');
+      launchBtn.disabled = true;
+
+      const interval = setInterval(() => {
+        const pick = VAULT_GAMES[Math.floor(Math.random() * VAULT_GAMES.length)];
+        titleEl.textContent = pick.title;
+        genreEl.textContent = `${pick.genre} // ★ ${pick.rating}`;
+        SoundFX.play('shoot');
+        ticks++;
+        if (ticks >= 14) {
+          clearInterval(interval);
+          selectedSlotGame = pick;
+          SoundFX.play('pickup');
+          launchBtn.disabled = false;
+          launchBtn.onclick = () => {
+            closeSurpriseModal();
+            launchVaultGame(selectedSlotGame.id);
+          };
+        }
+      }, 75);
+    }
+
+    // =========================================================================
+    // 5. 6 PLAYABLE HTML5 CANVAS MINI-GAMES (PARTICLES, SHAKE, COMBOS, AUDIO)
+    // =========================================================================
+    let arcade = {
+      engine: 'Neon TrackMania Time Attack',
+      running: false,
+      score: 0,
+      combo: 1,
+      shake: 0,
+      particles: [],
+      raf: null,
+      pointerX: 0,
+      pointerY: 0,
+      // Engine states
+      tm: { x: 0, vx: 0, speed: 5, dist: 0, time: 0, cp: 0, items: [], skids: [] },
+      td: { blocks: [], shots: 6, targetY: 0, proj: null, collapsed: false },
+      gd: { y: 0, vy: 0, grav: 1, rot: 0, dist: 0, hazards: [], beat: 0 },
+      nb: { angle: 0, bullets: [], enemies: [], boss: null, rapidTimer: 0, shield: true, wave: 1 },
+      ob: { x: 0, y: 0, vx: 0, vy: 0, trail: [], shards: [], roids: [], well: { x: 0, y: 0 } },
+      tr: { grid: 18, p1: null, ai: null, food: null, tick: 0 }
+    };
+
+    function updateHighScoreBadges() {
+      for (const g of CORE_6_PLAYABLE) {
+        const el = document.getElementById(`hs-badge-${g.engine}`);
+        const best = state.highScores[g.engine];
+        if (el) el.textContent = best !== undefined ? `BEST: ${best}` : 'BEST: --';
+      }
+    }
+
+    function recordScore(engineName, newScore) {
+      const prev = state.highScores[engineName] || 0;
+      if (newScore > prev) {
+        state.highScores[engineName] = newScore;
+        localStorage.setItem(STORAGE.SCORES, JSON.stringify(state.highScores));
+        updateHighScoreBadges();
+      }
+      document.getElementById('arcade-best').textContent = state.highScores[engineName] || 0;
+    }
+
+    function spawnParticles(x, y, color, count = 14) {
+      for (let i = 0; i < count; i++) {
+        const ang = Math.random() * Math.PI * 2;
+        const spd = 1.5 + Math.random() * 4.5;
+        arcade.particles.push({
+          x, y,
+          vx: Math.cos(ang) * spd,
+          vy: Math.sin(ang) * spd,
+          life: 24 + Math.random() * 16,
+          color
+        });
+      }
+    }
+
+    function openArcadeModal(engineName, catalogGame = null) {
+      const modal = document.getElementById('game-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      arcade.engine = engineName;
+      arcade.running = false;
+      if (arcade.raf) cancelAnimationFrame(arcade.raf);
+
+      const banner = document.getElementById('catalog-preview-banner');
+      if (catalogGame) {
+        banner.classList.remove('hidden');
+        document.getElementById('modal-game-title').textContent = `${catalogGame.title}`;
+        document.getElementById('modal-game-badge').textContent = 'VAULT LAUNCH';
+        document.getElementById('catalog-preview-desc').textContent =
+          `${catalogGame.title} (${catalogGame.year} • ${catalogGame.platform}) mapped to "${engineName}". Play live below!`;
+        document.getElementById('catalog-preview-meta').textContent = `${catalogGame.genre} // ★ ${catalogGame.rating}`;
+      } else {
+        banner.classList.add('hidden');
+        document.getElementById('modal-game-title').textContent = engineName;
+        document.getElementById('modal-game-badge').textContent = 'PLAYABLE ENGINE';
+      }
+
+      const guides = {
+        'Neon TrackMania Time Attack': 'Steer with Left/Right Arrows (or A/D) to hit cyan Boost Pads, clear 3 Checkpoints, and beat the 24.33s target ghost time!',
+        'Voxel Teardown Demolition': 'Aim with Mouse/Touch and click to fire explosive charges! Collapse the voxel tower below the red target line within 6 shots.',
+        'Cyber Geometry Dash': 'Press SPACE, Click/Tap, or ACTION to jump over plasma spikes, hit yellow jump pads, and survive gravity-flip portals to 100%!',
+        'NeroBreach: Packet Hacker': 'Aim with Mouse/Arrows and fire (Click/Space) to defend the NeroLinkXZ Core from corrupted waves, boss nodes, and grab power-ups!',
+        'Orbital Gravity Slingshot': 'Use Left/Right Arrows or Click/Tap to thrust around the central gravity well, collect emerald dark-matter shards, and dodge asteroids.',
+        'Cyber Snake / Tron Grid': 'Steer your cyan light-cycle with Arrow Keys / WASD, hold SPACE for turbo boost, and trap the violet AI cycle!'
+      };
+
+      document.getElementById('arcade-overlay-title').textContent = engineName;
+      document.getElementById('arcade-overlay-instructions').textContent = guides[engineName] || '';
+      document.getElementById('arcade-start-btn').textContent = 'LAUNCH ENGINE';
+      document.getElementById('arcade-overlay').classList.remove('hidden');
+      document.getElementById('arcade-score').textContent = '0';
+      document.getElementById('arcade-combo').textContent = 'x1';
+      document.getElementById('arcade-best').textContent = state.highScores[engineName] || 0;
+
+      resizeArcadeCanvas();
+      drawArcadeGridBackdrop();
+    }
+
+    function closeArcadeModal() {
+      arcade.running = false;
+      if (arcade.raf) cancelAnimationFrame(arcade.raf);
+      const modal = document.getElementById('game-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function resizeArcadeCanvas() {
+      const c = document.getElementById('arcade-canvas');
+      if (!c || !c.parentElement) return;
+      const r = c.parentElement.getBoundingClientRect();
+      c.width = Math.max(320, Math.floor(r.width));
+      c.height = Math.max(280, Math.floor(r.height));
+    }
+
+    function drawArcadeGridBackdrop() {
+      const c = document.getElementById('arcade-canvas');
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#04070f';
+      ctx.fillRect(0, 0, c.width, c.height);
+      ctx.strokeStyle = 'rgba(0, 240, 255, 0.1)';
+      for (let x = 0; x < c.width; x += 28) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, c.height); ctx.stroke(); }
+      for (let y = 0; y < c.height; y += 28) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(c.width, y); ctx.stroke(); }
+    }
+
+    function startCurrentMiniGame() {
+      SoundFX.ensure();
+      resizeArcadeCanvas();
+      const c = document.getElementById('arcade-canvas');
+      const w = c.width, h = c.height;
+
+      arcade.running = true;
+      arcade.score = 0;
+      arcade.combo = 1;
+      arcade.shake = 0;
+      arcade.particles = [];
+      document.getElementById('arcade-overlay').classList.add('hidden');
+      document.getElementById('arcade-score').textContent = '0';
+      document.getElementById('arcade-combo').textContent = 'x1';
+
+      if (arcade.engine === 'Neon TrackMania Time Attack') {
+        arcade.tm = { x: w / 2, vx: 0, speed: 6, dist: 0, time: 0, cp: 0, items: [], skids: [] };
+      } else if (arcade.engine === 'Voxel Teardown Demolition') {
+        const blocks = [];
+        const cols = 10, rows = 10, bw = 24, bh = 18;
+        const startX = w / 2 - (cols * bw) / 2;
+        const floorY = h - 26;
+        for (let r = 0; r < rows; r++) {
+          for (let col = 0; col < cols; col++) {
+            blocks.push({
+              x: startX + col * bw,
+              y: floorY - (r + 1) * bh,
+              w: bw - 2,
+              h: bh - 2,
+              vy: 0,
+              mat: r < 3 ? 'steel' : (r < 7 ? 'concrete' : 'glass'),
+              hp: r < 3 ? 2 : 1
+            });
+          }
+        }
+        arcade.td = { blocks, shots: 6, targetY: floorY - 4 * bh, proj: null };
+      } else if (arcade.engine === 'Cyber Geometry Dash') {
+        arcade.gd = { y: h - 74, vy: 0, grav: 1, rot: 0, dist: 0, hazards: [], beat: 0 };
+      } else if (arcade.engine === 'NeroBreach: Packet Hacker') {
+        arcade.nb = { angle: 0, bullets: [], enemies: [], boss: null, rapidTimer: 0, shield: true, wave: 1, tick: 0 };
+      } else if (arcade.engine === 'Orbital Gravity Slingshot') {
+        arcade.ob = {
+          x: w / 2, y: h / 2 - 95, vx: 3.2, vy: 0,
+          trail: [], shards: [], roids: [], well: { x: w / 2, y: h / 2 }, tick: 0
+        };
+      } else if (arcade.engine === 'Cyber Snake / Tron Grid') {
+        const cols = Math.floor(w / 16);
+        const rows = Math.floor(h / 16);
+        arcade.tr = {
+          cols, rows, tick: 0, boost: false,
+          p1: { x: 6, y: Math.floor(rows / 2), dx: 1, dy: 0, trail: [] },
+          ai: { x: cols - 7, y: Math.floor(rows / 2), dx: -1, dy: 0, trail: [] },
+          food: { x: Math.floor(cols / 2), y: Math.floor(rows / 2) }
+        };
+      }
+
+      if (arcade.raf) cancelAnimationFrame(arcade.raf);
+      runArcadeLoop();
+    }
+
+    function endMiniGame(msg, isWin = false) {
+      arcade.running = false;
+      if (arcade.raf) cancelAnimationFrame(arcade.raf);
+      SoundFX.play(isWin ? 'pickup' : 'gameover');
+      recordScore(arcade.engine, arcade.score);
+      document.getElementById('arcade-overlay-title').textContent = isWin
+        ? `STAGE CLEARED! SCORE: ${arcade.score}`
+        : `RUN COMPLETE // SCORE: ${arcade.score}`;
+      document.getElementById('arcade-overlay-instructions').textContent = msg;
+      document.getElementById('arcade-start-btn').textContent = 'PLAY AGAIN';
+      document.getElementById('arcade-overlay').classList.remove('hidden');
+    }
+
+    // Input Handling for all 6 games
+    const keysDown = {};
+    window.addEventListener('keydown', (e) => {
+      keysDown[e.code] = true;
+      if (!arcade.running) return;
+      if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Space'].includes(e.code)) e.preventDefault();
+
+      if (arcade.engine === 'Cyber Geometry Dash' && (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW')) {
+        triggerGameAction('action');
+      } else if (arcade.engine === 'NeroBreach: Packet Hacker' && e.code === 'Space') {
+        triggerGameAction('action');
+      } else if (arcade.engine === 'Cyber Snake / Tron Grid') {
+        const p = arcade.tr.p1;
+        if ((e.code === 'ArrowUp' || e.code === 'KeyW') && p.dy !== 1) { p.dx = 0; p.dy = -1; }
+        if ((e.code === 'ArrowDown' || e.code === 'KeyS') && p.dy !== -1) { p.dx = 0; p.dy = 1; }
+        if ((e.code === 'ArrowLeft' || e.code === 'KeyA') && p.dx !== 1) { p.dx = -1; p.dy = 0; }
+        if ((e.code === 'ArrowRight' || e.code === 'KeyD') && p.dx !== -1) { p.dx = 1; p.dy = 0; }
+      }
+    });
+    window.addEventListener('keyup', (e) => { keysDown[e.code] = false; });
+
+    function triggerGameAction(act) {
+      if (!arcade.running) return;
+      const c = document.getElementById('arcade-canvas');
+      if (arcade.engine === 'Neon TrackMania Time Attack') {
+        if (act === 'left') arcade.tm.vx -= 3.2;
+        if (act === 'right') arcade.tm.vx += 3.2;
+        if (act === 'action') { arcade.tm.speed = Math.min(13, arcade.tm.speed + 2); SoundFX.play('boost'); }
+      } else if (arcade.engine === 'Voxel Teardown Demolition') {
+        if (act === 'action') fireTeardownCharge(c.width / 2, c.height / 2);
+      } else if (arcade.engine === 'Cyber Geometry Dash') {
+        const gd = arcade.gd;
+        const floorY = c.height - 74;
+        const ceilY = 44;
+        if (gd.grav === 1 && gd.y >= floorY - 2) { gd.vy = -11.5; SoundFX.play('jump'); }
+        else if (gd.grav === -1 && gd.y <= ceilY + 2) { gd.vy = 11.5; SoundFX.play('jump'); }
+      } else if (arcade.engine === 'NeroBreach: Packet Hacker') {
+        if (act === 'left') arcade.nb.angle -= 0.3;
+        if (act === 'right') arcade.nb.angle += 0.3;
+        if (act === 'action') fireNeroBreachBullet();
+      } else if (arcade.engine === 'Orbital Gravity Slingshot') {
+        if (act === 'left') arcade.ob.vx -= 1.2;
+        if (act === 'right') arcade.ob.vx += 1.2;
+        if (act === 'action') { arcade.ob.vy -= 1.5; SoundFX.play('boost'); }
+      } else if (arcade.engine === 'Cyber Snake / Tron Grid') {
+        const p = arcade.tr.p1;
+        if (act === 'left') { const nx = p.dy, ny = -p.dx; p.dx = nx; p.dy = ny; }
+        if (act === 'right') { const nx = -p.dy, ny = p.dx; p.dx = nx; p.dy = ny; }
+      }
+    }
+
+    const canvasNode = document.getElementById('arcade-canvas');
+    canvasNode.addEventListener('pointermove', (e) => {
+      const r = canvasNode.getBoundingClientRect();
+      arcade.pointerX = e.clientX - r.left;
+      arcade.pointerY = e.clientY - r.top;
+      if (arcade.running && arcade.engine === 'NeroBreach: Packet Hacker') {
+        arcade.nb.angle = Math.atan2(arcade.pointerY - canvasNode.height / 2, arcade.pointerX - canvasNode.width / 2);
+      }
+    });
+
+    canvasNode.addEventListener('pointerdown', (e) => {
+      if (!arcade.running) return;
+      const r = canvasNode.getBoundingClientRect();
+      const px = e.clientX - r.left;
+      const py = e.clientY - r.top;
+
+      if (arcade.engine === 'Voxel Teardown Demolition') {
+        fireTeardownCharge(px, py);
+      } else if (arcade.engine === 'NeroBreach: Packet Hacker') {
+        arcade.nb.angle = Math.atan2(py - canvasNode.height / 2, px - canvasNode.width / 2);
+        fireNeroBreachBullet();
+      } else if (arcade.engine === 'Cyber Geometry Dash') {
+        triggerGameAction('action');
+      } else if (arcade.engine === 'Neon TrackMania Time Attack') {
+        triggerGameAction(px < r.width / 2 ? 'left' : 'right');
+      } else if (arcade.engine === 'Orbital Gravity Slingshot') {
+        const ang = Math.atan2(py - arcade.ob.y, px - arcade.ob.x);
+        arcade.ob.vx += Math.cos(ang) * 1.4;
+        arcade.ob.vy += Math.sin(ang) * 1.4;
+        SoundFX.play('boost');
+      }
+    });
+
+    function fireTeardownCharge(tx, ty) {
+      const td = arcade.td;
+      if (td.shots <= 0) return;
+      td.shots--;
+      SoundFX.play('explosion');
+      arcade.shake = 12;
+      spawnParticles(tx, ty, '#00f0ff', 24);
+      spawnParticles(tx, ty, '#f59e0b', 16);
+
+      for (let i = td.blocks.length - 1; i >= 0; i--) {
+        const b = td.blocks[i];
+        const bx = b.x + b.w / 2, by = b.y + b.h / 2;
+        const d = Math.hypot(bx - tx, by - ty);
+        if (d < 62) {
+          b.hp--;
+          if (b.hp <= 0) {
+            td.blocks.splice(i, 1);
+            arcade.score += 35 * arcade.combo;
+          }
+        }
+      }
+      arcade.combo++;
+      document.getElementById('arcade-score').textContent = arcade.score;
+      document.getElementById('arcade-combo').textContent = `x${arcade.combo}`;
+    }
+
+    function fireNeroBreachBullet() {
+      const nb = arcade.nb;
+      const a = nb.angle;
+      SoundFX.play('shoot');
+      nb.bullets.push({ x: Math.cos(a) * 24, y: Math.sin(a) * 24, vx: Math.cos(a) * 8, vy: Math.sin(a) * 8 });
+      if (nb.rapidTimer > 0) {
+        nb.bullets.push({ x: Math.cos(a + 0.14) * 24, y: Math.sin(a + 0.14) * 24, vx: Math.cos(a + 0.14) * 8, vy: Math.sin(a + 0.14) * 8 });
+        nb.bullets.push({ x: Math.cos(a - 0.14) * 24, y: Math.sin(a - 0.14) * 24, vx: Math.cos(a - 0.14) * 8, vy: Math.sin(a - 0.14) * 8 });
+      }
+    }
+
+    function runArcadeLoop() {
+      if (!arcade.running) return;
+      const c = document.getElementById('arcade-canvas');
+      const ctx = c.getContext('2d');
+      const w = c.width, h = c.height;
+
+      ctx.save();
+      if (arcade.shake > 0) {
+        ctx.translate((Math.random() - 0.5) * arcade.shake, (Math.random() - 0.5) * arcade.shake);
+        arcade.shake *= 0.85;
+        if (arcade.shake < 0.4) arcade.shake = 0;
+      }
+
+      ctx.fillStyle = '#04070f';
+      ctx.fillRect(0, 0, w, h);
+
+      // =========================================================
+      // ENGINE 1: NEON TRACKMANIA TIME ATTACK
+      // =========================================================
+      if (arcade.engine === 'Neon TrackMania Time Attack') {
+        const tm = arcade.tm;
+        tm.time += 1 / 60;
+        if (keysDown['ArrowLeft'] || keysDown['KeyA']) tm.vx -= 0.48;
+        if (keysDown['ArrowRight'] || keysDown['KeyD']) tm.vx += 0.48;
+        tm.vx *= 0.9;
+        tm.x += tm.vx;
+        tm.speed = Math.max(5.5, tm.speed * 0.996);
+        tm.dist += tm.speed;
+
+        const trackW = Math.min(420, w * 0.82);
+        const curve = Math.sin(tm.dist * 0.004) * 55;
+        const leftEdge = w / 2 - trackW / 2 + curve;
+        const rightEdge = leftEdge + trackW;
+
+        // Track surface & neon guardrails
+        ctx.fillStyle = '#0b1222';
+        ctx.fillRect(leftEdge, 0, trackW, h);
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.moveTo(leftEdge, 0); ctx.lineTo(leftEdge, h); ctx.stroke();
+        ctx.strokeStyle = '#8b5cf6';
+        ctx.beginPath(); ctx.moveTo(rightEdge, 0); ctx.lineTo(rightEdge, h); ctx.stroke();
+
+        // Spawn boost pads & barriers
+        if (Math.random() < 0.045) {
+          tm.items.push({
+            type: Math.random() < 0.45 ? 'boost' : 'wall',
+            offset: (Math.random() - 0.5) * (trackW - 70),
+            y: -25
+          });
+        }
+
+        const py = h - 64;
+        if (Math.abs(tm.vx) > 2.2) tm.skids.push({ x: tm.x, y: py + 14, life: 22 });
+
+        // Skid marks
+        for (let i = tm.skids.length - 1; i >= 0; i--) {
+          const s = tm.skids[i];
+          s.y += tm.speed;
+          s.life--;
+          ctx.fillStyle = `rgba(0, 240, 255, ${s.life / 45})`;
+          ctx.fillRect(s.x - 10, s.y, 4, 8);
+          ctx.fillRect(s.x + 6, s.y, 4, 8);
+          if (s.life <= 0) tm.skids.splice(i, 1);
+        }
+
+        for (let i = tm.items.length - 1; i >= 0; i--) {
+          const it = tm.items[i];
+          it.y += tm.speed;
+          const ix = w / 2 + curve + it.offset;
+
+          if (it.type === 'boost') {
+            ctx.fillStyle = '#10b981';
+            ctx.fillRect(ix - 22, it.y - 10, 44, 20);
+            if (Math.abs(tm.x - ix) < 30 && Math.abs(py - it.y) < 24) {
+              tm.speed = 13.5;
+              arcade.score += 120 * arcade.combo;
+              arcade.combo++;
+              SoundFX.play('boost');
+              spawnParticles(tm.x, py, '#10b981', 12);
+              tm.items.splice(i, 1);
+              continue;
+            }
+          } else {
+            ctx.fillStyle = '#f43f5e';
+            ctx.fillRect(ix - 24, it.y - 10, 48, 20);
+            if (Math.abs(tm.x - ix) < 30 && Math.abs(py - it.y) < 22) {
+              tm.speed = 4.2;
+              arcade.combo = 1;
+              arcade.shake = 10;
+              SoundFX.play('explosion');
+              spawnParticles(tm.x, py, '#f43f5e', 16);
+              tm.items.splice(i, 1);
+              continue;
+            }
+          }
+          if (it.y > h + 30) tm.items.splice(i, 1);
+        }
+
+        // Wall clamp
+        if (tm.x < leftEdge + 16) { tm.x = leftEdge + 16; tm.vx = 1.5; }
+        if (tm.x > rightEdge - 16) { tm.x = rightEdge - 16; tm.vx = -1.5; }
+
+        // Player Car
+        ctx.fillStyle = '#00f0ff';
+        ctx.beginPath();
+        ctx.moveTo(tm.x, py - 20);
+        ctx.lineTo(tm.x + 15, py + 18);
+        ctx.lineTo(tm.x - 15, py + 18);
+        ctx.closePath();
+        ctx.fill();
+
+        // HUD
+        const progress = Math.min(100, Math.floor((tm.dist / 12000) * 100));
+        ctx.fillStyle = '#e2e8f0';
+        ctx.font = 'bold 12px "JetBrains Mono", monospace';
+        ctx.fillText(`TIME: ${tm.time.toFixed(2)}s (GHOST: 24.33s) | TRACK: ${progress}%`, 16, 24);
+        document.getElementById('arcade-score').textContent = arcade.score;
+        document.getElementById('arcade-combo').textContent = `x${arcade.combo}`;
+
+        if (progress >= 100) {
+          const bonus = tm.time <= 24.33 ? 1500 : 500;
+          arcade.score += bonus;
+          endMiniGame(`Finished in ${tm.time.toFixed(2)}s! ${tm.time <= 24.33 ? '🏆 BEAT 24.33s GHOST RECORD!' : 'Target ghost: 24.33s'}`, true);
+          ctx.restore();
+          return;
+        }
+      }
+
+      // =========================================================
+      // ENGINE 2: VOXEL TEARDOWN DEMOLITION
+      // =========================================================
+      else if (arcade.engine === 'Voxel Teardown Demolition') {
+        const td = arcade.td;
+        const floorY = h - 26;
+
+        // Ground
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(0, floorY, w, 26);
+
+        // Target Collapse Line
+        ctx.strokeStyle = '#f43f5e';
+        ctx.setLineDash([8, 6]);
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(0, td.targetY); ctx.lineTo(w, td.targetY); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#f43f5e';
+        ctx.font = 'bold 11px "JetBrains Mono", monospace';
+        ctx.fillText('TARGET COLLAPSE HEIGHT', 14, td.targetY - 6);
+
+        // Gravity & settling for voxel blocks
+        let highestY = floorY;
+        for (const b of td.blocks) {
+          const below = td.blocks.some(o => o !== b && Math.abs(o.x - b.x) < 12 && o.y >= b.y + b.h && o.y <= b.y + b.h + 4);
+          if (b.y + b.h < floorY && !below) {
+            b.vy += 0.35;
+            b.y = Math.min(floorY - b.h, b.y + b.vy);
+          } else {
+            b.vy = 0;
+          }
+          if (b.y < highestY) highestY = b.y;
+
+          ctx.fillStyle = b.mat === 'steel' ? '#64748b' : (b.mat === 'concrete' ? '#8b5cf6' : '#00f0ff');
+          ctx.fillRect(b.x, b.y, b.w, b.h);
+        }
+
+        // Crosshair at pointer
+        ctx.strokeStyle = '#10b981';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(arcade.pointerX, arcade.pointerY, 18, 0, Math.PI * 2); ctx.stroke();
+
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 12px "JetBrains Mono", monospace';
+        ctx.fillText(`CHARGES LEFT: ${td.shots} // CLICK TOWER TO DETONATE`, 16, 24);
+
+        if (highestY >= td.targetY) {
+          arcade.score += td.shots * 250;
+          endMiniGame(`Tower demolished below target line with ${td.shots} charges remaining!`, true);
+          ctx.restore();
+          return;
+        } else if (td.shots === 0 && td.blocks.every(b => b.vy === 0)) {
+          endMiniGame('Out of explosive charges! Aim near the steel base supports to topple the structure.', false);
+          ctx.restore();
+          return;
+        }
+      }
+
+      // =========================================================
+      // ENGINE 3: CYBER GEOMETRY DASH
+      // =========================================================
+      else if (arcade.engine === 'Cyber Geometry Dash') {
+        const gd = arcade.gd;
+        const floorY = h - 50;
+        const ceilY = 44;
+        gd.dist += 6.2;
+        gd.beat += 0.18;
+
+        // Beat visualizer bars in background
+        ctx.fillStyle = 'rgba(139, 92, 246, 0.14)';
+        for (let i = 0; i < 16; i++) {
+          const bh = 25 + Math.abs(Math.sin(gd.beat + i * 0.5)) * 75;
+          ctx.fillRect(i * (w / 16) + 4, floorY - bh, w / 16 - 8, bh);
+        }
+
+        // Floor & Ceiling tracks
+        ctx.fillStyle = '#00f0ff';
+        ctx.fillRect(0, floorY, w, 4);
+        ctx.fillStyle = '#8b5cf6';
+        ctx.fillRect(0, ceilY - 4, w, 4);
+
+        // Physics
+        gd.vy += 0.65 * gd.grav;
+        gd.y += gd.vy;
+        if (gd.grav === 1 && gd.y >= floorY - 24) { gd.y = floorY - 24; gd.vy = 0; gd.rot = 0; }
+        else if (gd.grav === -1 && gd.y <= ceilY) { gd.y = ceilY; gd.vy = 0; gd.rot = 0; }
+        else { gd.rot += 0.14 * gd.grav; }
+
+        // Spawn spikes, jump pads, gravity portals
+        if (Math.floor(gd.dist) % 240 < 7) {
+          const r = Math.random();
+          gd.hazards.push({
+            x: w + 30,
+            type: r < 0.55 ? 'spike' : (r < 0.8 ? 'pad' : 'portal')
+          });
+        }
+
+        const px = 95;
+        for (let i = gd.hazards.length - 1; i >= 0; i--) {
+          const hz = gd.hazards[i];
+          hz.x -= 6.2;
+
+          if (hz.type === 'spike') {
+            const sy = gd.grav === 1 ? floorY : ceilY;
+            ctx.fillStyle = '#f43f5e';
+            ctx.beginPath();
+            ctx.moveTo(hz.x, sy);
+            ctx.lineTo(hz.x + 13, sy - 26 * gd.grav);
+            ctx.lineTo(hz.x + 26, sy);
+            ctx.closePath();
+            ctx.fill();
+
+            if (Math.abs(px - (hz.x + 13)) < 16 && Math.abs((gd.y + 12) - (sy - 12 * gd.grav)) < 18) {
+              spawnParticles(px, gd.y + 12, '#f43f5e', 20);
+              endMiniGame(`Shattered on plasma spike at ${Math.min(99, Math.floor(gd.dist / 90))}%!`, false);
+              ctx.restore();
+              return;
+            }
+          } else if (hz.type === 'pad') {
+            ctx.fillStyle = '#f59e0b';
+            ctx.fillRect(hz.x, floorY - 7, 28, 7);
+            if (Math.abs(px - (hz.x + 14)) < 20 && gd.y >= floorY - 30) {
+              gd.vy = -14.5;
+              SoundFX.play('boost');
+              arcade.score += 50;
+            }
+          } else if (hz.type === 'portal') {
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(hz.x, ceilY + 12, 16, floorY - ceilY - 24);
+            if (Math.abs(px - (hz.x + 8)) < 12 && !hz.used) {
+              hz.used = true;
+              gd.grav *= -1;
+              SoundFX.play('pickup');
+              arcade.score += 100;
+            }
+          }
+
+          if (hz.x < -40) {
+            gd.hazards.splice(i, 1);
+            arcade.score += 20;
+            document.getElementById('arcade-score').textContent = arcade.score;
+          }
+        }
+
+        // Player Cube
+        ctx.save();
+        ctx.translate(px + 12, gd.y + 12);
+        ctx.rotate(gd.rot);
+        ctx.fillStyle = '#10b981';
+        ctx.fillRect(-12, -12, 24, 24);
+        ctx.strokeStyle = '#fff';
+        ctx.strokeRect(-8, -8, 16, 16);
+        ctx.restore();
+
+        const pct = Math.min(100, Math.floor(gd.dist / 90));
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 12px "JetBrains Mono", monospace';
+        ctx.fillText(`SYNC PROGRESS: ${pct}% // GRAVITY: ${gd.grav === 1 ? 'NORMAL' : 'INVERTED'}`, 16, 24);
+        if (pct >= 100) {
+          arcade.score += 1000;
+          endMiniGame('100% Rhythm Sync Completed!', true);
+          ctx.restore();
+          return;
+        }
+      }
+
+      // =========================================================
+      // ENGINE 4: NEROBREACH: PACKET HACKER
+      // =========================================================
+      else if (arcade.engine === 'NeroBreach: Packet Hacker') {
+        const nb = arcade.nb;
+        nb.tick++;
+        const cx = w / 2, cy = h / 2;
+        if (nb.rapidTimer > 0) nb.rapidTimer--;
+
+        if (nb.tick % 42 === 0) {
+          const a = Math.random() * Math.PI * 2;
+          const dist = Math.max(w, h) * 0.54;
+          const isBoss = arcade.score > 0 && arcade.score % 400 === 0 && !nb.boss;
+          if (isBoss) {
+            nb.boss = { x: Math.cos(a) * dist, y: Math.sin(a) * dist, hp: 10, maxHp: 10 };
+          } else {
+            nb.enemies.push({
+              x: Math.cos(a) * dist,
+              y: Math.sin(a) * dist,
+              spd: 1.3 + Math.min(2.4, arcade.score / 600),
+              powerup: Math.random() < 0.2 ? (Math.random() < 0.5 ? 'rapid' : 'emp') : null
+            });
+          }
+        }
+
+        // Core & Shield
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.arc(cx, cy, 22, 0, Math.PI * 2); ctx.stroke();
+        if (nb.shield) {
+          ctx.strokeStyle = 'rgba(16, 185, 129, 0.45)';
+          ctx.beginPath(); ctx.arc(cx, cy, 32, 0, Math.PI * 2); ctx.stroke();
+        }
+
+        // Turret
+        ctx.strokeStyle = '#10b981';
+        ctx.lineWidth = 6;
+        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(nb.angle) * 32, cy + Math.sin(nb.angle) * 32); ctx.stroke();
+
+        // Bullets
+        for (let i = nb.bullets.length - 1; i >= 0; i--) {
+          const b = nb.bullets[i];
+          b.x += b.vx; b.y += b.vy;
+          ctx.fillStyle = nb.rapidTimer > 0 ? '#f59e0b' : '#00f0ff';
+          ctx.beginPath(); ctx.arc(cx + b.x, cy + b.y, 4, 0, Math.PI * 2); ctx.fill();
+          if (Math.hypot(b.x, b.y) > Math.max(w, h)) nb.bullets.splice(i, 1);
+        }
+
+        // Boss Node
+        if (nb.boss) {
+          const bs = nb.boss;
+          const a = Math.atan2(-bs.y, -bs.x);
+          bs.x += Math.cos(a) * 0.65;
+          bs.y += Math.sin(a) * 0.65;
+          ctx.fillStyle = '#8b5cf6';
+          ctx.fillRect(cx + bs.x - 22, cy + bs.y - 22, 44, 44);
+          ctx.fillStyle = '#10b981';
+          ctx.fillRect(cx + bs.x - 22, cy + bs.y - 30, 44 * (bs.hp / bs.maxHp), 4);
+
+          if (Math.hypot(bs.x, bs.y) < 38) {
+            endMiniGame('Overwhelmed by Rootkit Boss Node!', false);
+            ctx.restore();
+            return;
+          }
+          for (let j = nb.bullets.length - 1; j >= 0; j--) {
+            const b = nb.bullets[j];
+            if (Math.hypot(bs.x - b.x, bs.y - b.y) < 26) {
+              nb.bullets.splice(j, 1);
+              bs.hp--;
+              arcade.shake = 5;
+              if (bs.hp <= 0) {
+                spawnParticles(cx + bs.x, cy + bs.y, '#8b5cf6', 28);
+                SoundFX.play('explosion');
+                arcade.score += 300;
+                nb.boss = null;
+                break;
+              }
+            }
+          }
+        }
+
+        // Enemies
+        for (let i = nb.enemies.length - 1; i >= 0; i--) {
+          const en = nb.enemies[i];
+          const a = Math.atan2(-en.y, -en.x);
+          en.x += Math.cos(a) * en.spd;
+          en.y += Math.sin(a) * en.spd;
+
+          ctx.fillStyle = en.powerup ? '#10b981' : '#f43f5e';
+          ctx.fillRect(cx + en.x - 9, cy + en.y - 9, 18, 18);
+
+          if (Math.hypot(en.x, en.y) < 26) {
+            if (nb.shield) {
+              nb.shield = false;
+              nb.enemies.splice(i, 1);
+              arcade.shake = 12;
+              SoundFX.play('explosion');
+              continue;
+            }
+            endMiniGame('NeroLinkXZ Core breached by corrupted data packets!', false);
+            ctx.restore();
+            return;
+          }
+
+          for (let j = nb.bullets.length - 1; j >= 0; j--) {
+            const b = nb.bullets[j];
+            if (Math.hypot(en.x - b.x, en.y - b.y) < 16) {
+              spawnParticles(cx + en.x, cy + en.y, en.powerup ? '#10b981' : '#f43f5e', 10);
+              if (en.powerup === 'rapid') { nb.rapidTimer = 260; SoundFX.play('pickup'); }
+              else if (en.powerup === 'emp') { nb.enemies = []; SoundFX.play('explosion'); arcade.shake = 14; }
+              else SoundFX.play('explosion');
+
+              nb.enemies.splice(i, 1);
+              nb.bullets.splice(j, 1);
+              arcade.score += 25 * arcade.combo;
+              arcade.combo = Math.min(8, arcade.combo + 1);
+              document.getElementById('arcade-score').textContent = arcade.score;
+              document.getElementById('arcade-combo').textContent = `x${arcade.combo}`;
+              break;
+            }
+          }
+        }
+      }
+
+      // =========================================================
+      // ENGINE 5: ORBITAL GRAVITY SLINGSHOT
+      // =========================================================
+      else if (arcade.engine === 'Orbital Gravity Slingshot') {
+        const ob = arcade.ob;
+        ob.tick++;
+        const dx = ob.well.x - ob.x;
+        const dy = ob.well.y - ob.y;
+        const dist = Math.max(28, Math.hypot(dx, dy));
+        const pull = 290 / (dist * dist);
+        ob.vx += (dx / dist) * pull;
+        ob.vy += (dy / dist) * pull;
+        ob.x += ob.vx;
+        ob.y += ob.vy;
+
+        ob.trail.push({ x: ob.x, y: ob.y });
+        if (ob.trail.length > 26) ob.trail.shift();
+
+        // Gravity Well
+        ctx.fillStyle = '#8b5cf6';
+        ctx.beginPath(); ctx.arc(ob.well.x, ob.well.y, 20, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'rgba(139, 92, 246, 0.35)';
+        ctx.beginPath(); ctx.arc(ob.well.x, ob.well.y, 44, 0, Math.PI * 2); ctx.stroke();
+
+        // Spawn Shards & Asteroids
+        if (ob.shards.length < 3) {
+          const a = Math.random() * Math.PI * 2;
+          const r = 75 + Math.random() * 95;
+          ob.shards.push({ x: ob.well.x + Math.cos(a) * r, y: ob.well.y + Math.sin(a) * r });
+        }
+        if (ob.tick % 85 === 0) {
+          ob.roids.push({ x: Math.random() * w, y: -15, vx: (Math.random() - 0.5) * 2.5, vy: 1.8 + Math.random() * 1.5 });
+        }
+
+        // Trail
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ob.trail.forEach((p, idx) => idx === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+        ctx.stroke();
+
+        // Shards
+        for (let i = ob.shards.length - 1; i >= 0; i--) {
+          const s = ob.shards[i];
+          ctx.fillStyle = '#10b981';
+          ctx.beginPath(); ctx.arc(s.x, s.y, 7, 0, Math.PI * 2); ctx.fill();
+          if (Math.hypot(ob.x - s.x, ob.y - s.y) < 16) {
+            ob.shards.splice(i, 1);
+            arcade.score += 50 * arcade.combo;
+            arcade.combo++;
+            SoundFX.play('pickup');
+            spawnParticles(s.x, s.y, '#10b981', 12);
+            document.getElementById('arcade-score').textContent = arcade.score;
+            document.getElementById('arcade-combo').textContent = `x${arcade.combo}`;
+          }
+        }
+
+        // Asteroids
+        for (let i = ob.roids.length - 1; i >= 0; i--) {
+          const r = ob.roids[i];
+          r.x += r.vx; r.y += r.vy;
+          ctx.fillStyle = '#f43f5e';
+          ctx.beginPath(); ctx.arc(r.x, r.y, 11, 0, Math.PI * 2); ctx.fill();
+          if (Math.hypot(ob.x - r.x, ob.y - r.y) < 17) {
+            endMiniGame('Struck by rogue asteroid in orbit!', false);
+            ctx.restore();
+            return;
+          }
+          if (r.y > h + 30) ob.roids.splice(i, 1);
+        }
+
+        // Crash bounds or black hole
+        if (dist < 24 || ob.x < 0 || ob.x > w || ob.y < 0 || ob.y > h) {
+          endMiniGame('Lost orbital trajectory! Click or tap gently to slingshot around the gravity well.', false);
+          ctx.restore();
+          return;
+        }
+
+        ctx.fillStyle = '#00f0ff';
+        ctx.beginPath(); ctx.arc(ob.x, ob.y, 7, 0, Math.PI * 2); ctx.fill();
+      }
+
+      // =========================================================
+      // ENGINE 6: CYBER SNAKE / TRON GRID
+      // =========================================================
+      else if (arcade.engine === 'Cyber Snake / Tron Grid') {
+        const tr = arcade.tr;
+        tr.tick++;
+        const stepRate = keysDown['Space'] ? 3 : 5;
+
+        if (tr.tick % stepRate === 0) {
+          const moveCycle = (cObj, isAI) => {
+            cObj.trail.push({ x: cObj.x, y: cObj.y });
+            if (cObj.trail.length > 28) cObj.trail.shift();
+
+            if (isAI) {
+              const dirs = [{ dx: 1, dy: 0 }, { dx: -1, dy: 0 }, { dx: 0, dy: 1 }, { dx: 0, dy: -1 }]
+                .filter(d => !(d.dx === -cObj.dx && d.dy === -cObj.dy));
+              dirs.sort((a, b) => Math.hypot((cObj.x + a.dx) - tr.food.x, (cObj.y + a.dy) - tr.food.y) - Math.hypot((cObj.x + b.dx) - tr.food.x, (cObj.y + b.dy) - tr.food.y));
+              for (const d of dirs) {
+                const nx = cObj.x + d.dx, ny = cObj.y + d.dy;
+                const hit = nx < 0 || nx >= tr.cols || ny < 0 || ny >= tr.rows ||
+                  tr.p1.trail.some(t => t.x === nx && t.y === ny) ||
+                  cObj.trail.some(t => t.x === nx && t.y === ny);
+                if (!hit) { cObj.dx = d.dx; cObj.dy = d.dy; break; }
+              }
+            }
+            cObj.x += cObj.dx;
+            cObj.y += cObj.dy;
+          };
+
+          moveCycle(tr.p1, false);
+          moveCycle(tr.ai, true);
+
+          // Check player collision
+          const p = tr.p1;
+          const pCrash = p.x < 0 || p.x >= tr.cols || p.y < 0 || p.y >= tr.rows ||
+            p.trail.some(t => t.x === p.x && t.y === p.y) ||
+            tr.ai.trail.some(t => t.x === p.x && t.y === p.y);
+
+          if (pCrash) {
+            endMiniGame('Light-cycle derezzed on neon grid wall!', false);
+            ctx.restore();
+            return;
+          }
+
+          // Check AI crash
+          const ai = tr.ai;
+          const aiCrash = ai.x < 0 || ai.x >= tr.cols || ai.y < 0 || ai.y >= tr.rows ||
+            ai.trail.some(t => t.x === ai.x && t.y === ai.y) ||
+            p.trail.some(t => t.x === ai.x && t.y === ai.y);
+
+          if (aiCrash) {
+            arcade.score += 500;
+            SoundFX.play('explosion');
+            spawnParticles(ai.x * 16, ai.y * 16, '#8b5cf6', 24);
+            tr.ai = { x: Math.floor(Math.random() * (tr.cols - 4)) + 2, y: 2, dx: 0, dy: 1, trail: [] };
+          }
+
+          // Energy Node pickup
+          if (p.x === tr.food.x && p.y === tr.food.y) {
+            arcade.score += 100;
+            SoundFX.play('pickup');
+            tr.food = { x: Math.floor(Math.random() * (tr.cols - 2)) + 1, y: Math.floor(Math.random() * (tr.rows - 2)) + 1 };
+          }
+          document.getElementById('arcade-score').textContent = arcade.score;
+        }
+
+        // Render Grid Entities
+        ctx.fillStyle = '#10b981';
+        ctx.fillRect(tr.food.x * 16 + 2, tr.food.y * 16 + 2, 12, 12);
+
+        tr.p1.trail.forEach(t => { ctx.fillStyle = 'rgba(0, 240, 255, 0.5)'; ctx.fillRect(t.x * 16 + 1, t.y * 16 + 1, 14, 14); });
+        ctx.fillStyle = '#00f0ff';
+        ctx.fillRect(tr.p1.x * 16, tr.p1.y * 16, 16, 16);
+
+        tr.ai.trail.forEach(t => { ctx.fillStyle = 'rgba(139, 92, 246, 0.5)'; ctx.fillRect(t.x * 16 + 1, t.y * 16 + 1, 14, 14); });
+        ctx.fillStyle = '#8b5cf6';
+        ctx.fillRect(tr.ai.x * 16, tr.ai.y * 16, 16, 16);
+      }
+
+      // Render active explosion particles
+      for (let i = arcade.particles.length - 1; i >= 0; i--) {
+        const pt = arcade.particles[i];
+        pt.x += pt.vx;
+        pt.y += pt.vy;
+        pt.life--;
+        ctx.fillStyle = pt.color;
+        ctx.globalAlpha = Math.max(0, pt.life / 35);
+        ctx.fillRect(pt.x - 2, pt.y - 2, 4, 4);
+        ctx.globalAlpha = 1;
+        if (pt.life <= 0) arcade.particles.splice(i, 1);
+      }
+
+      ctx.restore();
+      arcade.raf = requestAnimationFrame(runArcadeLoop);
+    }
+
+    // =========================================================================
+    // 6. SPARKLINE TELEMETRY & NIBBLES HABITAT CONTROLS
+    // =========================================================================
+    const sparks = {
+      fps: Array.from({ length: 32 }, () => 236 + Math.random() * 8),
+      gpu: Array.from({ length: 32 }, () => 34 + Math.random() * 14),
+      temp: Array.from({ length: 32 }, () => 21.2 + Math.random() * 0.5),
+      rpm: Array.from({ length: 32 }, () => 30 + Math.random() * 16)
+    };
+
+    function drawSparkline(canvasId, seriesA, minA, maxA, colA, seriesB, minB, maxB, colB) {
+      const c = document.getElementById(canvasId);
+      if (!c || !c.parentElement) return;
+      const r = c.parentElement.getBoundingClientRect();
+      c.width = Math.max(240, Math.floor(r.width - 16));
+      c.height = Math.max(130, Math.floor(r.height - 16));
+      const ctx = c.getContext('2d');
+      const w = c.width, h = c.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const plot = (arr, mn, mx, color) => {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.4;
+        ctx.beginPath();
+        arr.forEach((v, i) => {
+          const x = (i / (arr.length - 1)) * w;
+          const y = h - ((v - mn) / (mx - mn)) * (h - 16) - 8;
+          i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      };
+      plot(seriesA, minA, maxA, colA);
+      plot(seriesB, minB, maxB, colB);
+    }
+
+    function appendPicoLog(msg, colorClass = 'text-slate-300') {
+      const log = document.getElementById('pico-serial-log');
+      const ts = new Date().toTimeString().split(' ')[0];
+      const div = document.createElement('div');
+      div.className = colorClass;
+      div.textContent = `[PICO-USB0 ${ts}] ${msg}`;
+      log.prepend(div);
+    }
+
+    function triggerMealwormDispenser() {
+      if (state.treatsLeft <= 0) {
+        showToast('Mealworm hopper empty! Refill required.', 'error');
+        return;
+      }
+      state.treatsLeft--;
+      state.wheelDist = +(state.wheelDist + 0.12).toFixed(2);
+      document.getElementById('hab-treats-val').innerHTML = `${state.treatsLeft} <span class="text-sm font-normal text-slate-400">worms</span>`;
+      document.getElementById('hab-dist-val').textContent = `${state.wheelDist} km`;
+      SoundFX.play('pickup');
+      appendPicoLog('SERVO_ACTUATE: Dispensed 1x Dried Mealworm treat to Nibbles!', 'text-[#10b981]');
+      showToast('🪱 Mealworm treat dispensed for Nibbles!', 'success');
+    }
+
+    function toggleNightVisionMode() {
+      state.irCam = !state.irCam;
+      document.getElementById('night-vision-btn').textContent = state.irCam ? '🌙 IR Night Cam: ON' : '☀️ IR Night Cam: OFF';
+      appendPicoLog(`CAMERA_MUX: Infrared Night-Vision set to ${state.irCam ? 'ENABLED' : 'DISABLED'}`, 'text-violet-300');
+      showToast(`IR Night Cam ${state.irCam ? 'Enabled' : 'Disabled'}`, 'info');
+    }
+
+    function toggleSensorFeed(name, enabled) {
+      appendPicoLog(`SENSOR_CONFIG: ${name} stream ${enabled ? 'RESUMED' : 'PAUSED'}`, 'text-[#00f0ff]');
+    }
+
+    function startTelemetryLoop() {
+      setInterval(() => {
+        const fps = Math.round(235 + Math.random() * 9);
+        const ping = Math.round(8 + Math.random() * 5);
+        const gpu = Math.round(33 + Math.random() * 14);
+        const rpm = Math.round(28 + Math.random() * 18);
+
+        document.getElementById('top-fps').textContent = fps;
+        document.getElementById('top-ping').textContent = `${ping}ms`;
+        document.getElementById('kpi-fps').textContent = fps;
+        document.getElementById('kpi-ping').textContent = `${ping}ms`;
+        document.getElementById('kpi-gpu').textContent = `${gpu}%`;
+        document.getElementById('kpi-rpm').textContent = `${rpm} RPM`;
+        document.getElementById('hab-rpm-val').textContent = `${rpm} RPM`;
+
+        sparks.fps.push(fps); sparks.fps.shift();
+        sparks.gpu.push(gpu); sparks.gpu.shift();
+        sparks.temp.push(21.4); sparks.temp.shift();
+        sparks.rpm.push(rpm); sparks.rpm.shift();
+
+        if (!document.getElementById('view-overview').classList.contains('hidden')) {
+          drawSparkline('sparkline-system', sparks.fps, 210, 255, '#00f0ff', sparks.gpu, 10, 90, '#8b5cf6');
+          drawSparkline('sparkline-nibbles', sparks.temp, 18, 25, '#10b981', sparks.rpm, 10, 60, '#f59e0b');
+        }
+      }, 1500);
+    }
+
+    window.addEventListener('resize', () => {
+      if (!document.getElementById('game-modal').classList.contains('hidden')) resizeArcadeCanvas();
+      drawSparkline('sparkline-system', sparks.fps, 210, 255, '#00f0ff', sparks.gpu, 10, 90, '#8b5cf6');
+      drawSparkline('sparkline-nibbles', sparks.temp, 18, 25, '#10b981', sparks.rpm, 10, 60, '#f59e0b');
+    });
+
+    // =========================================================================
+    // 7. WINDOW ONLOAD BOOTSTRAP
+    // =========================================================================
+    window.onload = function () {
+      document.getElementById('cohere-api-key-input').value = state.apiKey;
+      document.getElementById('cohere-model-select').value = state.model;
+      syncCohereStatusUI();
+
+      if (state.chatHistory.length === 0) clearChatHistory();
+      else renderAllChatContainers();
+
+      renderGenrePills();
+      renderGamesGrid();
+      updateHighScoreBadges();
+      drawSparkline('sparkline-system', sparks.fps, 210, 255, '#00f0ff', sparks.gpu, 10, 90, '#8b5cf6');
+      drawSparkline('sparkline-nibbles', sparks.temp, 18, 25, '#10b981', sparks.rpm, 10, 60, '#f59e0b');
+      startTelemetryLoop();
+    };
+  </script>
+</body>
+</html>
