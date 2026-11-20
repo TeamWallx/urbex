@@ -1,0 +1,2848 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeroLinkXZ // Cyber Command, 178 Games Vault & Cohere v2 OS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            voidbg: '#070b14',
+            glass: '#0d1424',
+            cyberCyan: '#00f0ff',
+            cyberMagenta: '#ff2a85',
+            cyberEmerald: '#10b981',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* Base cyberpunk palette and fast mobile touch handling */
+    html, body {
+      background-color: #070b14;
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      touch-action: manipulation;
+    }
+    button, [role="button"], select, input[type="checkbox"] {
+      touch-action: manipulation;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #070b14; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00f0ff; }
+
+    .cyber-backdrop {
+      background-image:
+        radial-gradient(circle at 15% 12%, rgba(0, 240, 255, 0.09), transparent 40%),
+        radial-gradient(circle at 86% 78%, rgba(255, 42, 133, 0.09), transparent 42%),
+        linear-gradient(to right, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 42, 133, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 38px 38px, 38px 38px;
+    }
+    .glass-panel {
+      background: rgba(13, 20, 36, 0.84);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+    }
+    .glass-cyan {
+      background: rgba(13, 20, 36, 0.88);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 240, 255, 0.34);
+      box-shadow: 0 0 26px rgba(0, 240, 255, 0.09);
+    }
+    .glass-magenta {
+      background: rgba(16, 18, 36, 0.88);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 42, 133, 0.34);
+      box-shadow: 0 0 26px rgba(255, 42, 133, 0.09);
+    }
+    canvas.arcade-surface {
+      background: #040710;
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+  </style>
+</head>
+<body class="cyber-backdrop min-h-screen flex flex-col lg:flex-row selection:bg-[#00f0ff]/25 selection:text-white">
+
+  <!-- Toast Status Container -->
+  <div id="toast-container" class="fixed bottom-4 left-4 z-[80] flex flex-col gap-2 pointer-events-none max-w-sm w-[calc(100%-2rem)]"></div>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebar-backdrop" class="fixed inset-0 z-[35] bg-slate-950/75 backdrop-blur-xs hidden lg:hidden"></div>
+
+  <!-- Mobile Top Header -->
+  <header class="lg:hidden sticky top-0 z-[30] flex items-center justify-between px-4 py-3 bg-[#080d19]/95 backdrop-blur-md border-b border-slate-800">
+    <div class="flex items-center gap-2.5">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#00f0ff] via-[#ff2a85] to-[#10b981] flex items-center justify-center font-mono font-black text-slate-950 text-sm">
+        NX
+      </div>
+      <div>
+        <span class="font-extrabold tracking-tight text-white text-base">NeroLink<span class="text-[#00f0ff]">XZ</span></span>
+        <span class="block text-[10px] font-mono text-[#ff2a85] uppercase tracking-wider">Command OS // 178 Vault</span>
+      </div>
+    </div>
+    <button id="mobile-menu-btn" type="button" aria-label="Open navigation menu" class="p-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100 hover:border-[#00f0ff] hover:text-[#00f0ff] transition-colors">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </header>
+
+  <!-- Left Navigation Sidebar -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-[40] w-72 bg-[#080d19]/98 backdrop-blur-xl border-r border-slate-800 transform -translate-x-full lg:translate-x-0 lg:static lg:flex lg:flex-col transition-transform duration-200 ease-out shrink-0">
+    <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#00f0ff] via-[#ff2a85] to-[#10b981] flex items-center justify-center font-mono font-black text-slate-950 text-lg shadow-lg shadow-cyan-500/20">
+          NX
+        </div>
+        <div>
+          <h1 class="font-black text-lg tracking-tight text-white leading-none">NeroLink<span class="text-[#00f0ff]">XZ</span></h1>
+          <p class="text-[10px] font-mono text-[#ff2a85] mt-1 tracking-wider">CYBER COMMAND // v6</p>
+        </div>
+      </div>
+      <button id="close-sidebar-btn" type="button" aria-label="Close navigation menu" class="lg:hidden p-2 rounded-xl bg-slate-800/80 text-slate-300 hover:text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <nav class="flex-1 p-4 space-y-1.5 overflow-y-auto">
+      <div class="px-3 pb-1 text-[10px] font-mono uppercase tracking-widest text-slate-500">Modules</div>
+
+      <button type="button" data-tab="overview" class="nav-tab-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all bg-[#00f0ff]/12 text-[#00f0ff] border border-[#00f0ff]/40">
+        <span>⚡</span>
+        <span>Command Hub</span>
+      </button>
+
+      <button type="button" data-tab="arcade" class="nav-tab-btn w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 border border-transparent transition-all">
+        <span class="flex items-center gap-3"><span>🕹️</span><span>Arcade Engines</span></span>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#00f0ff]/15 text-[#00f0ff] border border-[#00f0ff]/30">6 LIVE</span>
+      </button>
+
+      <button type="button" data-tab="games" class="nav-tab-btn w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 border border-transparent transition-all">
+        <span class="flex items-center gap-3"><span>🎮</span><span>Games Vault</span></span>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#ff2a85]/15 text-[#ff2a85] border border-[#ff2a85]/35">178</span>
+      </button>
+
+      <button type="button" data-tab="ai" class="nav-tab-btn w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 border border-transparent transition-all">
+        <span class="flex items-center gap-3"><span>🤖</span><span>COCO AI (Cohere v2)</span></span>
+        <span id="nav-ai-pill" class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">FALLBACK</span>
+      </button>
+
+      <button type="button" data-tab="habitat" class="nav-tab-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 border border-transparent transition-all">
+        <span>🐹</span>
+        <span>Nibbles & Coco Habitat</span>
+      </button>
+
+      <div class="pt-4 px-3 pb-1 text-[10px] font-mono uppercase tracking-widest text-slate-500">Configuration</div>
+
+      <button type="button" data-tab="settings" class="nav-tab-btn w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 border border-transparent transition-all">
+        <span class="flex items-center gap-3"><span>🔑</span><span>Cohere API & System</span></span>
+        <span id="nav-key-dot" class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+      </button>
+    </nav>
+
+    <div class="p-4 m-3 rounded-2xl glass-panel space-y-2.5">
+      <div class="flex items-center justify-between">
+        <span class="text-[11px] font-mono text-slate-400">WEBAUDIO SFX</span>
+        <button id="sidebar-audio-btn" type="button" class="px-2.5 py-1 rounded-lg bg-[#00f0ff]/15 text-[#00f0ff] border border-[#00f0ff]/35 text-[11px] font-mono hover:bg-[#00f0ff]/25 transition-colors">
+          🔊 SFX ON
+        </button>
+      </div>
+      <button id="sidebar-open-api-btn" type="button" class="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-[#ff2a85]/20 hover:text-[#ff2a85] border border-slate-700 hover:border-[#ff2a85]/40 text-xs font-mono text-slate-200 transition-colors">
+        Configure Cohere v2 Key →
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col min-w-0">
+    <!-- Top Status & Action Bar -->
+    <header class="sticky top-0 z-[25] bg-[#070b14]/90 backdrop-blur-xl border-b border-slate-800/90 px-4 sm:px-7 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5 flex-wrap">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono bg-[#10b981]/12 text-[#10b981] border border-[#10b981]/30">
+          <span class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
+          NEROLINK ONLINE
+        </span>
+        <span class="text-xs font-mono text-slate-400 hidden sm:inline">
+          FPS: <strong id="top-fps-val" class="text-[#00f0ff]">240</strong> · NET: <strong id="top-ping-val" class="text-[#10b981]">11ms</strong>
+        </span>
+      </div>
+
+      <div class="flex items-center gap-2 flex-wrap">
+        <button id="topbar-ai-status-btn" type="button" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#0d1424] hover:bg-slate-800 border border-slate-700 text-xs font-mono transition-colors">
+          <span id="topbar-ai-dot" class="w-2 h-2 rounded-full bg-amber-400"></span>
+          <span id="topbar-ai-label" class="text-amber-300">Cohere: Fallback</span>
+        </button>
+
+        <button id="topbar-quick-arcade-btn" type="button" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#00f0ff] to-[#ff2a85] text-slate-950 font-extrabold text-xs hover:opacity-95 transition-opacity">
+          ▶ Play Arcade
+        </button>
+      </div>
+    </header>
+
+    <!-- View Container -->
+    <main class="p-4 sm:p-7 max-w-7xl w-full mx-auto space-y-6 pb-24">
+
+      <!-- 1. COMMAND HUB (OVERVIEW) -->
+      <section id="view-overview" class="app-view space-y-6">
+        <div class="rounded-2xl glass-cyan p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div class="space-y-2.5 max-w-2xl">
+            <span class="inline-block px-3 py-1 rounded-full bg-[#ff2a85]/15 border border-[#ff2a85]/35 text-[#ff2a85] text-xs font-mono font-bold">
+              NEROLINKXZ // NIBBLES &amp; COCO COMMAND CENTER
+            </span>
+            <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-white">
+              6 Playable Canvas Engines, <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] via-[#ff2a85] to-[#10b981]">178 Games</span> &amp; Cohere v2
+            </h2>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Every button, selector, drawer, and game engine is bound for both desktop and mobile touch. Launch a playable arcade simulation, browse all 178 titles, chat with COCO via Cohere v2, or monitor Nibbles &amp; Coco's enclosure.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-3 shrink-0">
+            <button id="hub-to-arcade-btn" type="button" class="px-5 py-3 rounded-xl bg-[#00f0ff] hover:bg-cyan-300 text-slate-950 font-extrabold text-sm transition-colors">
+              Launch Arcade Engines
+            </button>
+            <button id="hub-to-games-btn" type="button" class="px-5 py-3 rounded-xl bg-[#ff2a85]/20 hover:bg-[#ff2a85]/30 text-pink-200 border border-[#ff2a85]/45 font-bold text-sm transition-colors">
+              Browse 178 Games
+            </button>
+          </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div class="p-5 rounded-2xl glass-panel">
+            <div class="text-xs font-mono text-slate-400 mb-1">PLAYABLE ENGINES</div>
+            <div class="text-3xl font-black text-[#00f0ff] font-mono">6 / 6</div>
+            <p class="text-xs text-slate-400 mt-1">Pause, Restart, Switch, SFX &amp; High Scores</p>
+          </div>
+          <div class="p-5 rounded-2xl glass-panel">
+            <div class="text-xs font-mono text-slate-400 mb-1">GAMES VAULT</div>
+            <div class="text-3xl font-black text-[#ff2a85] font-mono">178</div>
+            <p class="text-xs text-slate-400 mt-1">Search, Genres, Favorites &amp; Surprise Me</p>
+          </div>
+          <div class="p-5 rounded-2xl glass-panel">
+            <div class="text-xs font-mono text-slate-400 mb-1">COCO AI MODEL</div>
+            <div id="hub-ai-model-val" class="text-base font-bold text-white font-mono truncate">command-a-plus-05-2026</div>
+            <p id="hub-ai-mode-sub" class="text-xs text-amber-300 mt-1 font-mono">Mode: Smart Fallback</p>
+          </div>
+          <div class="p-5 rounded-2xl glass-panel">
+            <div class="text-xs font-mono text-slate-400 mb-1">NIBBLES ENCLOSURE</div>
+            <div id="hub-temp-val" class="text-3xl font-black text-[#10b981] font-mono">21.3°C</div>
+            <p class="text-xs text-slate-400 mt-1">Pearl Winter White · Mealworms Ready</p>
+          </div>
+        </div>
+
+        <!-- Quick Engine Cards -->
+        <div class="p-5 sm:p-6 rounded-2xl glass-panel space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h3 class="text-lg font-extrabold text-white">🕹️ Quick-Start Playable Engines</h3>
+            <button id="hub-open-quick-chat-btn" type="button" class="px-3.5 py-1.5 rounded-xl bg-[#ff2a85]/15 hover:bg-[#ff2a85]/25 text-[#ff2a85] border border-[#ff2a85]/40 text-xs font-mono">
+              Open COCO Quick Drawer
+            </button>
+          </div>
+          <div id="overview-engine-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5"></div>
+        </div>
+      </section>
+
+      <!-- 2. PLAYABLE ARCADE ENGINES (6 DISTINCT ENGINES) -->
+      <section id="view-arcade" class="app-view hidden space-y-4">
+        <div class="p-5 rounded-2xl glass-cyan space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 class="text-xl sm:text-2xl font-black text-white">🕹️ NeroLinkXZ Playable Arcade</h2>
+              <p id="arcade-engine-subtitle" class="text-xs text-slate-300 mt-0.5">Select an engine, play with keyboard, mouse, or on-screen touch controls.</p>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <button id="arcade-pause-btn" type="button" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-white transition-colors">
+                ⏸ Pause
+              </button>
+              <button id="arcade-restart-btn" type="button" class="px-3.5 py-2 rounded-xl bg-[#00f0ff]/15 hover:bg-[#00f0ff]/25 border border-[#00f0ff]/40 text-xs font-mono text-[#00f0ff] font-bold transition-colors">
+                ↻ Restart
+              </button>
+              <button id="arcade-sfx-btn" type="button" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-[#10b981] transition-colors">
+                🔊 SFX ON
+              </button>
+            </div>
+          </div>
+
+          <!-- 6 Engine Switcher Buttons -->
+          <div id="arcade-engine-switcher" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2"></div>
+
+          <!-- Score & Status Strip -->
+          <div class="flex flex-wrap items-center justify-between gap-2 px-3.5 py-2.5 rounded-xl bg-[#060a14] border border-slate-800 text-xs font-mono">
+            <div class="flex items-center gap-4 flex-wrap">
+              <span>ENGINE: <strong id="hud-engine-name" class="text-[#00f0ff]">Tactical Orbital Siege</strong></span>
+              <span>SCORE: <strong id="hud-score" class="text-white">0</strong></span>
+              <span>COMBO: <strong id="hud-combo" class="text-[#ff2a85]">x1</strong></span>
+              <span>BEST: <strong id="hud-best" class="text-[#10b981]">0</strong></span>
+            </div>
+            <span id="hud-status" class="text-amber-300">STATUS: READY</span>
+          </div>
+        </div>
+
+        <!-- Arcade Canvas Viewport -->
+        <div class="relative w-full h-[360px] sm:h-[440px] rounded-2xl border border-[#00f0ff]/35 bg-[#040710] overflow-hidden shadow-xl">
+          <canvas id="arcade-canvas" class="arcade-surface"></canvas>
+
+          <div id="arcade-overlay" class="absolute inset-0 bg-[#040710]/85 backdrop-blur-xs flex flex-col items-center justify-center p-6 text-center z-[10]">
+            <span class="text-[11px] font-mono uppercase tracking-widest text-[#ff2a85] mb-1">HTML5 CANVAS ENGINE</span>
+            <h3 id="overlay-title" class="text-2xl sm:text-3xl font-black text-white mb-2">Tactical Orbital Siege</h3>
+            <p id="overlay-desc" class="text-xs sm:text-sm text-slate-300 max-w-lg mb-5 leading-relaxed"></p>
+            <button id="overlay-start-btn" type="button" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#00f0ff] to-[#ff2a85] text-slate-950 font-black text-sm hover:scale-[1.02] transition-transform">
+              ▶ Start Engine
+            </button>
+          </div>
+        </div>
+
+        <!-- Touch & Action Controls Pad (PC + Mobile) -->
+        <div class="p-4 rounded-2xl glass-panel flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div id="arcade-controls-guide" class="text-xs font-mono text-slate-300">
+            Move/Aim: Mouse/Touch or WASD/Arrows · Fire/Pulse: Click/Tap or Space
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="pad-left-btn" type="button" class="px-3.5 py-2.5 rounded-xl bg-slate-800 active:bg-[#00f0ff] active:text-slate-950 border border-slate-700 text-xs font-mono text-white">◀ Left / L1</button>
+            <button id="pad-up-btn" type="button" class="px-3.5 py-2.5 rounded-xl bg-slate-800 active:bg-[#00f0ff] active:text-slate-950 border border-slate-700 text-xs font-mono text-white">▲ Up / Thr</button>
+            <button id="pad-down-btn" type="button" class="px-3.5 py-2.5 rounded-xl bg-slate-800 active:bg-[#00f0ff] active:text-slate-950 border border-slate-700 text-xs font-mono text-white">▼ Down / L2</button>
+            <button id="pad-right-btn" type="button" class="px-3.5 py-2.5 rounded-xl bg-slate-800 active:bg-[#00f0ff] active:text-slate-950 border border-slate-700 text-xs font-mono text-white">Right ▶ / R1</button>
+            <button id="pad-action-btn" type="button" class="px-4 py-2.5 rounded-xl bg-[#ff2a85]/20 hover:bg-[#ff2a85]/35 active:bg-[#ff2a85] active:text-slate-950 border border-[#ff2a85]/45 text-xs font-mono text-[#ff2a85] font-bold">⚡ Action / Fire</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 178-TITLE GAMES VAULT -->
+      <section id="view-games" class="app-view hidden space-y-5">
+        <div class="p-5 sm:p-6 rounded-2xl glass-magenta space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2.5 flex-wrap">
+                <h2 class="text-2xl font-black text-white">🎮 NeroLinkXZ Games Vault</h2>
+                <span id="vault-count-pill" class="text-xs font-mono px-3 py-1 rounded-full bg-[#00f0ff]/15 text-[#00f0ff] border border-[#00f0ff]/35">178 Titles</span>
+              </div>
+              <p class="text-xs text-slate-300 mt-1">178 curated modern, indie &amp; arcade titles. Clicking any game's Launch Engine button switches to Arcade and boots its matching engine.</p>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <button id="vault-fav-filter-btn" type="button" class="px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-slate-200 transition-colors">
+                ♡ Favorites (<span id="vault-fav-count">0</span>)
+              </button>
+              <button id="vault-surprise-btn" type="button" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#00f0ff] to-[#ff2a85] text-slate-950 font-extrabold text-xs hover:opacity-95 transition-opacity">
+                🎲 Surprise Me
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+            <input
+              id="vault-search-input"
+              type="text"
+              placeholder="Search 178 games (e.g., Hades, Elden Ring, Celeste, Cyberpunk)..."
+              class="md:col-span-3 w-full px-4 py-3 rounded-xl bg-[#070b14] border border-slate-700 focus:border-[#00f0ff] focus:outline-none text-sm text-white placeholder-slate-500"
+            />
+            <select id="vault-sort-select" class="w-full px-3.5 py-3 rounded-xl bg-[#070b14] border border-slate-700 focus:border-[#00f0ff] focus:outline-none text-xs font-mono text-white">
+              <option value="default">Sort: Vault Order (1–178)</option>
+              <option value="rating">Sort: Highest Rating</option>
+              <option value="year">Sort: Newest Year</option>
+              <option value="az">Sort: Title A → Z</option>
+            </select>
+          </div>
+
+          <div id="vault-genre-pills" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <div id="vault-games-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+      </section>
+
+      <!-- 4. COCO AI CO-PILOT (COHERE V2) -->
+      <section id="view-ai" class="app-view hidden space-y-4">
+        <div class="p-5 rounded-2xl glass-cyan flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2.5 flex-wrap">
+              <h2 class="text-xl font-black text-white">🤖 COCO AI Co-Pilot</h2>
+              <span id="ai-view-mode-badge" class="text-xs font-mono px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Fallback Mode</span>
+            </div>
+            <p class="text-xs text-slate-300 mt-1">Connected to <code class="text-[#00f0ff]">https://api.cohere.com/v2/chat</code> with strict <code class="text-[#10b981]">{ role, content }</code> message sanitization.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="ai-clear-history-btn" type="button" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-slate-200 transition-colors">
+              🗑 Clear Chat
+            </button>
+            <button id="ai-go-settings-btn" type="button" class="px-3.5 py-2 rounded-xl bg-[#00f0ff]/15 hover:bg-[#00f0ff]/25 border border-[#00f0ff]/40 text-xs font-mono text-[#00f0ff] transition-colors">
+              🔑 API Key
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompt Presets -->
+        <div class="flex flex-wrap gap-2">
+          <button type="button" data-preset="Give me a tactical strategy for Tactical Orbital Siege and suggest 5 top roguelikes from the 178 Games Vault." class="ai-preset-btn px-3 py-1.5 rounded-xl glass-panel hover:border-[#00f0ff]/50 text-xs text-slate-200 transition-colors">
+            🛸 Orbital Siege + Roguelikes
+          </button>
+          <button type="button" data-preset="Write a clean Python MicroPython snippet for Raspberry Pi Pico reading temperature, humidity, and hamster wheel ticks for Nibbles." class="ai-preset-btn px-3 py-1.5 rounded-xl glass-panel hover:border-[#10b981]/50 text-xs text-slate-200 transition-colors">
+            🐹 Nibbles Pico Telemetry Code
+          </button>
+          <button type="button" data-preset="How do I maximize combo multipliers in Rhythm Pulse Matrix and Gravity Pinball / Cyber Bouncer?" class="ai-preset-btn px-3 py-1.5 rounded-xl glass-panel hover:border-[#ff2a85]/50 text-xs text-slate-200 transition-colors">
+            🎹 Rhythm &amp; Pinball Combo Tips
+          </button>
+        </div>
+
+        <div id="ai-chat-feed" class="h-[420px] overflow-y-auto p-4 sm:p-5 rounded-2xl bg-[#050912] border border-slate-800 space-y-3.5"></div>
+
+        <form id="ai-chat-form" class="flex gap-2.5">
+          <input
+            id="ai-chat-input"
+            type="text"
+            placeholder="Message COCO (Cohere v2)..."
+            autocomplete="off"
+            class="flex-1 px-4 py-3 rounded-xl bg-[#0d1424] border border-slate-700 focus:border-[#00f0ff] focus:outline-none text-sm text-white placeholder-slate-500"
+          />
+          <button id="ai-send-btn" type="submit" class="px-6 py-3 rounded-xl bg-gradient-to-r from-[#00f0ff] to-[#ff2a85] text-slate-950 font-extrabold text-sm hover:opacity-95 transition-opacity shrink-0">
+            Send →
+          </button>
+        </form>
+      </section>
+
+      <!-- 5. NIBBLES & COCO HABITAT + TELEMETRY -->
+      <section id="view-habitat" class="app-view hidden space-y-6">
+        <div class="p-5 sm:p-6 rounded-2xl glass-cyan flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-mono text-[#10b981] uppercase">Enclosure Telemetry // Nibbles (Pearl Winter White) &amp; Coco</span>
+            <h2 class="text-2xl font-black text-white mt-0.5">🐹 Nibbles &amp; Coco Habitat Monitor</h2>
+            <p class="text-xs text-slate-300 mt-1">Live sensor readouts, mealworm treat dispenser, climate/lighting toggles, and real-time canvas graphs.</p>
+          </div>
+          <div class="flex flex-wrap gap-2.5">
+            <button id="dispense-mealworm-btn" type="button" class="px-4 py-2.5 rounded-xl bg-[#10b981] hover:bg-emerald-400 text-slate-950 font-extrabold text-xs transition-colors">
+              🪱 Dispense Mealworm
+            </button>
+            <button id="toggle-habitat-light-btn" type="button" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-[#00f0ff] transition-colors">
+              🌙 Night Mode: ON
+            </button>
+            <button id="toggle-habitat-fan-btn" type="button" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-[#ff2a85] transition-colors">
+              🌀 Micro-Fan: AUTO
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-5 rounded-2xl glass-panel">
+            <div class="text-xs font-mono text-slate-400">HABITAT TEMP</div>
+            <div id="hab-temp-display" class="text-3xl font-black text-[#00f0ff] font-mono mt-1">21.3°C</div>
+            <div class="text-xs text-slate-400 mt-1">Target: 19°C – 23°C</div>
+          </div>
+          <div class="p-5 rounded-2xl glass-panel">
+            <div class="text-xs font-mono text-slate-400">HUMIDITY</div>
+            <div id="hab-hum-display" class="text-3xl font-black text-[#10b981] font-mono mt-1">45% RH</div>
+            <div class="text-xs text-slate-400 mt-1">Substrate Dryness: Optimal</div>
+          </div>
+          <div class="p-5 rounded-2xl glass-panel">
+            <div class="text-xs font-mono text-slate-400">WHEEL ACTIVITY</div>
+            <div id="hab-wheel-display" class="text-3xl font-black text-[#ff2a85] font-mono mt-1">36 RPM</div>
+            <div id="hab-dist-display" class="text-xs text-slate-400 mt-1 font-mono">Distance: 5.12 km</div>
+          </div>
+          <div class="p-5 rounded-2xl glass-panel">
+            <div class="text-xs font-mono text-slate-400">MEALWORM LOG</div>
+            <div id="hab-treats-display" class="text-3xl font-black text-amber-300 font-mono mt-1">0 today</div>
+            <div id="hab-hopper-display" class="text-xs text-slate-400 mt-1 font-mono">Hopper: 48 treats</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div class="p-5 rounded-2xl glass-panel">
+            <h3 class="text-sm font-bold text-white mb-2">Enclosure Temp (°C) &amp; Wheel RPM Trend</h3>
+            <div class="h-44 bg-[#050912] rounded-xl border border-slate-800 p-2">
+              <canvas id="habitat-chart-canvas" class="w-full h-full block"></canvas>
+            </div>
+          </div>
+          <div class="p-5 rounded-2xl glass-panel flex flex-col">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-sm font-bold text-white">Enclosure Event &amp; Treat Log</h3>
+              <button id="clear-habitat-log-btn" type="button" class="text-xs font-mono text-slate-400 hover:text-white">Clear</button>
+            </div>
+            <div id="habitat-event-log" class="flex-1 max-h-44 overflow-y-auto bg-[#050912] rounded-xl border border-slate-800 p-3 font-mono text-xs space-y-1.5 text-slate-300"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. COHERE V2 API & SYSTEM SETTINGS -->
+      <section id="view-settings" class="app-view hidden max-w-3xl space-y-5">
+        <div class="p-6 sm:p-8 rounded-2xl glass-cyan space-y-5">
+          <div>
+            <span class="text-xs font-mono text-[#00f0ff] uppercase">Cohere v2 Chat Endpoint</span>
+            <h2 class="text-2xl font-black text-white mt-1">🔑 Cohere API Key &amp; Model Settings</h2>
+            <p class="text-xs sm:text-sm text-slate-300 mt-1">
+              Stored locally in your browser (<code class="text-[#00f0ff]">nerolinkxz_cohere_api_key</code>) and sent via Bearer auth to <code class="text-[#10b981]">https://api.cohere.com/v2/chat</code>.
+            </p>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="cohere-key-input" class="block text-xs font-mono uppercase text-slate-300">Cohere API Key</label>
+            <div class="flex gap-2">
+              <input
+                id="cohere-key-input"
+                type="password"
+                placeholder="Paste Cohere API key..."
+                class="flex-1 px-4 py-3 rounded-xl bg-[#070b14] border border-slate-700 focus:border-[#00f0ff] focus:outline-none text-sm font-mono text-white"
+              />
+              <button id="cohere-toggle-vis-btn" type="button" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-slate-200 transition-colors">
+                Show
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="cohere-model-select" class="block text-xs font-mono uppercase text-slate-300">Cohere v2 Model</label>
+            <select id="cohere-model-select" class="w-full px-4 py-3 rounded-xl bg-[#070b14] border border-slate-700 focus:border-[#00f0ff] focus:outline-none text-sm font-mono text-white">
+              <option value="command-a-plus-05-2026">command-a-plus-05-2026</option>
+              <option value="command-a-03-2025">command-a-03-2025</option>
+              <option value="command-r-plus-08-2024">command-r-plus-08-2024</option>
+              <option value="command-r-08-2024">command-r-08-2024</option>
+            </select>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <button id="cohere-save-btn" type="button" class="px-5 py-3 rounded-xl bg-gradient-to-r from-[#00f0ff] to-[#10b981] text-slate-950 font-extrabold text-xs sm:text-sm hover:opacity-95 transition-opacity">
+              Save Key &amp; Model
+            </button>
+            <button id="cohere-ping-btn" type="button" class="px-5 py-3 rounded-xl bg-[#ff2a85]/20 hover:bg-[#ff2a85]/30 text-pink-200 border border-[#ff2a85]/45 font-bold text-xs sm:text-sm transition-colors">
+              Ping Cohere v2 API
+            </button>
+            <button id="cohere-clear-btn" type="button" class="px-4 py-3 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/35 text-xs sm:text-sm font-medium transition-colors ml-auto">
+              Clear Key
+            </button>
+          </div>
+
+          <div id="cohere-ping-result" class="hidden p-4 rounded-xl bg-[#050912] border border-slate-800 font-mono text-xs text-slate-200 leading-relaxed"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Floating COCO Quick-Chat Drawer (Works on PC & Mobile) -->
+  <div class="fixed bottom-4 right-4 z-[60] flex flex-col items-end">
+    <div id="quick-drawer-panel" class="hidden w-[330px] sm:w-[380px] mb-3 rounded-2xl glass-magenta shadow-2xl overflow-hidden">
+      <div class="px-4 py-3 bg-[#090e1a] border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#00f0ff] animate-pulse"></span>
+          <span class="font-extrabold text-xs font-mono text-white">COCO QUICK DRAWER</span>
+        </div>
+        <button id="quick-drawer-close-btn" type="button" aria-label="Close quick chat" class="px-2 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white text-xs font-mono">
+          ✕
+        </button>
+      </div>
+      <div id="quick-drawer-feed" class="h-64 overflow-y-auto p-3.5 space-y-2.5 bg-[#050912] text-xs"></div>
+      <form id="quick-drawer-form" class="p-2.5 bg-[#090e1a] border-t border-slate-800 flex gap-2">
+        <input
+          id="quick-drawer-input"
+          type="text"
+          placeholder="Ask COCO..."
+          autocomplete="off"
+          class="flex-1 px-3 py-2 rounded-xl bg-[#070b14] border border-slate-700 focus:border-[#00f0ff] focus:outline-none text-xs text-white"
+        />
+        <button id="quick-drawer-send-btn" type="submit" class="px-3.5 py-2 rounded-xl bg-[#00f0ff] text-slate-950 font-extrabold text-xs shrink-0">
+          Send
+        </button>
+      </form>
+    </div>
+
+    <button id="quick-drawer-toggle-btn" type="button" class="px-4 py-3 rounded-2xl bg-gradient-to-r from-[#ff2a85] to-[#00f0ff] text-slate-950 font-black text-xs shadow-xl shadow-pink-500/25 hover:scale-[1.03] active:scale-95 transition-transform flex items-center gap-2">
+      <span>⚡</span>
+      <span>COCO AI</span>
+    </button>
+  </div>
+
+  <!-- Surprise Me Modal -->
+  <div id="surprise-modal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-slate-950/85 backdrop-blur-xs p-4">
+    <div class="w-full max-w-md rounded-2xl glass-magenta p-6 text-center space-y-4">
+      <div class="text-xs font-mono text-[#00f0ff] uppercase tracking-widest">178-Game Vault Picker</div>
+      <h3 class="text-2xl font-black text-white">🎲 Surprise Me</h3>
+      <div class="p-5 rounded-2xl bg-[#050912] border border-slate-800 min-h-[112px] flex flex-col items-center justify-center">
+        <div id="surprise-genre" class="text-xs font-mono text-[#ff2a85] mb-1">ROLLING...</div>
+        <div id="surprise-title" class="text-lg sm:text-xl font-black text-white">Selecting Title</div>
+        <div id="surprise-engine-tag" class="text-[11px] font-mono text-[#00f0ff] mt-1"></div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-2.5">
+        <button id="surprise-reroll-btn" type="button" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-white">
+          ↻ Re-Roll
+        </button>
+        <button id="surprise-launch-btn" type="button" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#00f0ff] to-[#10b981] text-slate-950 font-extrabold text-xs">
+          ▶ Launch Engine
+        </button>
+        <button id="surprise-close-btn" type="button" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-mono text-slate-300">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // Safe DOM lookup helper so missing elements never break event bindings
+      function byId(id) {
+        return document.getElementById(id);
+      }
+
+      function showToast(message, tone) {
+        try {
+          const box = byId('toast-container');
+          if (!box) return;
+          const styles = {
+            success: 'border-[#10b981]/60 text-[#10b981]',
+            error: 'border-rose-500/60 text-rose-300',
+            info: 'border-[#00f0ff]/60 text-[#00f0ff]',
+          };
+          const el = document.createElement('div');
+          el.className = 'pointer-events-auto px-4 py-2.5 rounded-xl bg-[#0b1120]/95 backdrop-blur-md border shadow-xl text-xs font-mono flex items-center justify-between gap-3 ' + (styles[tone] || styles.info);
+          const span = document.createElement('span');
+          span.textContent = String(message);
+          const closeBtn = document.createElement('button');
+          closeBtn.type = 'button';
+          closeBtn.className = 'text-slate-400 hover:text-white font-bold';
+          closeBtn.textContent = '✕';
+          closeBtn.addEventListener('click', function () {
+            if (el.parentElement) el.parentElement.removeChild(el);
+          });
+          el.appendChild(span);
+          el.appendChild(closeBtn);
+          box.appendChild(el);
+          setTimeout(function () {
+            if (el.parentElement) el.parentElement.removeChild(el);
+          }, 3600);
+        } catch (_err) {
+          // Ignore toast failure
+        }
+      }
+
+      // Safe storage read/write
+      function readStorage(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          return raw !== null ? raw : fallback;
+        } catch (_e) {
+          return fallback;
+        }
+      }
+
+      function writeStorage(key, value) {
+        try {
+          localStorage.setItem(key, value);
+        } catch (_e) {
+          // Ignore storage quota or sandbox restrictions
+        }
+      }
+
+      const KEYS = {
+        API_KEY: 'nerolinkxz_cohere_api_key',
+        MODEL: 'nerolinkxz_cohere_model',
+        FAVS: 'nerolinkxz_vault_favorites_v6',
+        CHAT: 'nerolinkxz_coco_chat_v6',
+        SCORES: 'nerolinkxz_engine_scores_v6',
+      };
+
+      let parsedFavs = [];
+      let parsedChat = [];
+      let parsedScores = {};
+      try { parsedFavs = JSON.parse(readStorage(KEYS.FAVS, '[]')) || []; } catch (_e) { parsedFavs = []; }
+      try { parsedChat = JSON.parse(readStorage(KEYS.CHAT, '[]')) || []; } catch (_e) { parsedChat = []; }
+      try { parsedScores = JSON.parse(readStorage(KEYS.SCORES, '{}')) || {}; } catch (_e) { parsedScores = {}; }
+
+      const appState = {
+        activeTab: 'overview',
+        apiKey: readStorage(KEYS.API_KEY, ''),
+        model: readStorage(KEYS.MODEL, 'command-a-plus-05-2026'),
+        favorites: Array.isArray(parsedFavs) ? parsedFavs : [],
+        chatHistory: Array.isArray(parsedChat) ? parsedChat : [],
+        highScores: parsedScores && typeof parsedScores === 'object' ? parsedScores : {},
+        selectedGenre: 'All',
+        searchQuery: '',
+        sortBy: 'default',
+        favoritesOnly: false,
+        muted: false,
+        nightMode: true,
+        fanMode: 'AUTO',
+        treatsToday: 0,
+        hopperCount: 48,
+        wheelRpm: 36,
+        wheelKm: 5.12,
+        tempC: 21.3,
+        humidity: 45,
+        surprisePick: null,
+      };
+
+      // =====================================================================
+      // WEBAUDIO SYNTHESIZER
+      // =====================================================================
+      const SynthAudio = {
+        ctx: null,
+        unlock: function () {
+          try {
+            if (!this.ctx) {
+              const Ctor = window.AudioContext || window.webkitAudioContext;
+              if (Ctor) this.ctx = new Ctor();
+            }
+            if (this.ctx && this.ctx.state === 'suspended') {
+              this.ctx.resume();
+            }
+          } catch (_e) {}
+        },
+        beep: function (freq, duration, type, volume) {
+          if (appState.muted) return;
+          this.unlock();
+          if (!this.ctx) return;
+          try {
+            const now = this.ctx.currentTime;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = type || 'sine';
+            osc.frequency.setValueAtTime(freq || 440, now);
+            osc.frequency.exponentialRampToValueAtTime(Math.max(55, (freq || 440) * 0.55), now + (duration || 0.1));
+            gain.gain.setValueAtTime(volume || 0.12, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + (duration || 0.1));
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now);
+            osc.stop(now + (duration || 0.1));
+          } catch (_e) {}
+        },
+      };
+
+      function syncAudioButtons() {
+        const label = appState.muted ? '🔇 SFX OFF' : '🔊 SFX ON';
+        ['sidebar-audio-btn', 'arcade-sfx-btn'].forEach(function (id) {
+          const btn = byId(id);
+          if (btn) btn.textContent = label;
+        });
+      }
+
+      function toggleMuteState() {
+        appState.muted = !appState.muted;
+        syncAudioButtons();
+        if (!appState.muted) SynthAudio.beep(660, 0.12, 'triangle', 0.12);
+        showToast(appState.muted ? 'WebAudio SFX muted' : 'WebAudio SFX enabled', 'info');
+      }
+
+      // =====================================================================
+      // NAVIGATION & MOBILE DRAWER
+      // =====================================================================
+      function setMobileDrawerOpen(open) {
+        const sidebar = byId('sidebar');
+        const backdrop = byId('sidebar-backdrop');
+        if (sidebar) {
+          if (open) sidebar.classList.remove('-translate-x-full');
+          else sidebar.classList.add('-translate-x-full');
+        }
+        if (backdrop) {
+          if (open) backdrop.classList.remove('hidden');
+          else backdrop.classList.add('hidden');
+        }
+      }
+
+      function switchTab(tabName) {
+        const validTabs = ['overview', 'arcade', 'games', 'ai', 'habitat', 'settings'];
+        const nextTab = validTabs.indexOf(tabName) >= 0 ? tabName : 'overview';
+        appState.activeTab = nextTab;
+
+        document.querySelectorAll('.app-view').forEach(function (sec) {
+          if (sec.id === 'view-' + nextTab) sec.classList.remove('hidden');
+          else sec.classList.add('hidden');
+        });
+
+        document.querySelectorAll('.nav-tab-btn').forEach(function (btn) {
+          const isCurrent = btn.getAttribute('data-tab') === nextTab;
+          if (isCurrent) {
+            btn.classList.add('bg-[#00f0ff]/12', 'text-[#00f0ff]', 'border-[#00f0ff]/40', 'font-semibold');
+            btn.classList.remove('text-slate-300', 'border-transparent', 'font-medium');
+          } else {
+            btn.classList.remove('bg-[#00f0ff]/12', 'text-[#00f0ff]', 'border-[#00f0ff]/40', 'font-semibold');
+            btn.classList.add('text-slate-300', 'border-transparent', 'font-medium');
+          }
+        });
+
+        setMobileDrawerOpen(false);
+
+        if (nextTab === 'arcade') {
+          resizeArcadeCanvas();
+          renderArcadeIdleFrame();
+        } else if (nextTab === 'habitat') {
+          drawHabitatChart();
+        }
+      }
+
+      function syncCohereIndicators() {
+        const live = appState.apiKey.trim().length > 8;
+        const modelText = appState.model;
+
+        const topDot = byId('topbar-ai-dot');
+        const topLabel = byId('topbar-ai-label');
+        const navPill = byId('nav-ai-pill');
+        const navDot = byId('nav-key-dot');
+        const hubModel = byId('hub-ai-model-val');
+        const hubSub = byId('hub-ai-mode-sub');
+        const aiBadge = byId('ai-view-mode-badge');
+
+        if (hubModel) hubModel.textContent = modelText;
+
+        if (live) {
+          if (topDot) topDot.className = 'w-2 h-2 rounded-full bg-[#10b981] animate-pulse';
+          if (topLabel) { topLabel.textContent = 'Cohere v2 Live'; topLabel.className = 'text-[#10b981]'; }
+          if (navPill) { navPill.textContent = 'LIVE'; navPill.className = 'text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30'; }
+          if (navDot) navDot.className = 'w-2.5 h-2.5 rounded-full bg-[#10b981]';
+          if (hubSub) { hubSub.textContent = 'Mode: Live Cohere v2'; hubSub.className = 'text-xs text-[#10b981] mt-1 font-mono'; }
+          if (aiBadge) { aiBadge.textContent = 'Live · ' + modelText; aiBadge.className = 'text-xs font-mono px-2.5 py-0.5 rounded-full bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30'; }
+        } else {
+          if (topDot) topDot.className = 'w-2 h-2 rounded-full bg-amber-400';
+          if (topLabel) { topLabel.textContent = 'Cohere: Fallback'; topLabel.className = 'text-amber-300'; }
+          if (navPill) { navPill.textContent = 'FALLBACK'; navPill.className = 'text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30'; }
+          if (navDot) navDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400';
+          if (hubSub) { hubSub.textContent = 'Mode: Smart Fallback'; hubSub.className = 'text-xs text-amber-300 mt-1 font-mono'; }
+          if (aiBadge) { aiBadge.textContent = 'Fallback Mode'; aiBadge.className = 'text-xs font-mono px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30'; }
+        }
+      }
+
+      // =====================================================================
+      // 1. COCO AI CO-PILOT (COHERE V2) + SANITIZED MESSAGES
+      // =====================================================================
+      function sanitizeCohereMessages(rawList, latestPrompt) {
+        const systemMessage = {
+          role: 'system',
+          content: 'You are COCO, the AI Co-Pilot inside NeroLinkXZ. Help with the 6 playable HTML5 Canvas engines (Tactical Orbital Siege, Subterranean Driller, Rhythm Pulse Matrix, Gravity Pinball / Cyber Bouncer, Rogue Dungeon Crawler, Asteroid Mining & Bounty Runner), the 178-title Games Vault, coding, and Nibbles & Coco dwarf hamster habitat telemetry. Be clear and helpful.',
+        };
+
+        const cleanedHistory = [];
+        const source = Array.isArray(rawList) ? rawList.slice(-8) : [];
+        for (let i = 0; i < source.length; i++) {
+          const item = source[i];
+          if (!item || typeof item !== 'object') continue;
+          const role = item.role === 'assistant' ? 'assistant' : (item.role === 'user' ? 'user' : null);
+          if (!role) continue;
+          const text = typeof item.content === 'string' ? item.content.trim() : '';
+          if (!text) continue;
+          if (role === 'assistant' && text.indexOf('⚠️') === 0) continue;
+          // Strictly include ONLY { role, content }
+          cleanedHistory.push({ role: role, content: text });
+        }
+
+        cleanedHistory.push({ role: 'user', content: String(latestPrompt).trim() });
+        return [systemMessage].concat(cleanedHistory);
+      }
+
+      async function requestCohereV2(promptText) {
+        const payload = {
+          model: appState.model || 'command-a-plus-05-2026',
+          messages: sanitizeCohereMessages(appState.chatHistory, promptText),
+          temperature: 0.6,
+        };
+
+        const response = await fetch('https://api.cohere.com/v2/chat', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + appState.apiKey.trim(),
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          let errMsg = 'HTTP ' + response.status;
+          try {
+            const errJson = await response.json();
+            if (errJson && errJson.message) errMsg += ' — ' + errJson.message;
+          } catch (_e) {}
+          throw new Error(errMsg);
+        }
+
+        const data = await response.json();
+        const blocks = data && data.message && Array.isArray(data.message.content) ? data.message.content : [];
+        const textBlock = blocks.find(function (b) { return b && typeof b.text === 'string'; });
+        if (textBlock && textBlock.text.trim()) return textBlock.text.trim();
+        throw new Error('Empty response content from Cohere v2');
+      }
+
+      function buildSmartFallback(promptText) {
+        const lower = String(promptText || '').toLowerCase();
+        if (lower.indexOf('nibbles') >= 0 || lower.indexOf('pico') >= 0 || lower.indexOf('hamster') >= 0) {
+          return 'Nibbles (Pearl Winter White dwarf hamster) thrives around 19°C–23°C with plenty of burrowing bedding and occasional dried mealworms. Use the Nibbles & Coco Habitat tab to log treats or adjust night lighting.';
+        }
+        if (lower.indexOf('orbital') >= 0 || lower.indexOf('siege') >= 0 || lower.indexOf('roguelike') >= 0) {
+          return 'In Tactical Orbital Siege, aim and fire directional pulses at incoming siege waves while building combos. In the 178-title vault, try Hades II, Hollow Knight: Silksong, Dead Cells, or Rogue Dungeon Crawler.';
+        }
+        return 'COCO Smart Fallback active (no Cohere API key saved yet). Add your key in "Cohere API & System" to use live ' + appState.model + ' responses.';
+      }
+
+      function renderChatFeeds() {
+        const mainFeed = byId('ai-chat-feed');
+        const drawerFeed = byId('quick-drawer-feed');
+        if (!mainFeed && !drawerFeed) return;
+
+        function fillContainer(target) {
+          if (!target) return;
+          target.innerHTML = '';
+          appState.chatHistory.forEach(function (entry) {
+            const isUser = entry.role === 'user';
+            const row = document.createElement('div');
+            row.className = 'flex flex-col ' + (isUser ? 'items-end' : 'items-start');
+
+            const meta = document.createElement('span');
+            meta.className = 'text-[10px] font-mono text-slate-500 mb-0.5';
+            meta.textContent = isUser ? 'YOU' : ('COCO' + (entry.sourceLabel ? ' · ' + entry.sourceLabel : ''));
+
+            const bubble = document.createElement('div');
+            bubble.className = 'max-w-[90%] px-3.5 py-2.5 rounded-2xl whitespace-pre-wrap leading-relaxed ' + (
+              isUser
+                ? 'bg-[#00f0ff]/15 border border-[#00f0ff]/35 text-cyan-50'
+                : 'bg-[#0f172a] border border-slate-800 text-slate-200'
+            );
+            bubble.textContent = entry.content;
+
+            row.appendChild(meta);
+            row.appendChild(bubble);
+            target.appendChild(row);
+          });
+          target.scrollTop = target.scrollHeight;
+        }
+
+        fillContainer(mainFeed);
+        fillContainer(drawerFeed);
+      }
+
+      function resetChatHistory() {
+        appState.chatHistory = [
+          {
+            role: 'assistant',
+            content: 'COCO Co-Pilot online. Ask about any of the 6 playable engines, search the 178-title Games Vault, or check Nibbles & Coco habitat telemetry.',
+            sourceLabel: appState.apiKey.trim().length > 8 ? 'COHERE V2' : 'FALLBACK',
+          },
+        ];
+        writeStorage(KEYS.CHAT, JSON.stringify(appState.chatHistory));
+        renderChatFeeds();
+      }
+
+      async function sendChatMessage(rawPrompt) {
+        const text = String(rawPrompt || '').trim();
+        if (!text) return;
+
+        appState.chatHistory.push({ role: 'user', content: text });
+        writeStorage(KEYS.CHAT, JSON.stringify(appState.chatHistory));
+        renderChatFeeds();
+
+        const sendBtn = byId('ai-send-btn');
+        if (sendBtn) sendBtn.disabled = true;
+
+        try {
+          if (appState.apiKey.trim().length > 8) {
+            const answer = await requestCohereV2(text);
+            appState.chatHistory.push({ role: 'assistant', content: answer, sourceLabel: appState.model });
+          } else {
+            const fallback = buildSmartFallback(text);
+            appState.chatHistory.push({ role: 'assistant', content: fallback, sourceLabel: 'FALLBACK' });
+          }
+        } catch (err) {
+          appState.chatHistory.push({
+            role: 'assistant',
+            content: '⚠️ Cohere v2 request error: ' + (err && err.message ? err.message : 'Unknown error'),
+            sourceLabel: 'ERROR',
+          });
+        } finally {
+          if (sendBtn) sendBtn.disabled = false;
+          writeStorage(KEYS.CHAT, JSON.stringify(appState.chatHistory));
+          renderChatFeeds();
+        }
+      }
+
+      function setQuickDrawerOpen(open) {
+        const panel = byId('quick-drawer-panel');
+        if (!panel) return;
+        if (open) panel.classList.remove('hidden');
+        else panel.classList.add('hidden');
+      }
+
+      // =====================================================================
+      // 2. SIX DISTINCT PLAYABLE HTML5 CANVAS ENGINES
+      // =====================================================================
+      const ENGINES = [
+        {
+          id: 'orbital_siege',
+          name: 'Tactical Orbital Siege',
+          short: 'Orbital Siege',
+          badge: 'ORBITAL DEFENSE',
+          desc: 'Orbiting defense platforms & directional turret firing at incoming siege waves. Aim & fire with Mouse/Touch or WASD/Arrows + Space.',
+          guide: 'Move/Aim: Mouse/Touch or WASD/Arrows · Fire Pulse: Click/Tap or Space',
+        },
+        {
+          id: 'sub_driller',
+          name: 'Subterranean Driller',
+          short: 'Sub Driller',
+          badge: 'MINING DIGGER',
+          desc: 'Dig downward through mineral & rock layers, collect gems/fuel, and avoid hazard pockets. Use WASD/Arrows or on-screen directional buttons.',
+          guide: 'Dig/Move: WASD / Arrow Keys or D-Pad buttons · Collect gems & fuel',
+        },
+        {
+          id: 'rhythm_matrix',
+          name: 'Rhythm Pulse Matrix',
+          short: 'Rhythm Matrix',
+          badge: '4-LANE BEAT',
+          desc: '4-lane neon beat tiles falling toward hit zones with combo multiplier & WebAudio synth notes. Press D/F/J/K or 1/2/3/4 or tap/click lanes.',
+          guide: 'Hit Lanes: D / F / J / K or 1 / 2 / 3 / 4 or Tap/Click any of the 4 lanes',
+        },
+        {
+          id: 'gravity_bouncer',
+          name: 'Gravity Pinball / Cyber Bouncer',
+          short: 'Pinball Bouncer',
+          badge: 'CYBER PINBALL',
+          desc: 'Bounce a high-energy orb off angled flippers & bumpers to smash targets and build combos. Left/Right arrows, A/D, or tap/click left/right.',
+          guide: 'Flippers: Left/Right Arrows or A/D or Tap/Click Left/Right half · Space/Up: Boost',
+        },
+        {
+          id: 'rogue_crawler',
+          name: 'Rogue Dungeon Crawler',
+          short: 'Dungeon Crawler',
+          badge: 'ROOM CRAWLER',
+          desc: 'Grid-based room/corridor dungeon crawler with enemy patrols, loot/health pickups, and attack/dash. WASD/Arrows to move, Click/Space to strike & dash.',
+          guide: 'Move: WASD / Arrows or D-Pad · Attack/Dash: Click/Tap or Space/Action',
+        },
+        {
+          id: 'asteroid_runner',
+          name: 'Asteroid Mining & Bounty Runner',
+          short: 'Asteroid Runner',
+          badge: 'ZERO-G RUNNER',
+          desc: 'Pilot a thruster craft in zero-G to blast/mine ore asteroids, collect bounties, and dodge debris. WASD/Arrows or mouse/touch steering + fire/boost.',
+          guide: 'Steer/Thrust: WASD / Arrows or Mouse/Touch · Fire/Boost: Space / Action / Click',
+        },
+      ];
+
+      const gameLoop = {
+        engineId: 'orbital_siege',
+        running: false,
+        paused: false,
+        score: 0,
+        combo: 1,
+        rafId: null,
+        lastTime: 0,
+        keys: {},
+        pointer: { x: 240, y: 180, active: false },
+        particles: [],
+        // Engine-specific states
+        orbital: { angle: 0, turretAngle: -Math.PI / 2, fireCd: 0, spawnCd: 30, projectiles: [], enemies: [], hull: 100 },
+        driller: { cols: 16, rows: 14, grid: [], px: 7, py: 1, fuel: 100, hull: 100, depth: 0, stepCd: 0 },
+        rhythm: { notes: [], spawnTimer: 0, flash: [0, 0, 0, 0], streak: 0, lastHitText: 'READY' },
+        bouncer: { ball: { x: 220, y: 120, vx: 3.1, vy: 2.2, r: 9 }, leftFlip: 0, rightFlip: 0, bumpers: [], targets: [] },
+        rogue: { tile: 28, cols: 16, rows: 12, px: 2, py: 2, hp: 100, dashCd: 0, enemies: [], pickups: [], stepCd: 0 },
+        asteroid: { x: 240, y: 200, vx: 0, vy: 0, angle: -Math.PI / 2, hull: 100, fireCd: 0, bullets: [], rocks: [], bounties: [], spawnCd: 45 },
+      };
+
+      function getEngineMeta(id) {
+        return ENGINES.find(function (e) { return e.id === id; }) || ENGINES[0];
+      }
+
+      function spawnBurst(x, y, color, count) {
+        const n = count || 10;
+        for (let i = 0; i < n; i++) {
+          const ang = (Math.PI * 2 * i) / n + Math.random() * 0.4;
+          const spd = 1.5 + Math.random() * 3.5;
+          gameLoop.particles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(ang) * spd,
+            vy: Math.sin(ang) * spd,
+            life: 22 + Math.floor(Math.random() * 12),
+            color: color || '#00f0ff',
+          });
+        }
+      }
+
+      function updateArcadeHud() {
+        const meta = getEngineMeta(gameLoop.engineId);
+        const nameEl = byId('hud-engine-name');
+        const scoreEl = byId('hud-score');
+        const comboEl = byId('hud-combo');
+        const bestEl = byId('hud-best');
+        const statusEl = byId('hud-status');
+        const guideEl = byId('arcade-controls-guide');
+        const subEl = byId('arcade-engine-subtitle');
+
+        if (nameEl) nameEl.textContent = meta.name;
+        if (scoreEl) scoreEl.textContent = String(gameLoop.score);
+        if (comboEl) comboEl.textContent = 'x' + gameLoop.combo;
+        if (bestEl) bestEl.textContent = String(appState.highScores[meta.id] || 0);
+        if (guideEl) guideEl.textContent = meta.guide;
+        if (subEl) subEl.textContent = meta.desc;
+
+        if (statusEl) {
+          if (!gameLoop.running) statusEl.textContent = 'STATUS: READY';
+          else if (gameLoop.paused) statusEl.textContent = 'STATUS: PAUSED';
+          else statusEl.textContent = 'STATUS: ACTIVE';
+        }
+      }
+
+      function saveHighScoreIfBetter() {
+        const id = gameLoop.engineId;
+        const prev = Number(appState.highScores[id] || 0);
+        if (gameLoop.score > prev) {
+          appState.highScores[id] = gameLoop.score;
+          writeStorage(KEYS.SCORES, JSON.stringify(appState.highScores));
+          renderOverviewEngineCards();
+        }
+        updateArcadeHud();
+      }
+
+      function resizeArcadeCanvas() {
+        const canvas = byId('arcade-canvas');
+        if (!canvas || !canvas.parentElement) return;
+        const rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = Math.max(320, Math.floor(rect.width));
+        canvas.height = Math.max(260, Math.floor(rect.height));
+      }
+
+      function initEngineState(id) {
+        const canvas = byId('arcade-canvas');
+        const w = canvas ? canvas.width : 640;
+        const h = canvas ? canvas.height : 400;
+
+        gameLoop.score = 0;
+        gameLoop.combo = 1;
+        gameLoop.particles = [];
+        gameLoop.pointer.x = w * 0.5;
+        gameLoop.pointer.y = h * 0.5;
+
+        if (id === 'orbital_siege') {
+          gameLoop.orbital = {
+            angle: 0,
+            turretAngle: -Math.PI / 2,
+            fireCd: 0,
+            spawnCd: 25,
+            projectiles: [],
+            enemies: [],
+            hull: 100,
+          };
+        } else if (id === 'sub_driller') {
+          const cols = 16;
+          const rows = 14;
+          const grid = [];
+          for (let r = 0; r < rows; r++) {
+            const row = [];
+            for (let c = 0; c < cols; c++) {
+              if (r <= 1) {
+                row.push('empty');
+              } else {
+                const roll = Math.random();
+                if (roll < 0.14) row.push('empty');
+                else if (roll < 0.24) row.push('hazard');
+                else if (roll < 0.36) row.push('fuel');
+                else if (roll < 0.54) row.push('gem');
+                else row.push('rock');
+              }
+            }
+            grid.push(row);
+          }
+          grid[1][7] = 'empty';
+          gameLoop.driller = { cols: cols, rows: rows, grid: grid, px: 7, py: 1, fuel: 100, hull: 100, depth: 0, stepCd: 0 };
+        } else if (id === 'rhythm_matrix') {
+          gameLoop.rhythm = { notes: [], spawnTimer: 18, flash: [0, 0, 0, 0], streak: 0, lastHitText: 'HIT NOTES!' };
+        } else if (id === 'gravity_bouncer') {
+          const cx = w * 0.5;
+          gameLoop.bouncer = {
+            ball: { x: cx, y: h * 0.25, vx: 3.0, vy: 2.0, r: 9 },
+            leftFlip: 0,
+            rightFlip: 0,
+            bumpers: [
+              { x: cx - 70, y: h * 0.32, r: 18, hit: 0 },
+              { x: cx + 70, y: h * 0.32, r: 18, hit: 0 },
+              { x: cx, y: h * 0.44, r: 21, hit: 0 },
+            ],
+            targets: [
+              { x: cx - 110, y: h * 0.52, active: true },
+              { x: cx - 36, y: h * 0.56, active: true },
+              { x: cx + 36, y: h * 0.56, active: true },
+              { x: cx + 110, y: h * 0.52, active: true },
+            ],
+          };
+        } else if (id === 'rogue_crawler') {
+          const cols = 16;
+          const rows = 12;
+          const enemies = [
+            { x: cols - 3, y: 3, hp: 30, cd: 20 },
+            { x: cols - 4, y: rows - 3, hp: 30, cd: 35 },
+            { x: Math.floor(cols / 2) + 2, y: rows - 3, hp: 40, cd: 28 },
+          ];
+          const pickups = [
+            { x: 6, y: 4, kind: 'gem' },
+            { x: cols - 5, y: 6, kind: 'heal' },
+            { x: 4, y: rows - 3, kind: 'gem' },
+          ];
+          gameLoop.rogue = { tile: 28, cols: cols, rows: rows, px: 2, py: 2, hp: 100, dashCd: 0, enemies: enemies, pickups: pickups, stepCd: 0 };
+        } else if (id === 'asteroid_runner') {
+          const rocks = [];
+          for (let i = 0; i < 5; i++) {
+            rocks.push({
+              x: 60 + Math.random() * Math.max(120, w - 120),
+              y: 50 + Math.random() * Math.max(100, h - 140),
+              vx: (Math.random() - 0.5) * 2.4,
+              vy: (Math.random() - 0.5) * 2.4,
+              r: 22,
+            });
+          }
+          gameLoop.asteroid = {
+            x: w * 0.5,
+            y: h * 0.5,
+            vx: 0,
+            vy: 0,
+            angle: -Math.PI / 2,
+            hull: 100,
+            fireCd: 0,
+            bullets: [],
+            rocks: rocks,
+            bounties: [],
+            spawnCd: 55,
+          };
+        }
+      }
+
+      function selectEngine(id, autoStart) {
+        const meta = getEngineMeta(id);
+        gameLoop.engineId = meta.id;
+        gameLoop.running = false;
+        gameLoop.paused = false;
+        if (gameLoop.rafId) {
+          cancelAnimationFrame(gameLoop.rafId);
+          gameLoop.rafId = null;
+        }
+
+        const pauseBtn = byId('arcade-pause-btn');
+        if (pauseBtn) pauseBtn.textContent = '⏸ Pause';
+
+        const titleEl = byId('overlay-title');
+        const descEl = byId('overlay-desc');
+        const startBtn = byId('overlay-start-btn');
+        const overlay = byId('arcade-overlay');
+
+        if (titleEl) titleEl.textContent = meta.name;
+        if (descEl) descEl.textContent = meta.desc;
+        if (startBtn) startBtn.textContent = '▶ Start Engine';
+
+        renderEngineSwitcherButtons();
+        resizeArcadeCanvas();
+        initEngineState(meta.id);
+        updateArcadeHud();
+
+        if (autoStart) {
+          startArcadeEngine();
+        } else if (overlay) {
+          overlay.classList.remove('hidden');
+          renderArcadeIdleFrame();
+        }
+      }
+
+      function startArcadeEngine() {
+        SynthAudio.unlock();
+        resizeArcadeCanvas();
+        initEngineState(gameLoop.engineId);
+        gameLoop.running = true;
+        gameLoop.paused = false;
+        gameLoop.lastTime = performance.now();
+        const pauseBtn = byId('arcade-pause-btn');
+        if (pauseBtn) pauseBtn.textContent = '⏸ Pause';
+        const overlay = byId('arcade-overlay');
+        if (overlay) overlay.classList.add('hidden');
+        updateArcadeHud();
+        SynthAudio.beep(520, 0.14, 'triangle', 0.13);
+        if (gameLoop.rafId) cancelAnimationFrame(gameLoop.rafId);
+        gameLoop.rafId = requestAnimationFrame(stepArcadeFrame);
+      }
+
+      function toggleArcadePause() {
+        if (!gameLoop.running) return;
+        gameLoop.paused = !gameLoop.paused;
+        const pauseBtn = byId('arcade-pause-btn');
+        if (pauseBtn) pauseBtn.textContent = gameLoop.paused ? '▶ Resume' : '⏸ Pause';
+        updateArcadeHud();
+        if (!gameLoop.paused) {
+          gameLoop.lastTime = performance.now();
+          gameLoop.rafId = requestAnimationFrame(stepArcadeFrame);
+        }
+      }
+
+      function finishEngineRun(reasonText) {
+        gameLoop.running = false;
+        gameLoop.paused = false;
+        if (gameLoop.rafId) {
+          cancelAnimationFrame(gameLoop.rafId);
+          gameLoop.rafId = null;
+        }
+        saveHighScoreIfBetter();
+        SynthAudio.beep(190, 0.3, 'sawtooth', 0.15);
+
+        const meta = getEngineMeta(gameLoop.engineId);
+        const titleEl = byId('overlay-title');
+        const descEl = byId('overlay-desc');
+        const startBtn = byId('overlay-start-btn');
+        const overlay = byId('arcade-overlay');
+        if (titleEl) titleEl.textContent = meta.name + ' · Score ' + gameLoop.score;
+        if (descEl) descEl.textContent = reasonText + ' Best score: ' + (appState.highScores[meta.id] || gameLoop.score) + '.';
+        if (startBtn) startBtn.textContent = '↻ Play Again';
+        if (overlay) overlay.classList.remove('hidden');
+      }
+
+      // Engine actions (fire, dig, rhythm hit, flipper, dash, thrust)
+      function fireOrbitalPulse() {
+        const canvas = byId('arcade-canvas');
+        if (!canvas) return;
+        const cx = canvas.width * 0.5;
+        const cy = canvas.height * 0.52;
+        const orb = gameLoop.orbital;
+        if (orb.fireCd > 0) return;
+        orb.fireCd = 11;
+        const ang = orb.turretAngle;
+        orb.projectiles.push({
+          x: cx + Math.cos(ang) * 28,
+          y: cy + Math.sin(ang) * 28,
+          vx: Math.cos(ang) * 8.5,
+          vy: Math.sin(ang) * 8.5,
+          life: 65,
+        });
+        SynthAudio.beep(760, 0.08, 'sawtooth', 0.1);
+      }
+
+      function moveDrillerStep(dc, dr) {
+        const d = gameLoop.driller;
+        if (d.stepCd > 0) return;
+        const nc = d.px + dc;
+        const nr = d.py + dr;
+        if (nc < 0 || nc >= d.cols || nr < 0 || nr >= d.rows) return;
+
+        d.stepCd = 7;
+        d.fuel = Math.max(0, d.fuel - 1.1);
+        const cell = d.grid[nr][nc];
+        const cellW = (byId('arcade-canvas') ? byId('arcade-canvas').width : 480) / d.cols;
+        const cellH = (byId('arcade-canvas') ? byId('arcade-canvas').height : 360) / d.rows;
+
+        if (cell === 'hazard') {
+          d.hull -= 25;
+          gameLoop.combo = 1;
+          spawnBurst(nc * cellW + cellW * 0.5, nr * cellH + cellH * 0.5, '#ff2a85', 12);
+          SynthAudio.beep(150, 0.18, 'square', 0.14);
+          if (d.hull <= 0) {
+            finishEngineRun('Driller hull breached on a subterranean hazard pocket!');
+            return;
+          }
+        } else {
+          if (cell === 'gem') {
+            gameLoop.score += 50 * gameLoop.combo;
+            gameLoop.combo = Math.min(8, gameLoop.combo + 1);
+            spawnBurst(nc * cellW + cellW * 0.5, nr * cellH + cellH * 0.5, '#00f0ff', 10);
+            SynthAudio.beep(880, 0.1, 'triangle', 0.12);
+          } else if (cell === 'fuel') {
+            d.fuel = Math.min(100, d.fuel + 35);
+            gameLoop.score += 25 * gameLoop.combo;
+            spawnBurst(nc * cellW + cellW * 0.5, nr * cellH + cellH * 0.5, '#10b981', 10);
+            SynthAudio.beep(620, 0.1, 'sine', 0.12);
+          } else if (cell === 'rock') {
+            gameLoop.score += 10 * gameLoop.combo;
+            SynthAudio.beep(260, 0.06, 'sawtooth', 0.08);
+          }
+          d.grid[nr][nc] = 'empty';
+          d.px = nc;
+          d.py = nr;
+          if (nr > d.depth) {
+            d.depth = nr;
+            gameLoop.score += 15;
+          }
+        }
+
+        if (d.fuel <= 0) {
+          finishEngineRun('Drill power cell ran dry at depth ' + d.depth + '!');
+          return;
+        }
+        saveHighScoreIfBetter();
+      }
+
+      function hitRhythmLane(laneIdx) {
+        const canvas = byId('arcade-canvas');
+        const h = canvas ? canvas.height : 400;
+        const w = canvas ? canvas.width : 640;
+        const hitY = h - 54;
+        const r = gameLoop.rhythm;
+        if (laneIdx < 0 || laneIdx > 3) return;
+
+        r.flash[laneIdx] = 9;
+        const laneCenter = (laneIdx + 0.5) * (w / 4);
+        let bestIndex = -1;
+        let bestDist = 42;
+
+        for (let i = 0; i < r.notes.length; i++) {
+          const n = r.notes[i];
+          if (!n.hit && n.lane === laneIdx) {
+            const dist = Math.abs(n.y - hitY);
+            if (dist < bestDist) {
+              bestDist = dist;
+              bestIndex = i;
+            }
+          }
+        }
+
+        if (bestIndex >= 0) {
+          r.notes[bestIndex].hit = true;
+          r.streak += 1;
+          gameLoop.combo = 1 + Math.floor(r.streak / 4);
+          const pts = (bestDist < 16 ? 120 : 75) * gameLoop.combo;
+          gameLoop.score += pts;
+          r.lastHitText = bestDist < 16 ? 'PERFECT!' : 'GREAT!';
+          spawnBurst(laneCenter, hitY, bestDist < 16 ? '#00f0ff' : '#10b981', 10);
+          SynthAudio.beep(520 + laneIdx * 110, 0.1, 'triangle', 0.13);
+          saveHighScoreIfBetter();
+        } else {
+          r.streak = 0;
+          gameLoop.combo = 1;
+          r.lastHitText = 'MISS';
+          SynthAudio.beep(180, 0.08, 'sawtooth', 0.08);
+          updateArcadeHud();
+        }
+      }
+
+      function pulseFlipper(side) {
+        const b = gameLoop.bouncer;
+        if (side === 'left') b.leftFlip = 9;
+        else b.rightFlip = 9;
+        const dx = b.ball.x - (side === 'left' ? b.ball.x - 10 : b.ball.x + 10);
+        if (b.ball.y > (byId('arcade-canvas') ? byId('arcade-canvas').height - 95 : 260)) {
+          b.ball.vy = -Math.abs(b.ball.vy) - 2.2;
+          b.ball.vx += (side === 'left' ? 1.8 : -1.8) + (dx * 0.02);
+          SynthAudio.beep(590, 0.09, 'triangle', 0.11);
+        }
+      }
+
+      function stepRoguePlayer(dc, dr) {
+        const rg = gameLoop.rogue;
+        if (rg.stepCd > 0) return;
+        const nc = Math.max(0, Math.min(rg.cols - 1, rg.px + dc));
+        const nr = Math.max(0, Math.min(rg.rows - 1, rg.py + dr));
+        rg.stepCd = 7;
+
+        // Attack enemy if occupying target cell
+        const enemyIdx = rg.enemies.findIndex(function (e) { return e.x === nc && e.y === nr; });
+        if (enemyIdx >= 0) {
+          const en = rg.enemies[enemyIdx];
+          en.hp -= 20;
+          gameLoop.score += 30 * gameLoop.combo;
+          SynthAudio.beep(420, 0.09, 'sawtooth', 0.12);
+          if (en.hp <= 0) {
+            rg.enemies.splice(enemyIdx, 1);
+            gameLoop.score += 120 * gameLoop.combo;
+            gameLoop.combo = Math.min(8, gameLoop.combo + 1);
+            SynthAudio.beep(780, 0.14, 'triangle', 0.14);
+            if (rg.enemies.length === 0) {
+              // Spawn next dungeon floor
+              gameLoop.score += 250;
+              rg.enemies.push(
+                { x: rg.cols - 2, y: 2, hp: 35, cd: 20 },
+                { x: rg.cols - 3, y: rg.rows - 2, hp: 45, cd: 25 }
+              );
+              rg.pickups.push({ x: Math.floor(rg.cols / 2), y: Math.floor(rg.rows / 2), kind: 'heal' });
+              showToast('Dungeon floor cleared! Next wave spawned (+250)', 'success');
+            }
+          }
+          saveHighScoreIfBetter();
+          return;
+        }
+
+        rg.px = nc;
+        rg.py = nr;
+
+        const pIdx = rg.pickups.findIndex(function (p) { return p.x === nc && p.y === nr; });
+        if (pIdx >= 0) {
+          const pk = rg.pickups[pIdx];
+          rg.pickups.splice(pIdx, 1);
+          if (pk.kind === 'heal') {
+            rg.hp = Math.min(100, rg.hp + 25);
+            SynthAudio.beep(700, 0.12, 'sine', 0.12);
+          } else {
+            gameLoop.score += 80 * gameLoop.combo;
+            gameLoop.combo = Math.min(8, gameLoop.combo + 1);
+            SynthAudio.beep(860, 0.12, 'triangle', 0.12);
+          }
+          saveHighScoreIfBetter();
+        }
+      }
+
+      function fireAsteroidShot() {
+        const a = gameLoop.asteroid;
+        if (a.fireCd > 0) return;
+        a.fireCd = 10;
+        a.bullets.push({
+          x: a.x + Math.cos(a.angle) * 16,
+          y: a.y + Math.sin(a.angle) * 16,
+          vx: Math.cos(a.angle) * 8 + a.vx * 0.35,
+          vy: Math.sin(a.angle) * 8 + a.vy * 0.35,
+          life: 55,
+        });
+        SynthAudio.beep(680, 0.07, 'square', 0.09);
+      }
+
+      function triggerPadControl(direction) {
+        if (!gameLoop.running || gameLoop.paused) return;
+        const id = gameLoop.engineId;
+        if (id === 'orbital_siege') {
+          if (direction === 'left') gameLoop.orbital.turretAngle -= 0.22;
+          else if (direction === 'right') gameLoop.orbital.turretAngle += 0.22;
+          else if (direction === 'up') gameLoop.orbital.turretAngle = -Math.PI / 2;
+          else if (direction === 'down') gameLoop.orbital.turretAngle = Math.PI / 2;
+          else fireOrbitalPulse();
+        } else if (id === 'sub_driller') {
+          if (direction === 'left') moveDrillerStep(-1, 0);
+          else if (direction === 'right') moveDrillerStep(1, 0);
+          else if (direction === 'up') moveDrillerStep(0, -1);
+          else if (direction === 'down' || direction === 'action') moveDrillerStep(0, 1);
+        } else if (id === 'rhythm_matrix') {
+          if (direction === 'left') hitRhythmLane(0);
+          else if (direction === 'down') hitRhythmLane(1);
+          else if (direction === 'up') hitRhythmLane(2);
+          else if (direction === 'right') hitRhythmLane(3);
+          else hitRhythmLane(Math.floor(Math.random() * 4));
+        } else if (id === 'gravity_bouncer') {
+          if (direction === 'left' || direction === 'down') pulseFlipper('left');
+          else if (direction === 'right') pulseFlipper('right');
+          else {
+            gameLoop.bouncer.ball.vy = -7.5;
+            SynthAudio.beep(540, 0.1, 'triangle', 0.11);
+          }
+        } else if (id === 'rogue_crawler') {
+          if (direction === 'left') stepRoguePlayer(-1, 0);
+          else if (direction === 'right') stepRoguePlayer(1, 0);
+          else if (direction === 'up') stepRoguePlayer(0, -1);
+          else if (direction === 'down') stepRoguePlayer(0, 1);
+          else {
+            // Dash toward aim / nearest enemy
+            const en = gameLoop.rogue.enemies[0];
+            if (en) {
+              const dc = Math.sign(en.x - gameLoop.rogue.px);
+              const dr = Math.sign(en.y - gameLoop.rogue.py);
+              stepRoguePlayer(dc || 1, dr);
+            }
+          }
+        } else if (id === 'asteroid_runner') {
+          const a = gameLoop.asteroid;
+          if (direction === 'left') a.angle -= 0.25;
+          else if (direction === 'right') a.angle += 0.25;
+          else if (direction === 'up') {
+            a.vx += Math.cos(a.angle) * 1.4;
+            a.vy += Math.sin(a.angle) * 1.4;
+            SynthAudio.beep(310, 0.09, 'sawtooth', 0.1);
+          } else if (direction === 'down') {
+            a.vx *= 0.72;
+            a.vy *= 0.72;
+          } else {
+            fireAsteroidShot();
+          }
+        }
+      }
+
+      function renderScene(ctx, w, h) {
+        ctx.fillStyle = '#040710';
+        ctx.fillRect(0, 0, w, h);
+
+        // Subtle grid
+        ctx.strokeStyle = 'rgba(0, 240, 255, 0.06)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < w; x += 32) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+        }
+        for (let y = 0; y < h; y += 32) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+        }
+
+        const id = gameLoop.engineId;
+
+        if (id === 'orbital_siege') {
+          const cx = w * 0.5;
+          const cy = h * 0.52;
+          const radius = Math.min(w, h) * 0.26;
+          const orb = gameLoop.orbital;
+
+          // Orbit ring & defense platforms
+          ctx.strokeStyle = 'rgba(0, 240, 255, 0.35)';
+          ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI * 2); ctx.stroke();
+
+          for (let p = 0; p < 3; p++) {
+            const pa = orb.angle + (p * Math.PI * 2) / 3;
+            const px = cx + Math.cos(pa) * radius;
+            const py = cy + Math.sin(pa) * radius;
+            ctx.fillStyle = '#ff2a85';
+            ctx.beginPath(); ctx.arc(px, py, 8, 0, Math.PI * 2); ctx.fill();
+          }
+
+          // Central core & directional turret barrel
+          ctx.fillStyle = '#10b981';
+          ctx.beginPath(); ctx.arc(cx, cy, 16, 0, Math.PI * 2); ctx.fill();
+
+          ctx.strokeStyle = '#00f0ff';
+          ctx.lineWidth = 5;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx + Math.cos(orb.turretAngle) * 30, cy + Math.sin(orb.turretAngle) * 30);
+          ctx.stroke();
+
+          // Projectiles
+          ctx.fillStyle = '#00f0ff';
+          orb.projectiles.forEach(function (pr) {
+            ctx.beginPath(); ctx.arc(pr.x, pr.y, 4.5, 0, Math.PI * 2); ctx.fill();
+          });
+
+          // Siege enemies
+          orb.enemies.forEach(function (en) {
+            ctx.fillStyle = '#ff2a85';
+            ctx.beginPath(); ctx.arc(en.x, en.y, 11, 0, Math.PI * 2); ctx.fill();
+          });
+
+          ctx.fillStyle = '#cbd5e1';
+          ctx.font = '12px "JetBrains Mono", monospace';
+          ctx.fillText('CORE HULL: ' + orb.hull + '%', 14, 24);
+        } else if (id === 'sub_driller') {
+          const d = gameLoop.driller;
+          const cw = w / d.cols;
+          const ch = h / d.rows;
+          const palette = {
+            empty: '#070e1c',
+            rock: '#334155',
+            gem: '#00f0ff',
+            fuel: '#10b981',
+            hazard: '#ff2a85',
+          };
+
+          for (let r = 0; r < d.rows; r++) {
+            for (let c = 0; c < d.cols; c++) {
+              const t = d.grid[r][c];
+              ctx.fillStyle = palette[t] || '#1e293b';
+              ctx.fillRect(c * cw + 1, r * ch + 1, cw - 2, ch - 2);
+            }
+          }
+
+          // Drill rig
+          ctx.fillStyle = '#facc15';
+          ctx.fillRect(d.px * cw + 3, d.py * ch + 3, cw - 6, ch - 6);
+
+          ctx.fillStyle = '#e2e8f0';
+          ctx.font = '12px "JetBrains Mono", monospace';
+          ctx.fillText('FUEL: ' + Math.round(d.fuel) + '%  HULL: ' + d.hull + '%  DEPTH: ' + d.depth, 12, 20);
+        } else if (id === 'rhythm_matrix') {
+          const r = gameLoop.rhythm;
+          const laneW = w / 4;
+          const hitY = h - 54;
+          const keysLabel = ['D / 1', 'F / 2', 'J / 3', 'K / 4'];
+
+          for (let i = 0; i < 4; i++) {
+            ctx.fillStyle = r.flash[i] > 0 ? 'rgba(0, 240, 255, 0.18)' : (i % 2 === 0 ? '#070d1c' : '#0a1224');
+            ctx.fillRect(i * laneW, 0, laneW - 2, h);
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = 'bold 12px "JetBrains Mono", monospace';
+            ctx.fillText(keysLabel[i], i * laneW + laneW * 0.5 - 20, hitY + 26);
+          }
+
+          ctx.fillStyle = 'rgba(255, 42, 133, 0.24)';
+          ctx.fillRect(0, hitY - 10, w, 20);
+
+          r.notes.forEach(function (n) {
+            if (!n.hit) {
+              ctx.fillStyle = n.lane % 2 === 0 ? '#00f0ff' : '#ff2a85';
+              ctx.fillRect(n.lane * laneW + 10, n.y - 8, laneW - 22, 16);
+            }
+          });
+
+          ctx.fillStyle = '#10b981';
+          ctx.font = 'bold 14px "JetBrains Mono", monospace';
+          ctx.fillText(r.lastHitText + ' · STREAK ' + r.streak, 14, 24);
+        } else if (id === 'gravity_bouncer') {
+          const b = gameLoop.bouncer;
+          const flipY = h - 44;
+
+          b.bumpers.forEach(function (bm) {
+            ctx.fillStyle = bm.hit > 0 ? '#00f0ff' : '#ff2a85';
+            ctx.beginPath(); ctx.arc(bm.x, bm.y, bm.r, 0, Math.PI * 2); ctx.fill();
+          });
+
+          b.targets.forEach(function (tg) {
+            ctx.fillStyle = tg.active ? '#10b981' : '#1e293b';
+            ctx.fillRect(tg.x - 14, tg.y - 7, 28, 14);
+          });
+
+          // Left & Right flippers
+          ctx.strokeStyle = '#00f0ff';
+          ctx.lineWidth = 8;
+          const lAng = b.leftFlip > 0 ? -0.45 : 0.22;
+          const rAng = b.rightFlip > 0 ? Math.PI + 0.45 : Math.PI - 0.22;
+          ctx.beginPath();
+          ctx.moveTo(w * 0.28, flipY);
+          ctx.lineTo(w * 0.28 + Math.cos(lAng) * 68, flipY + Math.sin(lAng) * 68);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(w * 0.72, flipY);
+          ctx.lineTo(w * 0.72 + Math.cos(rAng) * 68, flipY + Math.sin(rAng) * 68);
+          ctx.stroke();
+
+          // Orb
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath(); ctx.arc(b.ball.x, b.ball.y, b.ball.r, 0, Math.PI * 2); ctx.fill();
+        } else if (id === 'rogue_crawler') {
+          const rg = gameLoop.rogue;
+          const cw = w / rg.cols;
+          const ch = h / rg.rows;
+
+          for (let r = 0; r < rg.rows; r++) {
+            for (let c = 0; c < rg.cols; c++) {
+              ctx.strokeStyle = 'rgba(148, 163, 184, 0.12)';
+              ctx.strokeRect(c * cw, r * ch, cw, ch);
+            }
+          }
+
+          rg.pickups.forEach(function (pk) {
+            ctx.fillStyle = pk.kind === 'heal' ? '#10b981' : '#facc15';
+            ctx.beginPath();
+            ctx.arc((pk.x + 0.5) * cw, (pk.y + 0.5) * ch, Math.min(cw, ch) * 0.26, 0, Math.PI * 2);
+            ctx.fill();
+          });
+
+          rg.enemies.forEach(function (en) {
+            ctx.fillStyle = '#ff2a85';
+            ctx.fillRect(en.x * cw + 4, en.y * ch + 4, cw - 8, ch - 8);
+          });
+
+          ctx.fillStyle = '#00f0ff';
+          ctx.beginPath();
+          ctx.arc((rg.px + 0.5) * cw, (rg.py + 0.5) * ch, Math.min(cw, ch) * 0.34, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = '#e2e8f0';
+          ctx.font = '12px "JetBrains Mono", monospace';
+          ctx.fillText('HP: ' + rg.hp + ' · ENEMIES: ' + rg.enemies.length, 12, 20);
+        } else if (id === 'asteroid_runner') {
+          const a = gameLoop.asteroid;
+
+          a.rocks.forEach(function (rk) {
+            ctx.strokeStyle = '#ff2a85';
+            ctx.lineWidth = 2.2;
+            ctx.beginPath(); ctx.arc(rk.x, rk.y, rk.r, 0, Math.PI * 2); ctx.stroke();
+          });
+
+          a.bounties.forEach(function (bn) {
+            ctx.fillStyle = '#10b981';
+            ctx.fillRect(bn.x - 6, bn.y - 6, 12, 12);
+          });
+
+          ctx.fillStyle = '#00f0ff';
+          a.bullets.forEach(function (bl) {
+            ctx.beginPath(); ctx.arc(bl.x, bl.y, 4, 0, Math.PI * 2); ctx.fill();
+          });
+
+          ctx.save();
+          ctx.translate(a.x, a.y);
+          ctx.rotate(a.angle);
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.moveTo(15, 0);
+          ctx.lineTo(-11, -10);
+          ctx.lineTo(-6, 0);
+          ctx.lineTo(-11, 10);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+
+          ctx.fillStyle = '#e2e8f0';
+          ctx.font = '12px "JetBrains Mono", monospace';
+          ctx.fillText('HULL: ' + a.hull + '%', 12, 20);
+        }
+
+        // Particles
+        for (let i = gameLoop.particles.length - 1; i >= 0; i--) {
+          const pt = gameLoop.particles[i];
+          ctx.fillStyle = pt.color;
+          ctx.globalAlpha = Math.max(0, pt.life / 30);
+          ctx.fillRect(pt.x - 2.5, pt.y - 2.5, 5, 5);
+          ctx.globalAlpha = 1;
+        }
+      }
+
+      function renderArcadeIdleFrame() {
+        const canvas = byId('arcade-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (ctx) renderScene(ctx, canvas.width, canvas.height);
+      }
+
+      function stepArcadeFrame(now) {
+        if (!gameLoop.running || gameLoop.paused) return;
+        const canvas = byId('arcade-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width;
+        const h = canvas.height;
+        const dt = Math.min(2, Math.max(0.5, (now - gameLoop.lastTime) / 16.67));
+        gameLoop.lastTime = now;
+
+        const id = gameLoop.engineId;
+
+        if (id === 'orbital_siege') {
+          const cx = w * 0.5;
+          const cy = h * 0.52;
+          const orb = gameLoop.orbital;
+          orb.angle += 0.025 * dt;
+          if (orb.fireCd > 0) orb.fireCd--;
+
+          if (gameLoop.keys['ArrowLeft'] || gameLoop.keys['KeyA']) orb.turretAngle -= 0.055 * dt;
+          if (gameLoop.keys['ArrowRight'] || gameLoop.keys['KeyD']) orb.turretAngle += 0.055 * dt;
+          if (gameLoop.pointer.active) {
+            orb.turretAngle = Math.atan2(gameLoop.pointer.y - cy, gameLoop.pointer.x - cx);
+          }
+          if (gameLoop.keys['Space']) fireOrbitalPulse();
+
+          orb.spawnCd -= dt;
+          if (orb.spawnCd <= 0) {
+            orb.spawnCd = 42;
+            const spawnAng = Math.random() * Math.PI * 2;
+            const dist = Math.max(w, h) * 0.55;
+            orb.enemies.push({
+              x: cx + Math.cos(spawnAng) * dist,
+              y: cy + Math.sin(spawnAng) * dist,
+              spd: 1.25 + Math.min(1.6, gameLoop.score / 2500),
+            });
+          }
+
+          for (let i = orb.projectiles.length - 1; i >= 0; i--) {
+            const pr = orb.projectiles[i];
+            pr.x += pr.vx * dt;
+            pr.y += pr.vy * dt;
+            pr.life -= dt;
+            if (pr.life <= 0 || pr.x < 0 || pr.x > w || pr.y < 0 || pr.y > h) {
+              orb.projectiles.splice(i, 1);
+            }
+          }
+
+          for (let i = orb.enemies.length - 1; i >= 0; i--) {
+            const en = orb.enemies[i];
+            const ang = Math.atan2(cy - en.y, cx - en.x);
+            en.x += Math.cos(ang) * en.spd * dt;
+            en.y += Math.sin(ang) * en.spd * dt;
+
+            let hitByShot = false;
+            for (let j = orb.projectiles.length - 1; j >= 0; j--) {
+              const pr = orb.projectiles[j];
+              if (Math.hypot(pr.x - en.x, pr.y - en.y) < 16) {
+                orb.projectiles.splice(j, 1);
+                hitByShot = true;
+                break;
+              }
+            }
+
+            if (hitByShot) {
+              spawnBurst(en.x, en.y, '#00f0ff', 10);
+              orb.enemies.splice(i, 1);
+              gameLoop.score += 50 * gameLoop.combo;
+              gameLoop.combo = Math.min(10, gameLoop.combo + 1);
+              SynthAudio.beep(540, 0.09, 'triangle', 0.11);
+              saveHighScoreIfBetter();
+            } else if (Math.hypot(cx - en.x, cy - en.y) < 22) {
+              orb.enemies.splice(i, 1);
+              orb.hull -= 20;
+              gameLoop.combo = 1;
+              spawnBurst(cx, cy, '#ff2a85', 14);
+              SynthAudio.beep(160, 0.18, 'sawtooth', 0.13);
+              if (orb.hull <= 0) {
+                finishEngineRun('Orbital defense core was breached by siege waves!');
+                return;
+              }
+              updateArcadeHud();
+            }
+          }
+        } else if (id === 'sub_driller') {
+          const d = gameLoop.driller;
+          if (d.stepCd > 0) d.stepCd--;
+          if (gameLoop.keys['ArrowLeft'] || gameLoop.keys['KeyA']) moveDrillerStep(-1, 0);
+          else if (gameLoop.keys['ArrowRight'] || gameLoop.keys['KeyD']) moveDrillerStep(1, 0);
+          else if (gameLoop.keys['ArrowUp'] || gameLoop.keys['KeyW']) moveDrillerStep(0, -1);
+          else if (gameLoop.keys['ArrowDown'] || gameLoop.keys['KeyS']) moveDrillerStep(0, 1);
+        } else if (id === 'rhythm_matrix') {
+          const r = gameLoop.rhythm;
+          const hitY = h - 54;
+          for (let i = 0; i < 4; i++) {
+            if (r.flash[i] > 0) r.flash[i]--;
+          }
+          r.spawnTimer -= dt;
+          if (r.spawnTimer <= 0) {
+            r.spawnTimer = 26;
+            r.notes.push({ lane: Math.floor(Math.random() * 4), y: -12, hit: false });
+          }
+          for (let i = r.notes.length - 1; i >= 0; i--) {
+            const n = r.notes[i];
+            n.y += 4.3 * dt;
+            if (n.y > hitY + 34) {
+              if (!n.hit) {
+                r.streak = 0;
+                gameLoop.combo = 1;
+                r.lastHitText = 'MISSED';
+                updateArcadeHud();
+              }
+              r.notes.splice(i, 1);
+            }
+          }
+        } else if (id === 'gravity_bouncer') {
+          const b = gameLoop.bouncer;
+          const ball = b.ball;
+          if (b.leftFlip > 0) b.leftFlip--;
+          if (b.rightFlip > 0) b.rightFlip--;
+          if (gameLoop.keys['ArrowLeft'] || gameLoop.keys['KeyA']) pulseFlipper('left');
+          if (gameLoop.keys['ArrowRight'] || gameLoop.keys['KeyD']) pulseFlipper('right');
+
+          ball.vy += 0.16 * dt;
+          ball.x += ball.vx * dt;
+          ball.y += ball.vy * dt;
+
+          if (ball.x - ball.r < 8) { ball.x = 8 + ball.r; ball.vx = Math.abs(ball.vx); }
+          if (ball.x + ball.r > w - 8) { ball.x = w - 8 - ball.r; ball.vx = -Math.abs(ball.vx); }
+          if (ball.y - ball.r < 8) { ball.y = 8 + ball.r; ball.vy = Math.abs(ball.vy); }
+
+          b.bumpers.forEach(function (bm) {
+            if (bm.hit > 0) bm.hit--;
+            const dist = Math.hypot(ball.x - bm.x, ball.y - bm.y);
+            if (dist < ball.r + bm.r) {
+              const ang = Math.atan2(ball.y - bm.y, ball.x - bm.x);
+              ball.vx = Math.cos(ang) * 5.2;
+              ball.vy = Math.sin(ang) * 5.2;
+              bm.hit = 8;
+              gameLoop.score += 75 * gameLoop.combo;
+              gameLoop.combo = Math.min(10, gameLoop.combo + 1);
+              spawnBurst(bm.x, bm.y, '#00f0ff', 8);
+              SynthAudio.beep(640, 0.08, 'triangle', 0.1);
+              saveHighScoreIfBetter();
+            }
+          });
+
+          b.targets.forEach(function (tg) {
+            if (tg.active && Math.abs(ball.x - tg.x) < 20 && Math.abs(ball.y - tg.y) < 14) {
+              tg.active = false;
+              ball.vy = -Math.abs(ball.vy) * 1.05;
+              gameLoop.score += 150 * gameLoop.combo;
+              spawnBurst(tg.x, tg.y, '#10b981', 10);
+              SynthAudio.beep(790, 0.1, 'sine', 0.11);
+              if (b.targets.every(function (x) { return !x.active; })) {
+                b.targets.forEach(function (x) { x.active = true; });
+                gameLoop.score += 300;
+              }
+              saveHighScoreIfBetter();
+            }
+          });
+
+          // Flipper deck bounce
+          const flipY = h - 44;
+          if (ball.y + ball.r >= flipY && ball.vy > 0) {
+            if (ball.x > w * 0.22 && ball.x < w * 0.78) {
+              ball.vy = -Math.max(5.8, Math.abs(ball.vy) * 0.96);
+              ball.vx += (ball.x - w * 0.5) * 0.025;
+              SynthAudio.beep(460, 0.07, 'triangle', 0.09);
+            }
+          }
+
+          if (ball.y - ball.r > h + 16) {
+            finishEngineRun('Orb dropped below the cyber flippers!');
+            return;
+          }
+        } else if (id === 'rogue_crawler') {
+          const rg = gameLoop.rogue;
+          if (rg.stepCd > 0) rg.stepCd--;
+          if (gameLoop.keys['ArrowLeft'] || gameLoop.keys['KeyA']) stepRoguePlayer(-1, 0);
+          else if (gameLoop.keys['ArrowRight'] || gameLoop.keys['KeyD']) stepRoguePlayer(1, 0);
+          else if (gameLoop.keys['ArrowUp'] || gameLoop.keys['KeyW']) stepRoguePlayer(0, -1);
+          else if (gameLoop.keys['ArrowDown'] || gameLoop.keys['KeyS']) stepRoguePlayer(0, 1);
+
+          for (let i = 0; i < rg.enemies.length; i++) {
+            const en = rg.enemies[i];
+            en.cd -= dt;
+            if (en.cd <= 0) {
+              en.cd = 26;
+              const dc = Math.sign(rg.px - en.x);
+              const dr = Math.sign(rg.py - en.y);
+              const nx = Math.max(0, Math.min(rg.cols - 1, en.x + dc));
+              const ny = Math.max(0, Math.min(rg.rows - 1, en.y + dr));
+              if (nx === rg.px && ny === rg.py) {
+                rg.hp -= 12;
+                gameLoop.combo = 1;
+                SynthAudio.beep(175, 0.14, 'sawtooth', 0.12);
+                if (rg.hp <= 0) {
+                  finishEngineRun('Overwhelmed by dungeon patrols!');
+                  return;
+                }
+                updateArcadeHud();
+              } else {
+                en.x = nx;
+                en.y = ny;
+              }
+            }
+          }
+        } else if (id === 'asteroid_runner') {
+          const a = gameLoop.asteroid;
+          if (a.fireCd > 0) a.fireCd--;
+          if (gameLoop.keys['ArrowLeft'] || gameLoop.keys['KeyA']) a.angle -= 0.065 * dt;
+          if (gameLoop.keys['ArrowRight'] || gameLoop.keys['KeyD']) a.angle += 0.065 * dt;
+          if (gameLoop.keys['ArrowUp'] || gameLoop.keys['KeyW']) {
+            a.vx += Math.cos(a.angle) * 0.18 * dt;
+            a.vy += Math.sin(a.angle) * 0.18 * dt;
+          }
+          if (gameLoop.keys['Space']) fireAsteroidShot();
+
+          a.vx *= 0.99;
+          a.vy *= 0.99;
+          a.x = (a.x + a.vx * dt + w) % w;
+          a.y = (a.y + a.vy * dt + h) % h;
+
+          a.spawnCd -= dt;
+          if (a.spawnCd <= 0 && a.rocks.length < 7) {
+            a.spawnCd = 75;
+            a.rocks.push({
+              x: Math.random() * w,
+              y: 12,
+              vx: (Math.random() - 0.5) * 2.5,
+              vy: 1.2 + Math.random() * 1.4,
+              r: 20,
+            });
+          }
+
+          for (let i = a.bullets.length - 1; i >= 0; i--) {
+            const bl = a.bullets[i];
+            bl.x += bl.vx * dt;
+            bl.y += bl.vy * dt;
+            bl.life -= dt;
+            if (bl.life <= 0) a.bullets.splice(i, 1);
+          }
+
+          for (let i = a.rocks.length - 1; i >= 0; i--) {
+            const rk = a.rocks[i];
+            rk.x = (rk.x + rk.vx * dt + w) % w;
+            rk.y = (rk.y + rk.vy * dt + h) % h;
+
+            let destroyed = false;
+            for (let j = a.bullets.length - 1; j >= 0; j--) {
+              const bl = a.bullets[j];
+              if (Math.hypot(bl.x - rk.x, bl.y - rk.y) < rk.r + 4) {
+                a.bullets.splice(j, 1);
+                destroyed = true;
+                break;
+              }
+            }
+
+            if (destroyed) {
+              a.rocks.splice(i, 1);
+              a.bounties.push({ x: rk.x, y: rk.y });
+              gameLoop.score += 65 * gameLoop.combo;
+              gameLoop.combo = Math.min(10, gameLoop.combo + 1);
+              spawnBurst(rk.x, rk.y, '#ff2a85', 10);
+              SynthAudio.beep(480, 0.1, 'triangle', 0.11);
+              saveHighScoreIfBetter();
+            } else if (Math.hypot(a.x - rk.x, a.y - rk.y) < rk.r + 10) {
+              a.rocks.splice(i, 1);
+              a.hull -= 25;
+              gameLoop.combo = 1;
+              spawnBurst(a.x, a.y, '#ff2a85', 12);
+              SynthAudio.beep(155, 0.16, 'sawtooth', 0.13);
+              if (a.hull <= 0) {
+                finishEngineRun('Craft hull shattered in the asteroid belt!');
+                return;
+              }
+              updateArcadeHud();
+            }
+          }
+
+          for (let i = a.bounties.length - 1; i >= 0; i--) {
+            const bn = a.bounties[i];
+            if (Math.hypot(a.x - bn.x, a.y - bn.y) < 18) {
+              a.bounties.splice(i, 1);
+              gameLoop.score += 100 * gameLoop.combo;
+              SynthAudio.beep(920, 0.11, 'sine', 0.12);
+              saveHighScoreIfBetter();
+            }
+          }
+        }
+
+        // Update particles
+        for (let i = gameLoop.particles.length - 1; i >= 0; i--) {
+          const pt = gameLoop.particles[i];
+          pt.x += pt.vx * dt;
+          pt.y += pt.vy * dt;
+          pt.life -= dt;
+          if (pt.life <= 0) gameLoop.particles.splice(i, 1);
+        }
+
+        if (ctx) renderScene(ctx, w, h);
+        gameLoop.rafId = requestAnimationFrame(stepArcadeFrame);
+      }
+
+      function renderEngineSwitcherButtons() {
+        const box = byId('arcade-engine-switcher');
+        if (!box) return;
+        box.innerHTML = '';
+        ENGINES.forEach(function (eng) {
+          const active = eng.id === gameLoop.engineId;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'px-3 py-2.5 rounded-xl text-xs font-mono border text-left transition-all ' + (
+            active
+              ? 'bg-[#00f0ff]/18 text-[#00f0ff] border-[#00f0ff] font-bold'
+              : 'bg-[#070b14] text-slate-300 hover:text-white border-slate-800 hover:border-slate-600'
+          );
+          btn.textContent = eng.short;
+          btn.addEventListener('click', function () {
+            selectEngine(eng.id, false);
+          });
+          box.appendChild(btn);
+        });
+      }
+
+      function renderOverviewEngineCards() {
+        const box = byId('overview-engine-cards');
+        if (!box) return;
+        box.innerHTML = '';
+        ENGINES.forEach(function (eng) {
+          const best = appState.highScores[eng.id] || 0;
+          const card = document.createElement('div');
+          card.className = 'p-4 rounded-xl bg-[#070c18] border border-slate-800 hover:border-[#00f0ff]/45 flex flex-col justify-between gap-3 transition-colors';
+
+          const top = document.createElement('div');
+          const badge = document.createElement('div');
+          badge.className = 'text-[10px] font-mono text-[#ff2a85] uppercase';
+          badge.textContent = eng.badge + ' · BEST ' + best;
+          const title = document.createElement('div');
+          title.className = 'font-extrabold text-white text-sm mt-0.5';
+          title.textContent = eng.name;
+          const desc = document.createElement('p');
+          desc.className = 'text-xs text-slate-400 mt-1 line-clamp-2';
+          desc.textContent = eng.desc;
+          top.appendChild(badge);
+          top.appendChild(title);
+          top.appendChild(desc);
+
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'w-full py-2 px-3 rounded-xl bg-[#00f0ff]/15 hover:bg-[#00f0ff]/25 text-[#00f0ff] border border-[#00f0ff]/35 text-xs font-mono font-bold transition-colors';
+          btn.textContent = '▶ Play ' + eng.short;
+          btn.addEventListener('click', function () {
+            switchTab('arcade');
+            selectEngine(eng.id, true);
+          });
+
+          card.appendChild(top);
+          card.appendChild(btn);
+          box.appendChild(card);
+        });
+      }
+
+      // =====================================================================
+      // 3. 178-TITLE GAMES VAULT
+      // =====================================================================
+      const GENRES = ['Action', 'RPG', 'Roguelike', 'Racing', 'Rhythm', 'Strategy'];
+
+      function build178GamesCatalog() {
+        const curated = [
+          { title: 'Hades II', genre: 'Roguelike', rating: 9.8, year: 2024, platform: 'PC', engineId: 'rogue_crawler' },
+          { title: 'Hollow Knight: Silksong', genre: 'Action', rating: 9.9, year: 2025, platform: 'PC / Console', engineId: 'rogue_crawler' },
+          { title: 'Cyberpunk 2077: Phantom Liberty', genre: 'RPG', rating: 9.6, year: 2023, platform: 'PC / Console', engineId: 'orbital_siege' },
+          { title: 'TrackMania (2020)', genre: 'Racing', rating: 9.5, year: 2020, platform: 'PC / Console', engineId: 'gravity_bouncer' },
+          { title: 'Geometry Dash 2.2', genre: 'Rhythm', rating: 9.8, year: 2023, platform: 'PC / Mobile', engineId: 'rhythm_matrix' },
+          { title: 'Factorio: Space Age', genre: 'Strategy', rating: 9.9, year: 2024, platform: 'PC', engineId: 'orbital_siege' },
+          { title: 'Elden Ring: Shadow of the Erdtree', genre: 'RPG', rating: 9.9, year: 2024, platform: 'PC / Console', engineId: 'rogue_crawler' },
+          { title: 'Deep Rock Galactic', genre: 'Action', rating: 9.7, year: 2020, platform: 'PC / Console', engineId: 'sub_driller' },
+          { title: 'Balatro', genre: 'Roguelike', rating: 9.8, year: 2024, platform: 'Multi', engineId: 'rhythm_matrix' },
+          { title: 'BeamNG.drive', genre: 'Racing', rating: 9.7, year: 2015, platform: 'PC', engineId: 'gravity_bouncer' },
+          { title: 'Beat Saber', genre: 'Rhythm', rating: 9.7, year: 2019, platform: 'PC / VR', engineId: 'rhythm_matrix' },
+          { title: 'Into the Breach', genre: 'Strategy', rating: 9.5, year: 2018, platform: 'Multi', engineId: 'rogue_crawler' },
+          { title: 'No Man\'s Sky', genre: 'Action', rating: 9.3, year: 2016, platform: 'Multi', engineId: 'asteroid_runner' },
+          { title: 'Dead Cells', genre: 'Roguelike', rating: 9.6, year: 2018, platform: 'Multi', engineId: 'rogue_crawler' },
+          { title: 'Terraria', genre: 'Action', rating: 9.8, year: 2011, platform: 'Multi', engineId: 'sub_driller' },
+          { title: 'Hi-Fi RUSH', genre: 'Rhythm', rating: 9.6, year: 2023, platform: 'PC / Console', engineId: 'rhythm_matrix' },
+          { title: 'Forza Horizon 5', genre: 'Racing', rating: 9.5, year: 2021, platform: 'PC / Xbox', engineId: 'gravity_bouncer' },
+          { title: 'RimWorld', genre: 'Strategy', rating: 9.8, year: 2018, platform: 'PC / Console', engineId: 'sub_driller' },
+        ];
+
+        const prefixByGenre = {
+          Action: ['Neon Striker', 'Hyper Voxel', 'Pulse Vanguard', 'Zero-G Breach', 'Cyber Drift Ops', 'Flux Ranger'],
+          RPG: ['Chronicle of', 'Starlight Saga', 'Astral Oath', 'Aether Quest', 'Shadow Covenant', 'Mythic Frontier'],
+          Roguelike: ['Crypt Loop', 'Infinity Shard', 'Abyssal Seed', 'Echo Dungeon', 'Fracture Run', 'Prism Delve'],
+          Racing: ['Turbo Apex', 'Maglev Circuit', 'Nitro Vector', 'Sonic Slipstream', 'Overdrive GP', 'Grid Rush'],
+          Rhythm: ['Synth Beat', 'Bassline Rush', 'Tempo Nova', 'Wave Grid', 'Pulse Sequencer', 'Laser Cadence'],
+          Strategy: ['Orbital Bastion', 'Sector Command', 'Relay Architect', 'Core Syndicate', 'Tactical Grid', 'Hive Matrix'],
+        };
+
+        const list = [];
+        for (let i = 0; i < 178; i++) {
+          if (i < curated.length) {
+            const c = curated[i];
+            list.push({
+              id: i + 1,
+              title: c.title,
+              genre: c.genre,
+              rating: c.rating,
+              year: c.year,
+              platform: c.platform,
+              engineId: c.engineId,
+            });
+          } else {
+            const genre = GENRES[i % GENRES.length];
+            const eng = ENGINES[i % ENGINES.length];
+            const pool = prefixByGenre[genre];
+            const prefix = pool[i % pool.length];
+            const edition = ['DX', 'Zero', '2099', 'Overdrive', 'Prime', 'Redux'][i % 6];
+            const year = 2016 + (i % 11);
+            const rating = Number((8.4 + ((i * 7) % 15) * 0.1).toFixed(1));
+            list.push({
+              id: i + 1,
+              title: prefix + ' ' + edition + ' #' + (i + 1),
+              genre: genre,
+              rating: rating,
+              year: year,
+              platform: i % 2 === 0 ? 'PC / Web' : 'PC / Console',
+              engineId: eng.id,
+            });
+          }
+        }
+        return list;
+      }
+
+      const GAMES_178 = build178GamesCatalog();
+
+      function renderGenrePills() {
+        const box = byId('vault-genre-pills');
+        if (!box) return;
+        box.innerHTML = '';
+        ['All'].concat(GENRES).forEach(function (g) {
+          const active = appState.selectedGenre === g;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'px-3 py-1.5 rounded-xl text-xs font-mono border transition-colors ' + (
+            active
+              ? 'bg-[#00f0ff]/20 text-[#00f0ff] border-[#00f0ff] font-bold'
+              : 'bg-[#070b14] text-slate-300 hover:text-white border-slate-800'
+          );
+          btn.textContent = g;
+          btn.addEventListener('click', function () {
+            appState.selectedGenre = g;
+            renderGenrePills();
+            renderGamesVault();
+          });
+          box.appendChild(btn);
+        });
+      }
+
+      function toggleFavorite(gameId) {
+        const idx = appState.favorites.indexOf(gameId);
+        if (idx >= 0) appState.favorites.splice(idx, 1);
+        else appState.favorites.push(gameId);
+        writeStorage(KEYS.FAVS, JSON.stringify(appState.favorites));
+        renderGamesVault();
+      }
+
+      function launchGameEngine(game) {
+        if (!game) return;
+        const targetEngine = game.engineId || 'orbital_siege';
+        switchTab('arcade');
+        selectEngine(targetEngine, true);
+        showToast('Launched ' + game.title + ' → ' + getEngineMeta(targetEngine).short, 'success');
+      }
+
+      function renderGamesVault() {
+        const grid = byId('vault-games-grid');
+        const countPill = byId('vault-count-pill');
+        const favCountEl = byId('vault-fav-count');
+        if (favCountEl) favCountEl.textContent = String(appState.favorites.length);
+        if (!grid) return;
+
+        const q = appState.searchQuery.trim().toLowerCase();
+        const items = GAMES_178.filter(function (g) {
+          if (appState.favoritesOnly && appState.favorites.indexOf(g.id) < 0) return false;
+          if (appState.selectedGenre !== 'All' && g.genre !== appState.selectedGenre) return false;
+          if (q) {
+            const hay = (g.title + ' ' + g.genre + ' ' + g.platform).toLowerCase();
+            if (hay.indexOf(q) < 0) return false;
+          }
+          return true;
+        }).slice();
+
+        if (appState.sortBy === 'rating') {
+          items.sort(function (a, b) { return b.rating - a.rating; });
+        } else if (appState.sortBy === 'year') {
+          items.sort(function (a, b) { return b.year - a.year; });
+        } else if (appState.sortBy === 'az') {
+          items.sort(function (a, b) { return a.title.localeCompare(b.title); });
+        }
+
+        if (countPill) countPill.textContent = items.length + ' / ' + GAMES_178.length + ' Titles';
+
+        grid.innerHTML = '';
+        if (items.length === 0) {
+          const empty = document.createElement('div');
+          empty.className = 'col-span-full p-8 rounded-2xl glass-panel text-center text-sm text-slate-400';
+          empty.textContent = 'No matching games in the 178-title vault.';
+          grid.appendChild(empty);
+          return;
+        }
+
+        items.forEach(function (game) {
+          const isFav = appState.favorites.indexOf(game.id) >= 0;
+          const engMeta = getEngineMeta(game.engineId);
+
+          const card = document.createElement('div');
+          card.className = 'p-4 rounded-2xl glass-panel hover:border-[#00f0ff]/45 flex flex-col justify-between gap-3 transition-colors';
+
+          const topRow = document.createElement('div');
+          topRow.className = 'flex items-center justify-between gap-2 text-[11px] font-mono';
+          const tagSpan = document.createElement('span');
+          tagSpan.className = 'text-[#00f0ff]';
+          tagSpan.textContent = '#' + game.id + ' · ' + game.genre + ' · ★ ' + game.rating.toFixed(1);
+
+          const favBtn = document.createElement('button');
+          favBtn.type = 'button';
+          favBtn.className = 'px-2 py-0.5 rounded-lg border text-xs ' + (isFav ? 'border-[#ff2a85] text-[#ff2a85] bg-[#ff2a85]/15' : 'border-slate-700 text-slate-400 hover:text-white');
+          favBtn.textContent = isFav ? '♥ Fav' : '♡ Fav';
+          favBtn.addEventListener('click', function (ev) {
+            ev.stopPropagation();
+            toggleFavorite(game.id);
+          });
+
+          topRow.appendChild(tagSpan);
+          topRow.appendChild(favBtn);
+
+          const titleEl = document.createElement('h3');
+          titleEl.className = 'font-extrabold text-white text-sm leading-snug';
+          titleEl.textContent = game.title;
+
+          const metaEl = document.createElement('div');
+          metaEl.className = 'text-[11px] font-mono text-slate-400';
+          metaEl.textContent = game.platform + ' · ' + game.year + ' · Engine: ' + engMeta.short;
+
+          const launchBtn = document.createElement('button');
+          launchBtn.type = 'button';
+          launchBtn.className = 'w-full py-2 px-3 rounded-xl bg-gradient-to-r from-[#00f0ff]/20 to-[#ff2a85]/20 hover:from-[#00f0ff]/30 hover:to-[#ff2a85]/30 border border-[#00f0ff]/40 text-xs font-mono font-bold text-white transition-colors';
+          launchBtn.textContent = '▶ Launch Engine';
+          launchBtn.addEventListener('click', function () {
+            launchGameEngine(game);
+          });
+
+          const body = document.createElement('div');
+          body.className = 'space-y-1.5';
+          body.appendChild(topRow);
+          body.appendChild(titleEl);
+          body.appendChild(metaEl);
+
+          card.appendChild(body);
+          card.appendChild(launchBtn);
+          grid.appendChild(card);
+        });
+      }
+
+      // Surprise Me Modal
+      function rollSurpriseGame() {
+        const pick = GAMES_178[Math.floor(Math.random() * GAMES_178.length)];
+        appState.surprisePick = pick;
+        const gEl = byId('surprise-genre');
+        const tEl = byId('surprise-title');
+        const eEl = byId('surprise-engine-tag');
+        if (gEl) gEl.textContent = '#' + pick.id + ' · ' + pick.genre + ' · ★ ' + pick.rating.toFixed(1);
+        if (tEl) tEl.textContent = pick.title;
+        if (eEl) eEl.textContent = 'Engine: ' + getEngineMeta(pick.engineId).name;
+      }
+
+      function setSurpriseModalOpen(open) {
+        const modal = byId('surprise-modal');
+        if (!modal) return;
+        if (open) {
+          rollSurpriseGame();
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        } else {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }
+      }
+
+      // =====================================================================
+      // 4. NIBBLES & COCO HABITAT + TELEMETRY
+      // =====================================================================
+      const habitatSeries = {
+        temp: [21.1, 21.2, 21.3, 21.4, 21.3, 21.2, 21.3, 21.4, 21.3, 21.3],
+        rpm: [24, 32, 41, 38, 29, 44, 36, 33, 39, 36],
+      };
+
+      function logHabitatEvent(msg) {
+        const logBox = byId('habitat-event-log');
+        if (!logBox) return;
+        const now = new Date();
+        const stamp = now.toTimeString().slice(0, 8);
+        const line = document.createElement('div');
+        line.textContent = '[' + stamp + '] ' + msg;
+        logBox.prepend(line);
+      }
+
+      function syncHabitatDisplays() {
+        const tempEl = byId('hab-temp-display');
+        const hubTempEl = byId('hub-temp-val');
+        const humEl = byId('hab-hum-display');
+        const wheelEl = byId('hab-wheel-display');
+        const distEl = byId('hab-dist-display');
+        const treatsEl = byId('hab-treats-display');
+        const hopperEl = byId('hab-hopper-display');
+        const lightBtn = byId('toggle-habitat-light-btn');
+        const fanBtn = byId('toggle-habitat-fan-btn');
+
+        if (tempEl) tempEl.textContent = appState.tempC.toFixed(1) + '°C';
+        if (hubTempEl) hubTempEl.textContent = appState.tempC.toFixed(1) + '°C';
+        if (humEl) humEl.textContent = appState.humidity + '% RH';
+        if (wheelEl) wheelEl.textContent = appState.wheelRpm + ' RPM';
+        if (distEl) distEl.textContent = 'Distance: ' + appState.wheelKm.toFixed(2) + ' km';
+        if (treatsEl) treatsEl.textContent = appState.treatsToday + ' today';
+        if (hopperEl) hopperEl.textContent = 'Hopper: ' + appState.hopperCount + ' treats';
+        if (lightBtn) lightBtn.textContent = appState.nightMode ? '🌙 Night Mode: ON' : '☀️ Day Mode: ON';
+        if (fanBtn) fanBtn.textContent = '🌀 Micro-Fan: ' + appState.fanMode;
+      }
+
+      function drawHabitatChart() {
+        const canvas = byId('habitat-chart-canvas');
+        if (!canvas || !canvas.parentElement) return;
+        const rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = Math.max(240, Math.floor(rect.width - 12));
+        canvas.height = Math.max(120, Math.floor(rect.height - 12));
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        // Temp line (#00f0ff)
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        habitatSeries.temp.forEach(function (v, i) {
+          const x = (i / (habitatSeries.temp.length - 1)) * w;
+          const y = h - ((v - 18) / 7) * (h - 16) - 8;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+
+        // Wheel RPM line (#ff2a85)
+        ctx.strokeStyle = '#ff2a85';
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        habitatSeries.rpm.forEach(function (v, i) {
+          const x = (i / (habitatSeries.rpm.length - 1)) * w;
+          const y = h - (v / 60) * (h - 16) - 8;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      }
+
+      // =====================================================================
+      // EVENT BINDING (ALL BUTTONS, FORMS, KEYS & POINTER)
+      // =====================================================================
+      function bindAllEvents() {
+        // Navigation tabs
+        document.querySelectorAll('.nav-tab-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            switchTab(btn.getAttribute('data-tab'));
+          });
+        });
+
+        // Mobile drawer
+        const menuBtn = byId('mobile-menu-btn');
+        const closeSideBtn = byId('close-sidebar-btn');
+        const backdrop = byId('sidebar-backdrop');
+        if (menuBtn) menuBtn.addEventListener('click', function () { setMobileDrawerOpen(true); });
+        if (closeSideBtn) closeSideBtn.addEventListener('click', function () { setMobileDrawerOpen(false); });
+        if (backdrop) backdrop.addEventListener('click', function () { setMobileDrawerOpen(false); });
+
+        // Audio & API shortcut buttons
+        const sideAudio = byId('sidebar-audio-btn');
+        const arcAudio = byId('arcade-sfx-btn');
+        const sideApi = byId('sidebar-open-api-btn');
+        const topAiBtn = byId('topbar-ai-status-btn');
+        const topArcadeBtn = byId('topbar-quick-arcade-btn');
+        if (sideAudio) sideAudio.addEventListener('click', toggleMuteState);
+        if (arcAudio) arcAudio.addEventListener('click', toggleMuteState);
+        if (sideApi) sideApi.addEventListener('click', function () { switchTab('settings'); });
+        if (topAiBtn) topAiBtn.addEventListener('click', function () { switchTab('ai'); });
+        if (topArcadeBtn) topArcadeBtn.addEventListener('click', function () { switchTab('arcade'); });
+
+        // Overview Hub buttons
+        const hubArcBtn = byId('hub-to-arcade-btn');
+        const hubGamesBtn = byId('hub-to-games-btn');
+        const hubQuickChatBtn = byId('hub-open-quick-chat-btn');
+        if (hubArcBtn) hubArcBtn.addEventListener('click', function () { switchTab('arcade'); });
+        if (hubGamesBtn) hubGamesBtn.addEventListener('click', function () { switchTab('games'); });
+        if (hubQuickChatBtn) hubQuickChatBtn.addEventListener('click', function () { setQuickDrawerOpen(true); });
+
+        // Arcade controls
+        const pauseBtn = byId('arcade-pause-btn');
+        const restartBtn = byId('arcade-restart-btn');
+        const startBtn = byId('overlay-start-btn');
+        if (pauseBtn) pauseBtn.addEventListener('click', toggleArcadePause);
+        if (restartBtn) restartBtn.addEventListener('click', startArcadeEngine);
+        if (startBtn) startBtn.addEventListener('click', startArcadeEngine);
+
+        // On-screen touch/click pads
+        const padMap = [
+          ['pad-left-btn', 'left'],
+          ['pad-up-btn', 'up'],
+          ['pad-down-btn', 'down'],
+          ['pad-right-btn', 'right'],
+          ['pad-action-btn', 'action'],
+        ];
+        padMap.forEach(function (pair) {
+          const el = byId(pair[0]);
+          if (el) {
+            el.addEventListener('click', function () {
+              triggerPadControl(pair[1]);
+            });
+          }
+        });
+
+        // Canvas pointer interactions
+        const canvas = byId('arcade-canvas');
+        if (canvas) {
+          canvas.addEventListener('pointermove', function (e) {
+            const rect = canvas.getBoundingClientRect();
+            gameLoop.pointer.x = e.clientX - rect.left;
+            gameLoop.pointer.y = e.clientY - rect.top;
+            gameLoop.pointer.active = true;
+          });
+          canvas.addEventListener('pointerleave', function () {
+            gameLoop.pointer.active = false;
+          });
+          canvas.addEventListener('pointerdown', function (e) {
+            if (!gameLoop.running || gameLoop.paused) return;
+            const rect = canvas.getBoundingClientRect();
+            const px = e.clientX - rect.left;
+            const py = e.clientY - rect.top;
+            gameLoop.pointer.x = px;
+            gameLoop.pointer.y = py;
+            gameLoop.pointer.active = true;
+
+            if (gameLoop.engineId === 'orbital_siege') {
+              const cx = canvas.width * 0.5;
+              const cy = canvas.height * 0.52;
+              gameLoop.orbital.turretAngle = Math.atan2(py - cy, px - cx);
+              fireOrbitalPulse();
+            } else if (gameLoop.engineId === 'rhythm_matrix') {
+              const lane = Math.max(0, Math.min(3, Math.floor(px / (rect.width / 4))));
+              hitRhythmLane(lane);
+            } else if (gameLoop.engineId === 'gravity_bouncer') {
+              pulseFlipper(px < rect.width * 0.5 ? 'left' : 'right');
+            } else if (gameLoop.engineId === 'rogue_crawler') {
+              const cw = canvas.width / gameLoop.rogue.cols;
+              const ch = canvas.height / gameLoop.rogue.rows;
+              const tc = Math.floor(px / cw);
+              const tr = Math.floor(py / ch);
+              stepRoguePlayer(Math.sign(tc - gameLoop.rogue.px), Math.sign(tr - gameLoop.rogue.py));
+            } else if (gameLoop.engineId === 'sub_driller') {
+              const cw = canvas.width / gameLoop.driller.cols;
+              const ch = canvas.height / gameLoop.driller.rows;
+              const tc = Math.floor(px / cw);
+              const tr = Math.floor(py / ch);
+              const dc = tc - gameLoop.driller.px;
+              const dr = tr - gameLoop.driller.py;
+              if (Math.abs(dc) >= Math.abs(dr)) moveDrillerStep(Math.sign(dc) || 1, 0);
+              else moveDrillerStep(0, Math.sign(dr) || 1);
+            } else if (gameLoop.engineId === 'asteroid_runner') {
+              gameLoop.asteroid.angle = Math.atan2(py - gameLoop.asteroid.y, px - gameLoop.asteroid.x);
+              fireAsteroidShot();
+            }
+          });
+        }
+
+        // Keyboard controls
+        window.addEventListener('keydown', function (e) {
+          gameLoop.keys[e.code] = true;
+          if (!gameLoop.running || gameLoop.paused || appState.activeTab !== 'arcade') return;
+          if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Space'].indexOf(e.code) >= 0) {
+            e.preventDefault();
+          }
+          if (gameLoop.engineId === 'rhythm_matrix') {
+            if (e.code === 'KeyD' || e.code === 'Digit1') hitRhythmLane(0);
+            else if (e.code === 'KeyF' || e.code === 'Digit2') hitRhythmLane(1);
+            else if (e.code === 'KeyJ' || e.code === 'Digit3') hitRhythmLane(2);
+            else if (e.code === 'KeyK' || e.code === 'Digit4') hitRhythmLane(3);
+          }
+        });
+
+        window.addEventListener('keyup', function (e) {
+          gameLoop.keys[e.code] = false;
+        });
+
+        // Games Vault controls
+        const searchInput = byId('vault-search-input');
+        const sortSelect = byId('vault-sort-select');
+        const favFilterBtn = byId('vault-fav-filter-btn');
+        const surpriseBtn = byId('vault-surprise-btn');
+        const surpriseReroll = byId('surprise-reroll-btn');
+        const surpriseLaunch = byId('surprise-launch-btn');
+        const surpriseClose = byId('surprise-close-btn');
+
+        if (searchInput) {
+          searchInput.addEventListener('input', function (e) {
+            appState.searchQuery = e.target.value || '';
+            renderGamesVault();
+          });
+        }
+        if (sortSelect) {
+          sortSelect.addEventListener('change', function (e) {
+            appState.sortBy = e.target.value || 'default';
+            renderGamesVault();
+          });
+        }
+        if (favFilterBtn) {
+          favFilterBtn.addEventListener('click', function () {
+            appState.favoritesOnly = !appState.favoritesOnly;
+            favFilterBtn.classList.toggle('border-[#ff2a85]', appState.favoritesOnly);
+            favFilterBtn.classList.toggle('text-[#ff2a85]', appState.favoritesOnly);
+            renderGamesVault();
+          });
+        }
+        if (surpriseBtn) surpriseBtn.addEventListener('click', function () { setSurpriseModalOpen(true); });
+        if (surpriseReroll) surpriseReroll.addEventListener('click', rollSurpriseGame);
+        if (surpriseLaunch) {
+          surpriseLaunch.addEventListener('click', function () {
+            const chosen = appState.surprisePick;
+            setSurpriseModalOpen(false);
+            if (chosen) launchGameEngine(chosen);
+          });
+        }
+        if (surpriseClose) surpriseClose.addEventListener('click', function () { setSurpriseModalOpen(false); });
+
+        // COCO AI form, presets, clear & quick drawer
+        const chatForm = byId('ai-chat-form');
+        const chatInput = byId('ai-chat-input');
+        const clearChatBtn = byId('ai-clear-history-btn');
+        const goSettingsBtn = byId('ai-go-settings-btn');
+        const drawerToggleBtn = byId('quick-drawer-toggle-btn');
+        const drawerCloseBtn = byId('quick-drawer-close-btn');
+        const drawerForm = byId('quick-drawer-form');
+        const drawerInput = byId('quick-drawer-input');
+
+        if (chatForm && chatInput) {
+          chatForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const val = chatInput.value;
+            chatInput.value = '';
+            sendChatMessage(val);
+          });
+        }
+        if (clearChatBtn) clearChatBtn.addEventListener('click', function () {
+          resetChatHistory();
+          showToast('COCO chat history cleared', 'info');
+        });
+        if (goSettingsBtn) goSettingsBtn.addEventListener('click', function () { switchTab('settings'); });
+
+        document.querySelectorAll('.ai-preset-btn').forEach(function (presetBtn) {
+          presetBtn.addEventListener('click', function () {
+            sendChatMessage(presetBtn.getAttribute('data-preset') || '');
+          });
+        });
+
+        if (drawerToggleBtn) {
+          drawerToggleBtn.addEventListener('click', function () {
+            const panel = byId('quick-drawer-panel');
+            const isHidden = panel ? panel.classList.contains('hidden') : true;
+            setQuickDrawerOpen(isHidden);
+          });
+        }
+        if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', function () { setQuickDrawerOpen(false); });
+        if (drawerForm && drawerInput) {
+          drawerForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const val = drawerInput.value;
+            drawerInput.value = '';
+            setQuickDrawerOpen(true);
+            sendChatMessage(val);
+          });
+        }
+
+        // Habitat controls
+        const treatBtn = byId('dispense-mealworm-btn');
+        const lightBtn = byId('toggle-habitat-light-btn');
+        const fanBtn = byId('toggle-habitat-fan-btn');
+        const clearLogBtn = byId('clear-habitat-log-btn');
+
+        if (treatBtn) {
+          treatBtn.addEventListener('click', function () {
+            if (appState.hopperCount <= 0) {
+              showToast('Mealworm hopper empty', 'error');
+              return;
+            }
+            appState.treatsToday += 1;
+            appState.hopperCount -= 1;
+            syncHabitatDisplays();
+            SynthAudio.beep(740, 0.12, 'triangle', 0.12);
+            logHabitatEvent('Dispensed 1 mealworm treat for Nibbles & Coco.');
+            showToast('Mealworm dispensed for Nibbles!', 'success');
+          });
+        }
+        if (lightBtn) {
+          lightBtn.addEventListener('click', function () {
+            appState.nightMode = !appState.nightMode;
+            syncHabitatDisplays();
+            logHabitatEvent('Enclosure lighting switched to ' + (appState.nightMode ? 'Night Mode' : 'Day Mode') + '.');
+            showToast('Habitat lighting updated', 'info');
+          });
+        }
+        if (fanBtn) {
+          fanBtn.addEventListener('click', function () {
+            const order = ['AUTO', 'LOW', 'HIGH', 'OFF'];
+            const idx = order.indexOf(appState.fanMode);
+            appState.fanMode = order[(idx + 1) % order.length];
+            syncHabitatDisplays();
+            logHabitatEvent('Micro-fan mode set to ' + appState.fanMode + '.');
+            showToast('Micro-fan: ' + appState.fanMode, 'info');
+          });
+        }
+        if (clearLogBtn) {
+          clearLogBtn.addEventListener('click', function () {
+            const logBox = byId('habitat-event-log');
+            if (logBox) logBox.innerHTML = '';
+          });
+        }
+
+        // Cohere v2 API settings buttons
+        const keyInput = byId('cohere-key-input');
+        const modelSelect = byId('cohere-model-select');
+        const visBtn = byId('cohere-toggle-vis-btn');
+        const saveKeyBtn = byId('cohere-save-btn');
+        const pingBtn = byId('cohere-ping-btn');
+        const clearKeyBtn = byId('cohere-clear-btn');
+
+        if (keyInput) keyInput.value = appState.apiKey;
+        if (modelSelect) modelSelect.value = appState.model;
+
+        if (visBtn && keyInput) {
+          visBtn.addEventListener('click', function () {
+            const hidden = keyInput.type === 'password';
+            keyInput.type = hidden ? 'text' : 'password';
+            visBtn.textContent = hidden ? 'Hide' : 'Show';
+          });
+        }
+
+        if (saveKeyBtn) {
+          saveKeyBtn.addEventListener('click', function () {
+            appState.apiKey = keyInput ? keyInput.value.trim() : '';
+            appState.model = modelSelect ? modelSelect.value : 'command-a-plus-05-2026';
+            writeStorage(KEYS.API_KEY, appState.apiKey);
+            writeStorage(KEYS.MODEL, appState.model);
+            syncCohereIndicators();
+            showToast(appState.apiKey ? 'Cohere v2 key saved' : 'Saved fallback configuration', 'success');
+          });
+        }
+
+        if (clearKeyBtn) {
+          clearKeyBtn.addEventListener('click', function () {
+            appState.apiKey = '';
+            if (keyInput) keyInput.value = '';
+            writeStorage(KEYS.API_KEY, '');
+            syncCohereIndicators();
+            showToast('Cohere API key cleared', 'info');
+          });
+        }
+
+        if (pingBtn) {
+          pingBtn.addEventListener('click', async function () {
+            const out = byId('cohere-ping-result');
+            if (!out) return;
+            out.classList.remove('hidden');
+            if (!appState.apiKey.trim()) {
+              out.textContent = 'No API key entered. Paste a Cohere key and click "Save Key & Model" first.';
+              return;
+            }
+            out.textContent = 'Pinging https://api.cohere.com/v2/chat with ' + appState.model + '...';
+            const t0 = performance.now();
+            try {
+              const text = await requestCohereV2('Reply with: NEROLINKXZ V2 OK');
+              const ms = Math.round(performance.now() - t0);
+              out.textContent = '[' + ms + 'ms] Connected! Response: ' + text;
+              showToast('Cohere v2 ping succeeded (' + ms + 'ms)', 'success');
+            } catch (err) {
+              const ms = Math.round(performance.now() - t0);
+              out.textContent = '[' + ms + 'ms] Ping failed: ' + (err && err.message ? err.message : 'Request error');
+              showToast('Cohere v2 ping failed', 'error');
+            }
+          });
+        }
+
+        window.addEventListener('resize', function () {
+          if (appState.activeTab === 'arcade') {
+            resizeArcadeCanvas();
+            renderArcadeIdleFrame();
+          } else if (appState.activeTab === 'habitat') {
+            drawHabitatChart();
+          }
+        });
+      }
+
+      // Background live telemetry updates
+      function startBackgroundTelemetry() {
+        logHabitatEvent('Nibbles & Coco sensor bridge active (21.3°C, 45% RH).');
+        setInterval(function () {
+          const fps = Math.round(236 + Math.random() * 8);
+          const ping = Math.round(9 + Math.random() * 6);
+          const fpsEl = byId('top-fps-val');
+          const pingEl = byId('top-ping-val');
+          if (fpsEl) fpsEl.textContent = String(fps);
+          if (pingEl) pingEl.textContent = ping + 'ms';
+
+          appState.wheelRpm = Math.round(24 + Math.random() * 24);
+          appState.wheelKm = Number((appState.wheelKm + 0.01).toFixed(2));
+          habitatSeries.temp.push(appState.tempC);
+          habitatSeries.temp.shift();
+          habitatSeries.rpm.push(appState.wheelRpm);
+          habitatSeries.rpm.shift();
+
+          syncHabitatDisplays();
+          if (appState.activeTab === 'habitat') {
+            drawHabitatChart();
+          }
+        }, 2000);
+      }
+
+      function bootstrap() {
+        try {
+          bindAllEvents();
+          syncAudioButtons();
+          syncCohereIndicators();
+          if (appState.chatHistory.length === 0) resetChatHistory();
+          else renderChatFeeds();
+          renderOverviewEngineCards();
+          renderEngineSwitcherButtons();
+          selectEngine('orbital_siege', false);
+          renderGenrePills();
+          renderGamesVault();
+          syncHabitatDisplays();
+          startBackgroundTelemetry();
+        } catch (err) {
+          showToast('Startup recovery: ' + (err && err.message ? err.message : 'Check console'), 'error');
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bootstrap);
+      } else {
+        bootstrap();
+      }
+    })();
+  </script>
+</body>
+</html>
